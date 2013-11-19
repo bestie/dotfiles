@@ -1,0 +1,60 @@
+[user]
+  name = Stephen Best
+  email = bestie@gmail.com
+[alias]
+  stat = status
+  st = status
+  d = diff
+  ci = commit -v
+  cia = commit -v -a
+  co = checkout
+  cp = cherry-pick
+  l = log
+  ll = log -p
+  lt = log trunk..
+  llt = log -p trunk..
+  lm = log master..
+  llm = log -p master..
+  br = branch
+  # http://coderwall.com/p/euwpig?i=3&p=1&t=git
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+
+[color]
+  branch = auto
+  diff = auto
+  status = auto
+
+[color "status"]
+  added = blue
+  changed = yellow
+  untracked = black
+
+[color "diff"]
+  meta = black bold
+  frag = magenta ul
+  old = red bold
+  new = green bold
+
+[core]
+  attributesfile = ~/.gitattributes
+  excludesfile = ~/.gitignore
+  editor = vim
+[push]
+  default = upstream
+
+# http://bitfission.com/blog/2010/07/auto-merge-gemfile-lock.html
+[merge "bundlelock"]
+  name = lock Gemfile
+  driver = bundle install
+
+# http://tbaggery.com/2010/10/24/reduce-your-rails-schema-conflicts.html
+[merge "railsschema"]
+  name = newer Rails schema version
+  driver = "ruby -e '\n\
+    system %(git), %(merge-file), %(--marker-size=%L), %(%A), %(%O), %(%B)\n\
+    b = File.read(%(%A))\n\
+    b.sub!(/^<+ .*\\nActiveRecord::Schema\\.define.:version => (\\d+). do\\n=+\\nActiveRecord::Schema\\.define.:version => (\\d+). do\\n>+ .*/) do\n\
+      %(ActiveRecord::Schema.define(:version => #{[$1, $2].max}) do)\n\
+    end\n\
+    File.open(%(%A), %(w)) {|f| f.write(b)}\n\
+    exit 1 if b.include?(%(<)*%L)'"

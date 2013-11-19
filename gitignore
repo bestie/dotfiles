@@ -1,0 +1,11 @@
+
+
+.DS_Store
+Thumbs.db
+
+# vim temp files
+*.sw[a-z]
+*.un~
+
+*.log
+
