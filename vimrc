@@ -20,7 +20,7 @@ set ruler
 set number
 set hlsearch
 set nowrap
-set winwidth=80
+set winwidth=83
 set ignorecase
 set smartcase
 
