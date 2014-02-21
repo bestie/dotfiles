@@ -13,6 +13,7 @@
   ll = log -p
   lt = log trunk..
   llt = log -p trunk..
+  dic = diff --cached
   lm = log master..
   llm = log -p master..
   br = branch
