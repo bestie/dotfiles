@@ -121,7 +121,7 @@ au BufNewFile,BufRead *.json set ft=javascript
 """ Plugin configs """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Activeate CtrlP with leader t
-map <leader>t <C-p>
+nnoremap <silent> <leader>t :ClearCtrlPCache<cr>\|:CtrlP<cr>
 
 " Command + / for commenting
 map <D-/> :TComment<cr>
