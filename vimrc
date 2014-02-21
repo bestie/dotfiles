@@ -59,6 +59,20 @@ au BufEnter * match ExtraWhitespace /\s\+$/
 au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 au InsertLeave * match ExtraWhiteSpace /\s\+$/
 
+""" Sick functions and macros """""""""""""""""""""""""""""""""""""""""""""""""
+
+" Rename current file thanks @samphippen
+function! RenameFile()
+    let old_name = expand('%')
+    let new_name = input('New file name: ', expand('%'), 'file')
+    if new_name != '' && new_name != old_name
+        exec ':saveas ' . new_name
+        exec ':silent !rm ' . old_name
+        redraw!
+    endif
+endfunction
+map <leader>n :call RenameFile()<cr>
+
 """ Key remaps """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Disable paragraph skipping
@@ -111,6 +125,7 @@ map <leader>t <C-p>
 
 " Command + / for commenting
 map <D-/> :TComment<cr>
+map <leader>n :call RenameFile()<cr>
 
 """ MacVim specific """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
