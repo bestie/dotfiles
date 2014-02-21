@@ -23,6 +23,7 @@ set nowrap
 set winwidth=83
 set ignorecase
 set smartcase
+set noswapfile
 
 colorscheme solarized
 
