@@ -53,6 +53,10 @@ alias coreaudio-restart="sudo kill `ps -ax | grep 'coreaudiod' | grep -v grep | 
 # names of processes keeping deleting files open
 # https://twitter.com/climagic/status/289382853555392513
 lsof / | awk '/ DEL /{proc[$1]=1;} END{for (name in proc){print name;}}'
+### Scala ####################################################################
+
+export SCALA_HOME="/usr/local/opt/scala/idea"
+export SBT_OPTS="-XX:MaxPermSize=256m"
 
 ### Postgres #################################################################
 alias pgstart='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
