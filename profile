@@ -52,7 +52,11 @@ alias coreaudio-restart="sudo kill `ps -ax | grep 'coreaudiod' | grep -v grep | 
 
 # names of processes keeping deleting files open
 # https://twitter.com/climagic/status/289382853555392513
-lsof / | awk '/ DEL /{proc[$1]=1;} END{for (name in proc){print name;}}'
+alias lsof-openfiles="lsof / | awk '/ DEL /{proc[$1]=1;} END{for (name in proc){print name;}}'"
+
+# List all processes listening on ports
+alias lsof-listening-ports="lsof -i| grep LISTEN"
+
 ### Scala ####################################################################
 
 export SCALA_HOME="/usr/local/opt/scala/idea"
