@@ -48,7 +48,7 @@ alias rackthis="echo \"run Rack::Directory.new('.')\" >> config.ru"
 alias iphone-simulator="open /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Applications/iPhone\ Simulator.app"
 
 # Kill coreaudio for when Airplay device refused to be selected
-alias coreaudio-restart="sudo kill `ps -ax | grep 'coreaudiod' | grep -v grep | awk '{print $1}'`"
+alias coreaudio-restart="sudo kill `ps ax | grep 'coreaudiod' | grep -v grep | awk '{print $1}'`"
 
 # names of processes keeping deleting files open
 # https://twitter.com/climagic/status/289382853555392513
