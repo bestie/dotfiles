@@ -80,10 +80,6 @@ map <leader>n :call RenameFile()<cr>
 
 """ Key remaps """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Disable paragraph skipping
-nnoremap { :echo 'Stop trying to hurt yourself'<CR>
-nnoremap } :echo 'Stop trying to hurt yourself'<CR>
-
 " Remap esc to jj in insert mode
 inoremap jj <Esc>
 
