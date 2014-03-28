@@ -10,6 +10,7 @@ Bundle 'ack.vim'
 Bundle 'tComment'
 Bundle 'endwise.vim'
 Bundle 'ctrlp.vim'
+Bundle 'surround.vim'
 
 """ Settings """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
