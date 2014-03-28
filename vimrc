@@ -63,6 +63,9 @@ au InsertLeave * match ExtraWhiteSpace /\s\+$/
 
 """ Sick functions and macros """""""""""""""""""""""""""""""""""""""""""""""""
 
+" RSpec - Convert bare word to let(:thing) { double(:thing) }
+map <leader>rld Ilet(:wviwyA) { double(:pA) }
+
 " Rename current file thanks @samphippen
 function! RenameFile()
     let old_name = expand('%')
