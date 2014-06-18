@@ -176,6 +176,8 @@ au BufNewFile,BufRead *.json set ft=javascript
 
 " Activeate CtrlP with leader t
 nnoremap <silent> <leader>t :ClearCtrlPCache<cr>\|:CtrlP<cr>
+nnoremap <silent> <leader>e :ClearCtrlPCache<cr>\|:CtrlP<cr>
+nnoremap <leader>p :CtrlPBuffer<cr>
 
 " Command + / for commenting
 map <D-/> :TComment<cr>
