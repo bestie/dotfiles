@@ -64,8 +64,31 @@ au InsertLeave * match ExtraWhiteSpace /\s\+$/
 
 """ Sick functions and macros """""""""""""""""""""""""""""""""""""""""""""""""
 
-" RSpec - Convert bare word to let(:thing) { double(:thing) }
+" RSpec let double - Convert bare word to let(:thing) { double(:thing) }
 map <leader>rld Ilet(:wviwyA) { double(:pA) }
+
+" Ruby binding pry - insert binding.pry on the line above
+map <leader>rbp Orequire "pry"; binding.pry
+
+" Ruby no pry - remove a binding.pry from the current file, hope it's the one you wanted
+map <leader>rnp /binding.pry<cr>dd:noh
+
+" Ruby hash new - convert a string hash rocket to 1.9 hash syntax
+" "key" => value becomes key: value
+" Works with single quotes too.
+map <leader>rhn ^xf=dwbr:j
+
+" Ruby open spec
+map <leader>ros :call OpenSpec()<cr>
+
+" Ruby open spec vsplit
+map <leader>rosv :call VsplitSpec()<cr>
+
+" Rename current file
+map <leader>n :call RenameFile()<cr>
+
+" Ruby hash old - converts 1.9 symbol hash syntax to double quoted string and hash rocket
+map <leader>rho I"f:i"lcl =>j
 
 " Rename current file thanks @samphippen
 function! RenameFile()
@@ -77,9 +100,21 @@ function! RenameFile()
         redraw!
     endif
 endfunction
-map <leader>n :call RenameFile()<cr>
 
-""" Key remaps """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Infer and open RSpec file for current file
+function! OpenSpec()
+    let repl = substitute(substitute(substitute(expand('%'), '\.rb', '', ''), "lib/", "spec/", ""), "app/", "spec/", "")
+    let path = repl . '_spec.rb'
+    exec('e ' . path)
+endfunction
+
+" Open RSpec file in a Vsplit
+function! VsplitSpec()
+    exec('vsplit')
+    call OpenSpec()
+endfunction
+
+""" Key remaps (standard stuff) """""""""""""""""""""""""""""""""""""""""""""""
 
 " Remap esc to jj in insert mode
 inoremap jj <Esc>
