@@ -19,6 +19,7 @@
   br = branch
   # http://coderwall.com/p/euwpig?i=3&p=1&t=git
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+  recent-branches = for-each-ref --count=10 --sort=-committerdate refs/heads/ --format='%(refname:short)'
 
 [color]
   branch = auto
