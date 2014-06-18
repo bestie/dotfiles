@@ -122,8 +122,34 @@ inoremap jj <Esc>
 " Remap esc to kj in insert mode
 inoremap kj <Esc>
 
-" DIsable entering EX mode by accident
+" http://vimcasts.org/episodes/show-invisibles/
+" Shortcut to rapidly toggle `set list`
+nmap <leader>l :set list!<CR>
+
+" Turn search highlighting off
+map <leader>/ :noh<CR>
+
+" Save with CTRL-s
+map <C-s> <esc>:w<CR>
+imap <C-s> <esc>:w<CR>
+
+""" Forgive """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Disable entering EX mode by accident
 map Q <Nop>
+
+" You know what I meant
+command! Q  q  " Bind :Q  to :q
+command! W  w  " Bind :W  to :w
+command! Wq wq " Bind :Wq to :wq
+command! WQ wq " Bind :WQ to :wq
+
+""" Things to disable when you're feeling masochistic / anti-social
+
+" Disable backspace
+" inoremap <BS> <Nop>
+" Disable delete
+" inoremap <Del> <Nop>
 
 " disble arrow keys in insert, command mode
 "nnoremap <up> <nop>
@@ -134,15 +160,6 @@ map Q <Nop>
 "inoremap <down> <nop>
 "inoremap <left> <nop>
 "inoremap <right> <nop>
-
-" http://vimcasts.org/episodes/show-invisibles/
-" Shortcut to rapidly toggle `set list`
-nmap <leader>l :set list!<CR>
-
-" Disable backspace
-" inoremap <BS> <Nop>
-" Disable delete
-" inoremap <Del> <Nop>
 
 """ Syntax highlighting """""""""""""""""""""""""""""""""""""""""""""""""""""""
 
