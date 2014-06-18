@@ -26,6 +26,7 @@ set ignorecase
 set smartcase
 set noswapfile
 set showcmd
+set wildmode=list:longest,full
 
 colorscheme solarized
 
