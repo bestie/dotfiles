@@ -5,10 +5,10 @@ function git_prompt_segment {
     exit 1
   fi
 
-  branch_pattern="^# On branch ([^${IFS}]*)"
-  detached_branch_pattern="# Not currently on any branch"
-  remote_pattern="# Your branch is (.*) of"
-  diverge_pattern="# Your branch and (.*) have diverged"
+  branch_pattern="^On branch ([^${IFS}]*)"
+  detached_branch_pattern="Not currently on any branch"
+  remote_pattern="Your branch is (.*) of"
+  diverge_pattern="Your branch and (.*) have diverged"
 
   # Green bolt if all changes are staged
   if [[ ${git_status}} =~ "Changes to be committed" ]]; then
