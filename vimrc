@@ -20,6 +20,7 @@ set autoindent
 set ruler
 set number
 set hlsearch
+set incsearch
 set nowrap
 set winwidth=83
 set ignorecase
