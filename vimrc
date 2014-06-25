@@ -93,8 +93,8 @@ map <leader>rosv :call VsplitSpec()<cr>
 " Rename current file
 map <leader>n :call RenameFile()<cr>
 
-" Ruby hash old - converts 1.9 symbol hash syntax to double quoted string and hash rocket
-map <leader>rho I"f:i"lcl =>j
+map <leader>vrc :vsplit<cr>:edit $MYVIMRC<cr>
+map <leader>vsrc :w<cr>:source $MYVIMRC<cr>:echo "VIMRC reloaded"<cr>
 
 " Rename current file thanks @samphippen
 function! RenameFile()
