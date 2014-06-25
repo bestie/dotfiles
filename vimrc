@@ -81,6 +81,9 @@ map <leader>rnp /binding.pry<cr>dd:noh
 " Works with single quotes too.
 map <leader>rhn ^xf=dwbr:j
 
+" Ruby hash old - converts 1.9 symbol hash syntax to double quoted string and hash rocket
+map <leader>rho I"f:i"lcl =>j
+
 " Ruby open spec
 map <leader>ros :call OpenSpec()<cr>
 
