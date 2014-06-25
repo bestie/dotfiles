@@ -28,13 +28,15 @@ set noswapfile
 set showcmd
 set wildmode=list:longest,full
 
-colorscheme solarized
+" Allow backspacing over autoindent, eol and start of lines
+set backspace=indent,eol,start
 
-if has('gui_running')
-    set background=light
-else
-    set background=dark
-endif
+" solarized options
+let g:solarized_termtrans=1
+let g:solarized_visibility = "low"
+let g:solarized_contrast = "low"
+colorscheme solarized
+set background=light
 
 " set vertical marker at col 80
 set colorcolumn=80
@@ -130,8 +132,9 @@ nmap <leader>l :set list!<CR>
 map <leader>/ :noh<CR>
 
 " Save with CTRL-s
-map <C-s> <esc>:w<CR>
-imap <C-s> <esc>:w<CR>
+:nmap <c-s> :w<CR>
+:imap <c-s> <Esc>:w<CR>a
+:imap <c-s> <Esc><c-s>
 
 """ Forgive """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 

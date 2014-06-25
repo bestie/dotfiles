@@ -42,6 +42,9 @@ alias rc='be rails console'
 alias rg='be rails generate'
 alias rails-migrate-redo="rake db:migrate:redo VERSION=\$(ls -tr db/migrate| tail -n1 | sed -e s/[^0-9]//g)"
 
+# Disable terminal suspend so vim can map ctrl-s
+alias vim="stty stop '' -ixoff ; vim"
+
 alias gem-cull='gem list | cut -d" " -f1 | xargs gem uninstall -aIx'
 alias git-merged-branches="git br --merged | grep -v master | xargs"
 alias rackthis="echo \"run Rack::Directory.new('.')\" >> config.ru"
