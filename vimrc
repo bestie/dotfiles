@@ -86,6 +86,7 @@ map <leader>rho I"f:i"lcl =>j
 
 " Ruby open spec
 map <leader>ros :call OpenSpec()<cr>
+map <leader>rtf :call RunRSpec()<cr>
 
 " Ruby open spec vsplit
 map <leader>rosv :call VsplitSpec()<cr>
@@ -109,8 +110,16 @@ endfunction
 
 " Infer and open RSpec file for current file
 function! OpenSpec()
-    let repl = substitute(substitute(substitute(expand('%'), '\.rb', '', ''), "lib/", "spec/", ""), "app/", "spec/", "")
-    let path = repl . '_spec.rb'
+    let current_file = expand('%')
+    if current_file =~ '^app'
+      let spec_file = substitute(current_file, '^app', 'spec', '')
+    elseif current_file =~ '^lib/'
+      let spec_file = substitute(current_file, '^lib', 'spec', '')
+    else
+      let spec_file = 'spec/' . current_file
+    endif
+
+    let path = substitute(spec_file, '\.rb', '_spec.rb', '')
     exec('e ' . path)
 endfunction
 
@@ -118,6 +127,16 @@ endfunction
 function! VsplitSpec()
     exec('vsplit')
     call OpenSpec()
+endfunction
+
+function! RunRSpec()
+    let raw_file=tempname()
+    let stripped_file=tempname()
+    exe expand(":!unbuffer bundle exec rspec % 2>&1 | tee " . raw_file)
+    call system('cat ' . raw_file . ' | sed "s:.\[[0-9;]*[mK]::g" > ' . stripped_file)
+    exe "vsplit " . stripped_file
+    set wrap
+    call system("rm " . raw_file . " " . stripped_file)
 endfunction
 
 """ Key remaps (standard stuff) """""""""""""""""""""""""""""""""""""""""""""""
