@@ -86,7 +86,7 @@ map <leader>rho I"f:i"lcl =>j
 
 " Ruby open spec
 map <leader>ros :call OpenSpec()<cr>
-map <leader>rtf :call RunRSpec()<cr>
+map <leader>rtf :call RunTestFile()<cr>
 
 " Ruby open spec vsplit
 map <leader>rosv :call VsplitSpec()<cr>
@@ -129,10 +129,19 @@ function! VsplitSpec()
     call OpenSpec()
 endfunction
 
-function! RunRSpec()
+function! RunTestFile()
     let raw_file=tempname()
     let stripped_file=tempname()
-    exe expand(":!unbuffer bundle exec rspec % 2>&1 | tee " . raw_file)
+
+    if expand("%") =~ "\.feature$"
+      let test_command  = "bundle exec cucumber"
+    elseif expand("%") =~ "_spec\.rb$"
+      let test_command = "bundle exec rspec"
+    elseif expand("%") =~ "_test\.rb$"
+      let test_command = "bundle exec ruby -I test"
+    end
+
+    exe expand(":!unbuffer " . test_command . " % 2>&1 | tee " . raw_file)
     call system('cat ' . raw_file . ' | sed "s:.\[[0-9;]*[mK]::g" > ' . stripped_file)
     exe "vsplit " . stripped_file
     set wrap
