@@ -7,7 +7,7 @@ function git_prompt_segment {
 
   branch_pattern="^On branch ([^${IFS}]*)"
   detached_branch_pattern="Not currently on any branch"
-  remote_pattern="Your branch is (.*) of"
+  remote_pattern="Your branch is (ahead|behind)"
   diverge_pattern="Your branch and (.*) have diverged"
 
   # Green bolt if all changes are staged
@@ -24,7 +24,7 @@ function git_prompt_segment {
   if [[ ${git_status} =~ ${remote_pattern} ]]; then
     if [[ ${BASH_REMATCH[1]} == "ahead" ]]; then
       remote="${YELLOW}↑"
-    else
+    elif [[ ${BASH_REMATCH[1]} == "behind" ]]; then
       remote="${YELLOW}↓"
     fi
   fi
