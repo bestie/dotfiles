@@ -46,7 +46,6 @@ alias rails-migrate-redo="rake db:migrate:redo VERSION=\$(ls -tr db/migrate| tai
 alias vim="stty stop '' -ixoff ; vim"
 
 alias gem-cull='gem list | cut -d" " -f1 | xargs gem uninstall -aIx'
-alias git-merged-branches="git br --merged | grep -v master | xargs"
 alias rackthis="echo \"run Rack::Directory.new('.')\" >> config.ru"
 alias iphone-simulator="open /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Applications/iPhone\ Simulator.app"
 
