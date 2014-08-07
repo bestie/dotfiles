@@ -9,6 +9,7 @@ function git_prompt_segment {
   detached_branch_pattern="Not currently on any branch"
   remote_pattern="Your branch is (ahead|behind)"
   diverge_pattern="Your branch and (.*) have diverged"
+  rebasing_pattern="You are currently rebasing"
 
   # Green bolt if all changes are staged
   if [[ ${git_status}} =~ "Changes to be committed" ]]; then
@@ -32,10 +33,13 @@ function git_prompt_segment {
   if [[ ${git_status} =~ ${diverge_pattern} ]]; then
     remote="${YELLOW}↕"
   fi
+
   if [[ ${git_status} =~ ${branch_pattern} ]]; then
     branch="${YELLOW}${BASH_REMATCH[1]}"
   elif [[ ${git_status} =~ ${detached_branch_pattern} ]]; then
     branch="${YELLOW}NO BRANCH"
+  elif [[ ${git_status} =~ ${rebasing_pattern} ]]; then
+    branch="${YELLOW}REBASING"
   fi
 
   if [[ ${#state} -gt "0" || ${#remote} -gt "0" ]]; then
