@@ -13,12 +13,12 @@ function git_prompt_segment {
 
   # Green bolt if all changes are staged
   if [[ ${git_status}} =~ "Changes to be committed" ]]; then
-    state="${GREEN}⚡"
+    state="${GREEN}*"
   fi
 
   # Red bolt for unstaged changes
   if [[ ${git_status}} =~ "Changes not staged for commit" ]]; then
-    state="${RED}⚡"
+    state="${RED}*"
   fi
 
   # add an else if or two here if you want to get more specific
