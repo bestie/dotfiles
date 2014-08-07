@@ -33,9 +33,11 @@ set wildmode=list:longest,full
 set backspace=indent,eol,start
 
 " solarized options
-let g:solarized_termtrans=1
-let g:solarized_visibility = "low"
-let g:solarized_contrast = "low"
+if !has('gui_running')
+    let g:solarized_termtrans=1
+    let g:solarized_visibility = "low"
+    let g:solarized_contrast = "low"
+endif
 colorscheme solarized
 set background=light
 
