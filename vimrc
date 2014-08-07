@@ -88,7 +88,12 @@ map <leader>rho I"f:i"lcl =>j
 
 " Ruby open spec
 map <leader>ros :call OpenSpec()<cr>
-map <leader>rtf :call RunTestFile()<cr>
+
+" Run test, support all common Ruby test libs
+map <leader>rt :call RunTestFile()<cr>
+
+" As above but only test on current line
+map <leader>rtl :call RunTestFileAtLine()<cr>
 
 " Ruby open spec vsplit
 map <leader>rosv :call VsplitSpec()<cr>
@@ -131,23 +136,69 @@ function! VsplitSpec()
     call OpenSpec()
 endfunction
 
+" Run the current file and open results in a Vsplit, handle ANSI chars
 function! RunTestFile()
-    let raw_file=tempname()
-    let stripped_file=tempname()
+    exec("w")
+    let test_command = CommandToRunFile(expand("%"))
+    call RunCommandVsplitOutput(test_command)
+endfunction
 
-    if expand("%") =~ "\.feature$"
-      let test_command  = "bundle exec cucumber"
-    elseif expand("%") =~ "_spec\.rb$"
-      let test_command = "bundle exec rspec"
-    elseif expand("%") =~ "_test\.rb$"
-      let test_command = "bundle exec ruby -I test"
+" As RunTestFile using Ruby convention for running tests by line number
+function! RunTestFileAtLine()
+    let current_line = line(".") + 1
+    let test_command = CommandToRunFile(expand("%")) . ":" . current_line
+    call RunCommandVsplitOutput(test_command)
+endfunction
+
+" Run a command capturing the output in a new vsplit
+function! RunCommandVsplitOutput(command)
+    let temp_file = CaptureShellOutput(a:command)
+    call VsplitFileWithAnsiEscChars(temp_file)
+    call system("rm " . temp_file)
+endfunction
+
+" Open a file in a new vsplit handling ANSI escape chars
+function! VsplitFileWithAnsiEscChars(file)
+  exe "vsplit"
+  call OpenFileWithAnsiEscChars(a:file)
+endfunction
+
+" Open a file stripping ANSI escape chars or use AnsiEsc plugin if present
+function! OpenFileWithAnsiEscChars(file)
+    if exists(":AnsiEsc")
+      exe "edit " . a:file
+      exe "AnsiEsc"
+    else
+      let stripped_file = StripAnsiEscapeChars(a:file)
+      exe "edit " . stripped_file
+      call system("rm " stripped_file)
+    endif
+endfunction
+
+" Infer command necessary test run file
+function! CommandToRunFile(filename)
+    if a:filename =~ "\.feature$"
+      let command  = "bundle exec cucumber"
+    elseif a:filename =~ "_spec\.rb$"
+      let command = "bundle exec rspec"
+    elseif a:filename =~ "_test\.rb$"
+      let command = "bundle exec ruby -I test"
     end
 
-    exe expand(":!unbuffer " . test_command . " % 2>&1 | tee " . raw_file)
-    call system('cat ' . raw_file . ' | sed "s:.\[[0-9;]*[mK]::g" > ' . stripped_file)
-    exe "vsplit " . stripped_file
-    set wrap
-    call system("rm " . raw_file . " " . stripped_file)
+    return command . " " . a:filename
+endfunction
+
+" Run command, capture shell eutput to temp file and return temp file
+function! CaptureShellOutput(command)
+    let temp_file=tempname()
+    exe expand(":!unbuffer " . a:command . " % 2>&1 | tee " . temp_file)
+    return temp_file
+endfunction
+
+function! StripAnsiEscapeChars(raw_file)
+    let stripped_file=tempname()
+    call system('cat ' . a:raw_file . ' | sed "s:.\[[0-9;]*[mK]::g" > ' . stripped_file)
+    return stripped_file
 endfunction
 
 """ Key remaps (standard stuff) """""""""""""""""""""""""""""""""""""""""""""""
