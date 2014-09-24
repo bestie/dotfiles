@@ -5,7 +5,7 @@ function git_prompt_segment {
     exit 1
   fi
 
-  branch_pattern="^On branch ([^${IFS}]*)"
+  branch_pattern="On branch ([^${IFS}]*)"
   detached_branch_pattern="Not currently on any branch"
   remote_pattern="Your branch is (ahead|behind)"
   diverge_pattern="Your branch and (.*) have diverged"
