@@ -28,22 +28,6 @@
   bclean = "!f() { git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs -r git branch -d; }; f"
   bdone = "!f() { git checkout ${1-master} && git up && git bclean ${1-master}; }; f"
 
-[color]
-  branch = auto
-  diff = auto
-  status = auto
-
-[color "status"]
-  added = blue
-  changed = yellow
-  untracked = black
-
-[color "diff"]
-  meta = black bold
-  frag = magenta ul
-  old = red bold
-  new = green bold
-
 [core]
   attributesfile = ~/.gitattributes
   excludesfile = ~/.gitignore
