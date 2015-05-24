@@ -61,6 +61,10 @@ alias lsof-listening-ports="lsof -i| grep LISTEN"
 
 alias big-directories="du -a ~/ | sort -n -r"
 
+github-pub-key() {
+  curl https://github.com/${1}.keys
+}
+
 ### Scala ####################################################################
 
 export SCALA_HOME="/usr/local/opt/scala/idea"
