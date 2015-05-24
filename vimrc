@@ -1,16 +1,20 @@
 """ Vundle """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 filetype off
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-Bundle 'gmarik/vundle'
-Bundle 'Solarized'
-Bundle 'ack.vim'
-Bundle 'tComment'
-Bundle 'endwise.vim'
-Bundle 'ctrlp.vim'
-Bundle 'surround.vim'
+" Plugin 'floobits/floobits-neovim'
+Plugin 'gmarik/Vundle.vim'
+Plugin 'Solarized'
+Plugin 'ack.vim'
+Plugin 'tComment'
+Plugin 'endwise.vim'
+Plugin 'ctrlp.vim'
+Plugin 'surround.vim'
+
+call vundle#end()
+filetype plugin indent on
 
 """ Settings """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
