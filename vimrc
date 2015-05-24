@@ -125,7 +125,7 @@ map <leader>rl :call RepeatLastTest()<cr>
 
 function! RepeatLastTest()
   if exists("g:last_test")
-    execute "!" . g:last_test
+    exec "Dispatch " . g:last_test
   else
     echo "No last test, <leader>rt to run this file."
   end
@@ -138,7 +138,7 @@ function! RunTestAtLine(filename, line_number)
   if strlen(test_command)
     let test_command_with_line = test_command . ":" . a:line_number
     let g:last_test = test_command_with_line
-    execute "!" . test_command_with_line
+    exec "Dispatch " . test_command_with_line
   else
     echo "Not a recognized test '" . a:filename . "'"
   end
@@ -150,7 +150,7 @@ function! RunTest(filename)
 
   if strlen(test_command)
     let g:last_test = test_command
-    execute "!" . test_command
+    exec "Dispatch " . test_command
   else
     echo "Not a recognized test '" . a:filename . "'"
   end
