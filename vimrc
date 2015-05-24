@@ -265,10 +265,13 @@ command! WQ wq " Bind :WQ to :wq
 """ Syntax highlighting """""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
-au BufRead,BufNewFile {Gemfile,Guardfile,Rakefile,Vagrantfile,Thorfile,config.ru}    set ft=ruby
+au BufRead,BufNewFile {Gemfile,Guardfile,Rakefile,Vagrantfile,Thorfile,config.ru} set filename=ruby
 
 " md, markdown, and mk are markdown and define buffer-local preview
-au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} set ft=markdown
+au BufRead,BufNewFile *.{md,markdown} set filetype=markdown
+
+" Spell checking for text formats
+au BufRead,BufNewFile *.txt,*.md,*.markdown,*.textile setlocal spell
 
 " add json syntax highlighting
 au BufNewFile,BufRead *.json set ft=javascript
