@@ -105,22 +105,85 @@ map <leader>rhn ^xf=dwbr:j
 map <leader>rho I"f:i"lcl =>j
 
 " Ruby open spec
-map <leader>ros :call OpenSpec()<cr>
+map <leader>ros :call EditFile(InferSpecFile(expand('%')))<cr>
 
 " Run test, support all common Ruby test libs
-map <leader>rt :call RunTestFile()<cr>
+map <leader>rt :call RunTest(expand('%'))<cr>
 
 " As above but only test on current line
-map <leader>rtl :call RunTestFileAtLine()<cr>
-
-" Ruby open spec vsplit
-map <leader>rosv :call VsplitSpec()<cr>
+map <leader>rtl :call RunTestAtLine(expand('%'), line(".") + 1)<cr>
+"
+" Repeats one of the above, for when you've navigated away from the test file
+map <leader>rl :call RepeatLastTest()<cr>
 
 " Rename current file
 map <leader>n :call RenameFile()<cr>
 
 map <leader>vrc :edit $MYVIMRC<cr>
 map <leader>vsrc :source $MYVIMRC<cr>:echo "VIMRC reloaded"<cr>
+
+function! RepeatLastTest()
+  if exists("g:last_test")
+    execute "!" . g:last_test
+  else
+    echo "No last test, <leader>rt to run this file."
+  end
+endfunction
+
+" Run a test file at line (currently supports Ruby only)
+function! RunTestAtLine(filename, line_number)
+  let test_command = InferRubyTestCommand(a:filename)
+
+  if strlen(test_command)
+    let test_command_with_line = test_command . ":" . a:line_number
+    let g:last_test = test_command_with_line
+    execute "!" . test_command_with_line
+  else
+    echo "Not a recognized test '" . a:filename . "'"
+  end
+endfunction!
+
+" Run a test file (currently supports Ruby only)
+function! RunTest(filename)
+  let test_command = InferRubyTestCommand(a:filename)
+
+  if strlen(test_command)
+    let g:last_test = test_command
+    execute "!" . test_command
+  else
+    echo "Not a recognized test '" . a:filename . "'"
+  end
+endfunction
+
+" Infer and return corresponding command to run a Ruby test file
+function! InferRubyTestCommand(filename)
+    if a:filename =~ "\.feature$"
+      let command  = "bundle exec cucumber"
+    elseif a:filename =~ "_spec\.rb$"
+      let command = "bundle exec rspec"
+    elseif a:filename =~ "_test\.rb$"
+      let command = "bundle exec ruby -I test"
+    else
+      return ""
+    end
+
+    return command . " " . a:filename
+endfunction
+
+" Infer RSpec file for current file
+function! InferSpecFile(filename)
+    if a:filename =~ '^app'
+      let spec_file = substitute(a:filename, '^app', 'spec', '')
+    elseif a:filename =~ '^lib/'
+      let spec_file = substitute(a:filename, '^lib', 'spec', '')
+    else
+      let spec_file = 'spec/' . a:filename
+    endif
+
+    let path = substitute(spec_file, '\.rb', '_spec.rb', '')
+
+    return path
+endfunction
 
 " Rename current file thanks @samphippen
 function! RenameFile()
@@ -133,32 +196,11 @@ function! RenameFile()
     endif
 endfunction
 
-" Infer and open RSpec file for current file
-function! OpenSpec()
-    let current_file = expand('%')
-    if current_file =~ '^app'
-      let spec_file = substitute(current_file, '^app', 'spec', '')
-    elseif current_file =~ '^lib/'
-      let spec_file = substitute(current_file, '^lib', 'spec', '')
-    else
-      let spec_file = 'spec/' . current_file
-    endif
-
-    let path = substitute(spec_file, '\.rb', '_spec.rb', '')
-    exec('e ' . path)
+" This probably isn't necessary but I have no idea what I'm doing
+function! EditFile(filename)
+  exec "e " . a:filename
 endfunction
 
-function! CommandToRunFile(filename)
-    if a:filename =~ "\.feature$"
-      let command  = "bundle exec cucumber"
-    elseif a:filename =~ "_spec\.rb$"
-      let command = "bundle exec rspec"
-    elseif a:filename =~ "_test\.rb$"
-      let command = "bundle exec ruby -I test"
-    end
-
-    return command . " " . a:filename
-endfunction
 
 """ Key remaps (standard stuff) """""""""""""""""""""""""""""""""""""""""""""""
 
