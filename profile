@@ -72,6 +72,8 @@ alias pgstop='pg_ctl -D /usr/local/var/postgres stop -s -m fast'
 alias ll="ls -l"
 alias psgrep="ps aux|grep"
 alias rsyncwoptions='rsync -ruv -e ssh'
+alias bc-benchmark='time echo "scale=5000; a(1)*4" | bc -l'
+
 export EDITOR=vim
 export PATH=$HOME/bin:$PATH
 export CLICOLOR="YES"
