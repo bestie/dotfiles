@@ -209,6 +209,9 @@ endfunction
 
 """ Key remaps (standard stuff) """""""""""""""""""""""""""""""""""""""""""""""
 
+" %% For current directory thanks @squil
+cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
+
 " Remap esc to jj in insert mode
 inoremap jj <Esc>
 
