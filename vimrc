@@ -107,8 +107,8 @@ map <leader>rosv :call VsplitSpec()<cr>
 " Rename current file
 map <leader>n :call RenameFile()<cr>
 
-map <leader>vrc :vsplit<cr>:edit $MYVIMRC<cr>
-map <leader>vsrc :w<cr>:source $MYVIMRC<cr>:echo "VIMRC reloaded"<cr>
+map <leader>vrc :edit $MYVIMRC<cr>
+map <leader>vsrc :source $MYVIMRC<cr>:echo "VIMRC reloaded"<cr>
 
 " Rename current file thanks @samphippen
 function! RenameFile()
