@@ -148,52 +148,6 @@ function! OpenSpec()
     exec('e ' . path)
 endfunction
 
-" Open RSpec file in a Vsplit
-function! VsplitSpec()
-    exec('vsplit')
-    call OpenSpec()
-endfunction
-
-" Run the current file and open results in a Vsplit, handle ANSI chars
-function! RunTestFile()
-    exec("w")
-    let test_command = CommandToRunFile(expand("%"))
-    call RunCommandVsplitOutput(test_command)
-endfunction
-
-" As RunTestFile using Ruby convention for running tests by line number
-function! RunTestFileAtLine()
-    let current_line = line(".") + 1
-    let test_command = CommandToRunFile(expand("%")) . ":" . current_line
-    call RunCommandVsplitOutput(test_command)
-endfunction
-
-" Run a command capturing the output in a new vsplit
-function! RunCommandVsplitOutput(command)
-    let temp_file = CaptureShellOutput(a:command)
-    call VsplitFileWithAnsiEscChars(temp_file)
-    call system("rm " . temp_file)
-endfunction
-
-" Open a file in a new vsplit handling ANSI escape chars
-function! VsplitFileWithAnsiEscChars(file)
-  exe "vsplit"
-  call OpenFileWithAnsiEscChars(a:file)
-endfunction
-
-" Open a file stripping ANSI escape chars or use AnsiEsc plugin if present
-function! OpenFileWithAnsiEscChars(file)
-    if exists(":AnsiEsc")
-      exe "edit " . a:file
-      exe "AnsiEsc"
-    else
-      let stripped_file = StripAnsiEscapeChars(a:file)
-      exe "edit " . stripped_file
-      call system("rm " stripped_file)
-    endif
-endfunction
-
-" Infer command necessary test run file
 function! CommandToRunFile(filename)
     if a:filename =~ "\.feature$"
       let command  = "bundle exec cucumber"
@@ -204,19 +158,6 @@ function! CommandToRunFile(filename)
     end
 
     return command . " " . a:filename
-endfunction
-
-" Run command, capture shell eutput to temp file and return temp file
-function! CaptureShellOutput(command)
-    let temp_file=tempname()
-    exe expand(":!unbuffer " . a:command . " % 2>&1 | tee " . temp_file)
-    return temp_file
-endfunction
-
-function! StripAnsiEscapeChars(raw_file)
-    let stripped_file=tempname()
-    call system('cat ' . a:raw_file . ' | sed "s:.\[[0-9;]*[mK]::g" > ' . stripped_file)
-    return stripped_file
 endfunction
 
 """ Key remaps (standard stuff) """""""""""""""""""""""""""""""""""""""""""""""
