@@ -82,6 +82,14 @@ au BufEnter * match ExtraWhitespace /\s\+$/
 au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 au InsertLeave * match ExtraWhiteSpace /\s\+$/
 
+" Return to last edit position when opening files
+if has("autocmd")
+    autocmd BufReadPost *
+         \ if line("'\"") > 0 && line("'\"") <= line("$") |
+         \   exe "normal! g`\"" |
+         \ endif
+endif
+
 """ Sick functions and macros """""""""""""""""""""""""""""""""""""""""""""""""
 
 " Open and reload vimrc
