@@ -80,6 +80,7 @@ alias psgrep="ps aux|grep"
 alias rsyncwoptions='rsync -ruv -e ssh'
 alias bc-benchmark='time echo "scale=5000; a(1)*4" | bc -l'
 alias look-busy='cat /dev/urandom | hexdump -C | grep "ca fe"'
+alias fuck='sudo $(history -p \!\!)'
 
 export EDITOR=vim
 export PATH=$HOME/bin:$PATH
