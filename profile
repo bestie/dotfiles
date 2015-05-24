@@ -89,6 +89,9 @@ export EDITOR=vim
 export PATH=$HOME/bin:$PATH
 export CLICOLOR="YES"
 export LSCOLORS="ExGxFxdxCxDxDxhbadExEx"
+export HISTSIZE=1000
+export HISTCONTROL=ignoreboth
+
 # Homebrew only
 export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 
