@@ -59,6 +59,8 @@ alias lsof-openfiles="lsof / | awk '/ DEL /{proc[$1]=1;} END{for (name in proc){
 # List all processes listening on ports
 alias lsof-listening-ports="lsof -i| grep LISTEN"
 
+alias big-directories="du -a ~/ | sort -n -r"
+
 ### Scala ####################################################################
 
 export SCALA_HOME="/usr/local/opt/scala/idea"
