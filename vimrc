@@ -39,11 +39,13 @@ set backspace=indent,eol,start
 " solarized options
 if !has('gui_running')
     let g:solarized_termtrans=1
-    let g:solarized_visibility = "low"
-    let g:solarized_contrast = "low"
+    let g:solarized_visibility = "high"
+    let g:solarized_contrast = "high"
 endif
 colorscheme solarized
 set background=light
+set t_Co=256                        " force vim to use 256 colors
+let g:solarized_termcolors=256      " use solarized 256 fallback
 
 " set vertical marker at col 80
 set colorcolumn=80
