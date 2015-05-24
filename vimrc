@@ -4,14 +4,23 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" Plugin 'floobits/floobits-neovim'
+" for the editor itself
 Plugin 'gmarik/Vundle.vim'
 Plugin 'Solarized'
+Plugin 'ctrlp.vim'
 Plugin 'ack.vim'
+Plugin 'bling/vim-airline'
+Plugin 'tpope/vim-dispatch'
+
+" for general text editing
 Plugin 'tComment'
 Plugin 'endwise.vim'
-Plugin 'ctrlp.vim'
 Plugin 'surround.vim'
+Plugin 'abolish.vim'
+
+" language specific
+Plugin 'haskell.vim'
+Plugin 'vim-coffee-script'
 
 call vundle#end()
 filetype plugin indent on
