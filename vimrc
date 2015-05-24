@@ -84,6 +84,13 @@ au InsertLeave * match ExtraWhiteSpace /\s\+$/
 
 """ Sick functions and macros """""""""""""""""""""""""""""""""""""""""""""""""
 
+" Open and reload vimrc
+map <leader>vrc :edit $MYVIMRC<cr>
+map <leader>vsrc :source $MYVIMRC<cr>:echo "VIMRC reloaded"<cr>
+
+" Rename current file
+map <leader>n :call RenameFile()<cr>
+
 " RSpec let double - Convert bare word to let(:thing) { double(:thing) }
 map <leader>rld Ilet(:wviwyA) { double(:pA) }
 
@@ -115,12 +122,6 @@ map <leader>rtl :call RunTestAtLine(expand('%'), line(".") + 1)<cr>
 "
 " Repeats one of the above, for when you've navigated away from the test file
 map <leader>rl :call RepeatLastTest()<cr>
-
-" Rename current file
-map <leader>n :call RenameFile()<cr>
-
-map <leader>vrc :edit $MYVIMRC<cr>
-map <leader>vsrc :source $MYVIMRC<cr>:echo "VIMRC reloaded"<cr>
 
 function! RepeatLastTest()
   if exists("g:last_test")
