@@ -275,6 +275,10 @@ au BufNewFile,BufRead *.json set ft=javascript
 nnoremap <silent> <leader>t :ClearCtrlPCache<cr>\|:CtrlP<cr>
 nnoremap <silent> <leader>e :ClearCtrlPCache<cr>\|:CtrlP<cr>
 nnoremap <leader>p :CtrlPBuffer<cr>
+nnoremap <leader><leader> :CtrlPBuffer<cr>
+" ctrl-p working mode nearest git versioned ancestor
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|tmp'
 
 " Command + / for commenting
 map <D-/> :TComment<cr>
