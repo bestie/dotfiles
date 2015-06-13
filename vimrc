@@ -123,17 +123,17 @@ map <leader>rho I"f:i"lcl =>j
 map <leader>ros :call EditFile(InferSpecFile(expand('%')))<cr>
 
 " Run test, support all common Ruby test libs
-map <leader>rt :call RunTest(expand('%'))<cr>
+map <leader>rt :call RunTest(expand('%'))<cr><cr>
 
 " As above but only test on current line
-map <leader>rtl :call RunTestAtLine(expand('%'), line(".") + 1)<cr>
-"
+map <leader>rtl :call RunTestAtLine(expand('%'), line(".") + 1)<cr><cr>
+
 " Repeats one of the above, for when you've navigated away from the test file
-map <leader>rl :call RepeatLastTest()<cr>
+map <leader>rr :call RepeatLastTest()<cr><cr>
 
 function! RepeatLastTest()
   if exists("g:last_test")
-    exec "Dispatch " . g:last_test
+    exec "!testrunner-client " . g:last_test
   else
     echo "No last test, <leader>rt to run this file."
   end
@@ -146,7 +146,7 @@ function! RunTestAtLine(filename, line_number)
   if strlen(test_command)
     let test_command_with_line = test_command . ":" . a:line_number
     let g:last_test = test_command_with_line
-    exec "Dispatch " . test_command_with_line
+    exec "!testrunner-client " . test_command_with_line
   else
     echo "Not a recognized test '" . a:filename . "'"
   end
@@ -158,7 +158,7 @@ function! RunTest(filename)
 
   if strlen(test_command)
     let g:last_test = test_command
-    exec "Dispatch " . test_command
+    exec "!testrunner-client " . test_command
   else
     echo "Not a recognized test '" . a:filename . "'"
   end
@@ -167,9 +167,9 @@ endfunction
 " Infer and return corresponding command to run a Ruby test file
 function! InferRubyTestCommand(filename)
     if a:filename =~ "\.feature$"
-      let command  = "bundle exec cucumber --strict"
+      let command  = "bundle exec cucumber --strict --color"
     elseif a:filename =~ "_spec\.rb$"
-      let command = "bundle exec rspec"
+      let command = "bundle exec rspec --color"
     elseif a:filename =~ "_test\.rb$"
       let command = "bundle exec ruby -I test"
     else
