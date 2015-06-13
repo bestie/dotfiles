@@ -234,6 +234,8 @@ map <leader>/ :noh<CR>
 :imap <c-s> <Esc>:w<CR>a
 :imap <c-s> <Esc><c-s>
 
+:nnoremap <c-n> :bprevious<CR>:redraw<CR>:ls<CR>
+
 """ Forgive """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Disable entering EX mode by accident
