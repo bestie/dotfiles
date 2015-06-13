@@ -167,7 +167,7 @@ endfunction
 " Infer and return corresponding command to run a Ruby test file
 function! InferRubyTestCommand(filename)
     if a:filename =~ "\.feature$"
-      let command  = "bundle exec cucumber"
+      let command  = "bundle exec cucumber --strict"
     elseif a:filename =~ "_spec\.rb$"
       let command = "bundle exec rspec"
     elseif a:filename =~ "_test\.rb$"
