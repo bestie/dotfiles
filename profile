@@ -53,6 +53,8 @@ github-pub-key() {
   curl https://github.com/${1}.keys
 }
 
+alias vim-dirty="git status --porcelain | sed 's/^...//' | xargs -o vim -O"
+
 ### Scala ####################################################################
 
 export SCALA_HOME="/usr/local/opt/scala/idea"
