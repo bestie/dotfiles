@@ -103,10 +103,10 @@ map <leader>n :call RenameFile()<cr>
 map <leader>rld Ilet(:wviwyA) { double(:pA) }
 
 " Ruby binding pry - insert binding.pry on the line above
-map <leader>rbp Orequire "pry"; binding.pry
+map <leader>rbp Orequire "pry"; binding.pry # DEBUG @bestie
 
 " Ruby tap and pry
-map <leader>rtp o.tap { \|o\| require "pry"; binding.pry }<esc>
+map <leader>rtp o.tap { \|o\| "DEBUG @bestie"; require "pry"; binding.pry }<esc>
 
 " Ruby no pry - remove a binding.pry from the current file, hope it's the one you wanted
 map <leader>rnp /binding.pry<cr>dd:noh
