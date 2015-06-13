@@ -49,18 +49,6 @@ alias gem-cull='gem list | cut -d" " -f1 | xargs gem uninstall -aIx'
 alias rackthis="echo \"run Rack::Directory.new('.')\" >> config.ru"
 alias iphone-simulator="open /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Applications/iPhone\ Simulator.app"
 
-# Kill coreaudio for when Airplay device refused to be selected
-alias coreaudio-restart="sudo kill `ps ax | grep 'coreaudiod' | grep -v grep | awk '{print $1}'`"
-
-# names of processes keeping deleting files open
-# https://twitter.com/climagic/status/289382853555392513
-alias lsof-openfiles="lsof / | awk '/ DEL /{proc[$1]=1;} END{for (name in proc){print name;}}'"
-
-# List all processes listening on ports
-alias lsof-listening-ports="lsof -i| grep LISTEN"
-
-alias big-directories="du -a ~/ | sort -n -r"
-
 github-pub-key() {
   curl https://github.com/${1}.keys
 }
@@ -78,12 +66,26 @@ alias pgstop='pg_ctl -D /usr/local/var/postgres stop -s -m fast'
 alias ll="ls -l"
 alias psgrep="ps aux|grep"
 alias rsyncwoptions='rsync -ruv -e ssh'
-alias bc-benchmark='time echo "scale=5000; a(1)*4" | bc -l'
 alias look-busy='cat /dev/urandom | hexdump -C | grep "ca fe"'
 alias fuck='sudo $(history -p \!\!)'
 function random-word {
   ruby -e "puts File.readlines('/usr/share/dict/words').shuffle.take(${1-1})"
 }
+
+# Quick and easy CPU benchmark, calculate pi to 5000 sf
+alias bc-benchmark='time echo "scale=5000; a(1)*4" | bc -l'
+
+# Kill coreaudio for when Airplay device refused to be selected
+alias coreaudio-restart="sudo kill `ps ax | grep 'coreaudiod' | grep -v grep | awk '{print $1}'`"
+
+# names of processes keeping deleting files open
+# https://twitter.com/climagic/status/289382853555392513
+alias lsof-openfiles="lsof / | awk '/ DEL /{proc[$1]=1;} END{for (name in proc){print name;}}'"
+
+# List all processes listening on ports
+alias lsof-listening-ports="lsof -i| grep LISTEN"
+
+alias big-directories="du -a ~/ | sort -n -r"
 
 export EDITOR=vim
 export PATH=$HOME/bin:$PATH
