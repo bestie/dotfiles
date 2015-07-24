@@ -301,6 +301,10 @@ au BufRead,BufNewFile *.txt,*.md,*.markdown,*.textile setlocal spell
 " add json syntax highlighting
 au BufNewFile,BufRead *.json set ft=javascript
 
+" Remove 80 char line from temporary windows
+au BufReadPost quickfix exe "normal G"
+au BufReadPost quickfix setlocal colorcolumn=0
+
 """ Plugin configs """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Activeate CtrlP with leader t
