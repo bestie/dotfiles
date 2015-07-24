@@ -297,7 +297,10 @@ au BufRead,BufNewFile {Gemfile,Guardfile,Rakefile,Vagrantfile,Thorfile,config.ru
 au BufRead,BufNewFile *.{md,markdown} set filetype=markdown
 
 " Spell checking for text formats
-au BufRead,BufNewFile *.txt,*.md,*.markdown,*.textile setlocal spell
+au BufRead,BufNewFile *.txt,*.md,*.markdown,*.textile,*.feature setlocal spell
+autocmd FileType gitcommit setlocal spell
+" Autocomplete with dictionary words when spell check is on
+set complete+=kspell
 
 " add json syntax highlighting
 au BufNewFile,BufRead *.json set ft=javascript
