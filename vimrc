@@ -252,6 +252,7 @@ map <leader>/ :noh<CR>
 :imap <c-s> <Esc>:w<CR>a
 :imap <c-s> <Esc><c-s>
 
+:nnoremap <leader>c :ccl<CR>
 
 " Copy and paste from system clipboard
 vmap <leader>y "+y
