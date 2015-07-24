@@ -111,13 +111,23 @@ map <leader>rtp o.tap { \|o\| "DEBUG @bestie"; require "pry"; binding.pry }<esc>
 " Ruby no pry - remove a binding.pry from the current file, hope it's the one you wanted
 map <leader>rnp /binding.pry<cr>dd:noh
 
-" Ruby hash new - convert a string hash rocket to 1.9 hash syntax
-" "key" => value becomes key: value
+" Convert Ruby hash keys, works with visual selection
 " Works with single quotes too.
-map <leader>rhn ^xf=dwbr:j
+map <leader>rhn :call RubyHashConvertStringKeysToNewSyntax()<cr>
+map <leader>rho :call RubyHashConvertNewSyntaxKeysToStrings()<cr>
+map <leader>rh19 :call RubyHashConvertSymbolKeysToNewSyntax()<cr>
 
-" Ruby hash old - converts 1.9 symbol hash syntax to double quoted string and hash rocket
-map <leader>rho I"f:i"lcl =>j
+function! RubyHashConvertStringKeysToNewSyntax()
+  normal ^xf=dwbr:j
+endfunction
+
+function! RubyHashConvertNewSyntaxKeysToStrings()
+  normal I"f:i"lcl =>j
+endfunction
+
+function! RubyHashConvertSymbolKeysToNewSyntax()
+  normal ^xf r:ldt j
+endfunction
 
 " Ruby open spec
 map <leader>ros :call EditFile(InferSpecFile(expand('%')))<cr>
