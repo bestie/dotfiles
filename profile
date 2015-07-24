@@ -41,6 +41,7 @@ alias rs='be rails server'
 alias rc='be rails console'
 alias rg='be rails generate'
 alias rails-migrate-redo="rake db:migrate:redo VERSION=\$(ls -tr db/migrate| tail -n1 | sed -e s/[^0-9]//g)"
+alias ctags-ruby='ctags -R --languages=ruby --exclude=.git --exclude=log -f.tags'
 
 # Disable terminal suspend so vim can map ctrl-s
 alias vim="stty stop '' -ixoff ; vim"

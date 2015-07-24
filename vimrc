@@ -41,6 +41,7 @@ set smartcase
 set noswapfile
 set showcmd
 set wildmode=list:longest,full
+set tags=.tags " Put ctags file in .tags
 
 " Allow backspacing over autoindent, eol and start of lines
 set backspace=indent,eol,start
@@ -305,11 +306,12 @@ au BufNewFile,BufRead *.json set ft=javascript
 " Activeate CtrlP with leader t
 nnoremap <silent> <leader>t :ClearCtrlPCache<cr>\|:CtrlP<cr>
 nnoremap <silent> <leader>e :ClearCtrlPCache<cr>\|:CtrlP<cr>
-nnoremap <leader>p :CtrlPBuffer<cr>
 nnoremap <leader><leader> :CtrlPBuffer<cr>
 " ctrl-p working mode nearest git versioned ancestor
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|tmp'
+" ctrl-p for ctags
+nnoremap <leader>] :CtrlPTag<cr>
 
 " Command + / for commenting
 map <D-/> :TComment<cr>
