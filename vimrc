@@ -251,7 +251,12 @@ map <leader>/ :noh<CR>
 :imap <c-s> <Esc>:w<CR>a
 :imap <c-s> <Esc><c-s>
 
-:nnoremap <c-n> :bprevious<CR>:redraw<CR>:ls<CR>
+
+" Copy and paste from system clipboard
+vmap <leader>y "+y
+nmap <leader>y "+yy
+map <leader>p "+p
+nmap <leader>P "+P
 
 """ Forgive """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
