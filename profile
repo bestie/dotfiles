@@ -48,7 +48,7 @@ alias vim="stty stop '' -ixoff ; vim"
 
 alias gem-cull='gem list | cut -d" " -f1 | xargs gem uninstall -aIx'
 alias rackthis="echo \"run Rack::Directory.new('.')\" >> config.ru"
-alias iphone-simulator="open /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Applications/iPhone\ Simulator.app"
+alias iphone-simulator="open /Applications/Xcode.app/Contents/Developer/Applications/iOS\ Simulator.app"
 
 github-pub-key() {
   curl https://github.com/${1}.keys
