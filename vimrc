@@ -206,8 +206,8 @@ endfunction
 
 function! RunTestCommand(test_command)
   let g:last_test = a:test_command
+  echo a:test_command
   exec "Dispatch " . a:test_command
-  " exec("!testrunner-client " . a:test_command)
 endfunction
 
 " Infer and return corresponding command to run a Ruby test file
