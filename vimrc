@@ -131,6 +131,8 @@ map <leader>rhn :call RubyHashConvertStringKeysToNewSyntax()<cr>
 map <leader>rho :call RubyHashConvertNewSyntaxKeysToStrings()<cr>
 map <leader>rh19 :call RubyHashConvertSymbolKeysToNewSyntax()<cr>
 
+imap <c-l> <space>=><space>
+
 function! RubyHashConvertStringKeysToNewSyntax()
   normal ^xf=dwbr:j
 endfunction
