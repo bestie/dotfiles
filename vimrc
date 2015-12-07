@@ -329,37 +329,15 @@ set complete+=kspell
 au BufNewFile,BufRead *.json set ft=javascript
 
 " Remove 80 char line from temporary windows
-au BufReadPost quickfix exe "normal G"
 au BufReadPost quickfix setlocal colorcolumn=0
 
 """ Plugin configs """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Activeate CtrlP with leader t
-nnoremap <silent> <leader>t :ClearCtrlPCache<cr>\|:CtrlP<cr>
-nnoremap <silent> <leader>e :ClearCtrlPCache<cr>\|:CtrlP<cr>
-nnoremap <leader><leader> :CtrlPBuffer<cr>
 " ctrl-p working mode nearest git versioned ancestor
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|tmp'
+let g:ctrlp_use_caching = 0
+" Use Ag to list files because it's *fast*
+" let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 " ctrl-p for ctags
 nnoremap <leader>] :CtrlPTag<cr>
-
-" Command + / for commenting
-map <D-/> :TComment<cr>
-map <leader>n :call RenameFile()<cr>
-
-""" MacVim specific """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-if has('gui_running')
-" MacVim save on loss of focus
-" autocmd BufLeave,FocusLost * silent! wall
-
-" Intelligently switch between relative and absolute line number line number
-" autocmd FocusLost * :set norelativenumber
-" if mode() == 'i'
-"   autocmd FocusGained * :set relativenumber
-" endif
-" autocmd InsertEnter * :set norelativenumber
-" autocmd InsertLeave * :set relativenumber
-" autocmd CursorMoved * :set relativenumber
-endif
