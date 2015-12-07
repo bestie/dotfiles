@@ -20,6 +20,7 @@
   # http://coderwall.com/p/euwpig?i=3&p=1&t=git
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
   recent-branches = for-each-ref --count=10 --sort=-committerdate refs/heads/ --format='%(refname:short)'
+  diff-commits = log --oneline --graph HEAD..
   # Thanks to @haacked http://haacked.com/archive/2014/07/28/github-flow-aliases
   up = !git pull --rebase --prune $@ && git submodule update --init --recursive
   wip = !git add -A && git commit -m "WIP"
