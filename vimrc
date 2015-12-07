@@ -97,12 +97,13 @@ au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 au InsertLeave * match ExtraWhiteSpace /\s\+$/
 
 " Return to last edit position when opening files
-if has("autocmd")
-    autocmd BufReadPost *
-         \ if line("'\"") > 0 && line("'\"") <= line("$") |
-         \   exe "normal! g`\"" |
-         \ endif
-endif
+function! PositionCursorFromViminfo()
+  if !(bufname("%") =~ '\(COMMIT_EDITMSG\)') && line("'\"") > 1 && line("'\"") <= line("$")
+    exe "normal! g`\""
+  endif
+endfunction
+
+autocmd BufReadPost * call PositionCursorFromViminfo()
 
 """ Sick functions and macros """""""""""""""""""""""""""""""""""""""""""""""""
 
