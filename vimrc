@@ -175,8 +175,9 @@ function! RepeatLastTest()
   end
 endfunction
 
+" Generate Ruby classes with a bit less typing
 map <leader>rc :%!ruby-class-generator<cr>
-vmap <leader>rc <esc>:'<,'> !ruby-class-generator<cr>
+vmap <leader>rc :!ruby-class-generator<cr>
 
 " Unjoin
 map <leader>j :s/, /,\r/g<cr>:nohl<cr>

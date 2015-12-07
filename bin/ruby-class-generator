@@ -1,0 +1,42 @@
+#!/usr/bin/env ruby
+
+#
+# Input should look like:
+#
+# Thing
+# a
+# b
+# c
+#
+# Output is a fully formed class with keyword arg constructor and private
+# reader methods. Stray `end`s are stipped out.
+
+def just_end?(string)
+  /^\s*end\s*$/ === string
+end
+
+class_name = STDIN.readline.strip
+attributes = STDIN.readlines.map(&:strip).reject(&:empty?).reject(&method(:just_end?))
+arguments = attributes.join(":, ") + ":"
+assignments = attributes.map { |attr| " " * 4 + "@" + attr + " = " + attr }.join("\n")
+attr_readers = ":" + attributes.join(", :")
+
+params = {
+  class_name: class_name,
+  arguments: arguments,
+  assignments: assignments,
+  attr_readers: attr_readers,
+}
+
+template = DATA.read
+STDOUT.puts(template % params)
+
+__END__
+class %{class_name}
+  def initialize(%{arguments})
+%{assignments}
+  end
+
+  attr_reader %{attr_readers}
+  private     %{attr_readers}
+end
