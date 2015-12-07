@@ -314,7 +314,7 @@ command! WQ wq " Bind :WQ to :wq
 """ Syntax highlighting """""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
-au BufRead,BufNewFile {Gemfile,Guardfile,Rakefile,Vagrantfile,Thorfile,config.ru} set filetype=ruby
+au BufRead,BufNewFile {Gemfile,Guardfile,Rakefile,Vagrantfile,Thorfile,config.ru,*.jbuilder} set filetype=ruby
 
 " md, markdown, and mk are markdown and define buffer-local preview
 au BufRead,BufNewFile *.{md,markdown} set filetype=markdown
