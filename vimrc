@@ -150,13 +150,13 @@ endfunction
 map <leader>ros :call EditFile(InferSpecFile(expand('%')))<cr>
 
 " Run test, support all common Ruby test libs
-map <leader>rt :ccl<cr>:w<cr>:call RunTest(expand('%'))<cr><cr>
+map <leader>rt :ccl<cr>:w<cr>:call RunTest(expand('%'))<cr>
 
 " As above but only test on current line
-map <leader>rtl :ccl<cr>:w<cr>:call RunTestAtLine(expand('%'), line("."))<cr><cr>
+map <leader>rtl :ccl<cr>:w<cr>:call RunTestAtLine(expand('%'), line("."))<cr>
 
 " Repeats one of the above, for when you've navigated away from the test file
-map <leader>rr :ccl<cr>:w<cr>:call RepeatLastTest()<cr><cr>
+map <leader>rr <esc>:ccl<cr>:w<cr>:call RepeatLastTest()<cr>
 
 function! RepeatLastTest()
   if exists("g:last_test")
