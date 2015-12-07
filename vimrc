@@ -279,7 +279,8 @@ map <leader>/ :noh<CR>
 " Copy and paste from system clipboard
 vmap <leader>y "+y
 nmap <leader>y "+yy
-map <leader>p "+p
+nmap <leader>p "+p
+vmap <leader>p "+p
 nmap <leader>P "+P
 
 """ Forgive """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
