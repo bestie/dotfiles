@@ -158,6 +158,15 @@ map <leader>rtl :ccl<cr>:w<cr>:call RunTestAtLine(expand('%'), line("."))<cr>
 " Repeats one of the above, for when you've navigated away from the test file
 map <leader>rr <esc>:ccl<cr>:w<cr>:call RepeatLastTest()<cr>
 
+" Run rame
+map <leader>drake :call RunTestCommand("bundle exec rake")<cr>
+"
+" Run all the specs
+map <leader>drspec :call RunTestCommand("bundle exec rspec")<cr>
+
+" Run all the cukes
+map <leader>dcuc :call RunTestCommand("bundle exec cucumber --strict")<cr>
+
 function! RepeatLastTest()
   if exists("g:last_test")
     call RunTestCommand(g:last_test)
