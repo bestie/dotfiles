@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+organization, repo = %x[git remote --verbose]
+  .each_line
+  .select { |line| line.include?("origin") }
+  .select { |line| line.include?("fetch") }
+  .select { |line| line.include?("github.com") }
+  .map    { |line| line.match(%r{github.com:([^/]+)/([^/]+)\.git})[1..-1] }
+  .first || ["drupal"] * 2
+
+github_url = "https://github.com/#{organization}/#{repo}"
+pr_url = [github_url, "pulls"].join("/")
+
+sub_command = ARGV[0]
+
+case sub_command
+when "p"
+  url = pr_url
+else
+  url = github_url
+end
+
+exec(%{open '#{url}'})
