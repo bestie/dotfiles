@@ -178,6 +178,9 @@ endfunction
 map <leader>rc :%!ruby-class-generator<cr>
 vmap <leader>rc <esc>:'<,'> !ruby-class-generator<cr>
 
+" Unjoin
+map <leader>j :s/, /,\r/g<cr>:nohl<cr>
+
 " Run a test file at line (currently supports Ruby only)
 function! RunTestAtLine(filename, line_number)
   let test_command = InferRubyTestCommand(a:filename)
