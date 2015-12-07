@@ -42,6 +42,19 @@ set noswapfile
 set showcmd
 set wildmode=list:longest,full
 set tags=.tags " Put ctags file in .tags
+set scrolloff=5               " keep at least 5 lines above/below
+set sidescrolloff=5           " keep at least 5 lines left/right
+set cmdheight=2               " command line two lines high
+
+set path+=./
+set path+=./lib
+set path+=./spec
+set ttyfast                   " Apparently terminals are fast
+set noerrorbells              " @andrewmcdonough does not like bells
+set fileformats=unix
+set ff=unix
+set lazyredraw
+set shell=bash
 
 " Allow backspacing over autoindent, eol and start of lines
 set backspace=indent,eol,start
