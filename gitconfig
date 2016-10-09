@@ -28,6 +28,12 @@
   merged-branches = !git branch --merged ${1-master}
   bclean = "!f() { git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs -r git branch -d; }; f"
   bdone = "!f() { git checkout ${1-master} && git up && git bclean ${1-master}; }; f"
+  # origin/master has changed and you to rebase ... AGAIN
+  fucksake = !git up && git rebase origin/master && git push -f
+  # Make that last commit eat it
+  omnom = commit --amend -C HEAD
+  # Remove all trace of file / pattern
+  nuke = "!f() { git filter-branch --force --index-filter \"git rm --cached --ignore-unmatch $1\" --prune-empty --tag-name-filter cat -- --all; }; f"
 
 [core]
   attributesfile = ~/.gitattributes
