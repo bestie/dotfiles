@@ -5,7 +5,7 @@ organization, repo = %x[git remote --verbose]
   .select { |line| line.include?("origin") }
   .select { |line| line.include?("fetch") }
   .select { |line| line.include?("github.com") }
-  .map    { |line| line.match(%r{github.com:([^/]+)/([^/]+)\.git})[1..-1] }
+  .map    { |line| line.match(%r{github.com[:/]([^/]+)/([^/]+)\.git})[1..-1] }
   .first || ["drupal"] * 2
 
 github_url = "https://github.com/#{organization}/#{repo}"
