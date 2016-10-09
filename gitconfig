@@ -17,23 +17,26 @@
   br = branch
   unstage = rm --cached
   staged = diff --cached
-  # http://coderwall.com/p/euwpig?i=3&p=1&t=git
-	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
   recent-branches = for-each-ref --count=10 --sort=-committerdate refs/heads/ --format='%(refname:short)'
   diff-commits = log --oneline --graph HEAD..
-  # Thanks to @haacked http://haacked.com/archive/2014/07/28/github-flow-aliases
-  up = !git pull --rebase --prune $@ && git submodule update --init --recursive
-  wip = !git add -A && git commit -m "WIP"
-  wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
   merged-branches = !git branch --merged ${1-master}
-  bclean = "!f() { git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs -r git branch -d; }; f"
-  bdone = "!f() { git checkout ${1-master} && git up && git bclean ${1-master}; }; f"
   # origin/master has changed and you to rebase ... AGAIN
   fucksake = !git up && git rebase origin/master && git push -f
   # Make that last commit eat it
   omnom = commit --amend -C HEAD
   # Remove all trace of file / pattern
   nuke = "!f() { git filter-branch --force --index-filter \"git rm --cached --ignore-unmatch $1\" --prune-empty --tag-name-filter cat -- --all; }; f"
+  #
+  # Found on the internets:
+  #
+  # http://coderwall.com/p/euwpig?i=3&p=1&t=git
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+  # Thanks to @haacked http://haacked.com/archive/2014/07/28/github-flow-aliases
+  up = !git pull --rebase --prune $@ && git submodule update --init --recursive
+  wip = !git add -A && git commit -m "WIP"
+  wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+  bclean = "!f() { git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs -r git branch -d; }; f"
+  bdone = "!f() { git checkout ${1-master} && git up && git bclean ${1-master}; }; f"
 
 [core]
   attributesfile = ~/.gitattributes
