@@ -44,6 +44,8 @@
   editor = vim
 [push]
   default = upstream
+[commit]
+	verbose = true
 
 # http://bitfission.com/blog/2010/07/auto-merge-gemfile-lock.html
 [merge "bundlelock"]
