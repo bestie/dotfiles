@@ -128,20 +128,25 @@ map <leader>rnp /binding.pry<cr>dd:noh
 " Works with single quotes too.
 map <leader>rhn :call RubyHashConvertStringKeysToNewSyntax()<cr>
 map <leader>rho :call RubyHashConvertNewSyntaxKeysToStrings()<cr>
-map <leader>rh19 :call RubyHashConvertSymbolKeysToNewSyntax()<cr>
+map <leader>rh19 :call RubyHashConvertSymbolHashRocketKeysToNewSyntax()<cr>
+map <leader>rhrs :call RubyHashConvertSymbolHashRocketKeysToStrings()<cr>
 
 imap <c-l> <space>=><space>
 
 function! RubyHashConvertStringKeysToNewSyntax()
-  normal ^xf=dwbr:j
+  normal ^xf=dwbr:j^
 endfunction
 
 function! RubyHashConvertNewSyntaxKeysToStrings()
   normal I"f:i"lcl =>j
 endfunction
 
-function! RubyHashConvertSymbolKeysToNewSyntax()
+function! RubyHashConvertSymbolHashRocketKeysToNewSyntax()
   normal ^xf r:ldt j
+endfunction
+
+function! RubyHashConvertSymbolHashRocketKeysToStrings()
+  normal ^r"f i"j
 endfunction
 
 " Ruby open spec
