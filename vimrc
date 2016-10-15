@@ -287,6 +287,9 @@ nmap <leader>P "+P
 " Disable entering EX mode by accident
 map Q <Nop>
 
+" Disable man page lookups
+map K :echo "man lookups disabled"<cr>
+
 " You know what I meant
 command! Q  q  " Bind :Q  to :q
 command! W  w  " Bind :W  to :w
