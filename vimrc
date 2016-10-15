@@ -51,7 +51,6 @@ set path+=./spec
 set ttyfast                   " Apparently terminals are fast
 set noerrorbells              " @andrewmcdonough does not like bells
 set fileformats=unix
-set ff=unix
 set lazyredraw
 set shell=bash
 
@@ -341,3 +340,9 @@ let g:ctrlp_use_caching = 0
 " let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 " ctrl-p for ctags
 nnoremap <leader>] :CtrlPTag<cr>
+
+" Always show Airline status
+set laststatus=2
+let g:airline_powerline_fonts = 1
+let g:Powerline_symbols = 'fancy'
+let g:airline_section_b = ''
