@@ -41,7 +41,6 @@ set smartcase
 set noswapfile
 set showcmd
 set wildmode=list:longest,full
-set tags=.tags " Put ctags file in .tags
 set scrolloff=5               " keep at least 5 lines above/below
 set sidescrolloff=5           " keep at least 5 lines left/right
 
@@ -109,6 +108,7 @@ autocmd BufReadPost * call PositionCursorFromViminfo()
 map <leader>vrc :edit $MYVIMRC<cr>
 map <leader>vsrc :source $MYVIMRC<cr>:echo "VIMRC reloaded"<cr>
 
+map <leader>ct :call RefreshRubyCTags()<cr>
 " Rename current file
 map <leader>n :call RenameFile()<cr>
 
@@ -132,6 +132,12 @@ map <leader>rh19 :call RubyHashConvertSymbolHashRocketKeysToNewSyntax()<cr>
 map <leader>rhrs :call RubyHashConvertSymbolHashRocketKeysToStrings()<cr>
 
 imap <c-l> <space>=><space>
+
+function! RefreshRubyCTags()
+  if !(bufname("%") =~ '\*.rb\')
+    exec(":!tmux new -d 'ctags -R --languages=ruby --exclude=.git --exclude=log'")
+  endif
+endfunction
 
 function! RubyHashConvertStringKeysToNewSyntax()
   normal ^xf=dwbr:j^
