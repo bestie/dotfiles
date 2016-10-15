@@ -44,7 +44,6 @@ set wildmode=list:longest,full
 set tags=.tags " Put ctags file in .tags
 set scrolloff=5               " keep at least 5 lines above/below
 set sidescrolloff=5           " keep at least 5 lines left/right
-set cmdheight=2               " command line two lines high
 
 set path+=./
 set path+=./lib
