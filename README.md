@@ -1,5 +1,3 @@
 # Dotfiles
 
-These are my dotfiles.
-
-My aim is for them to be clean and minimal.
+This is my dotfiles. There are many like it, but this one is mine.
