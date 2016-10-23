@@ -272,10 +272,6 @@ endfunction
 " %% For current directory thanks @squil
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 
-" http://vimcasts.org/episodes/show-invisibles/
-" Shortcut to rapidly toggle `set list`
-nmap <leader>l :set list!<CR>
-
 " Turn search highlighting off
 map <leader>/ :noh<CR>
 
