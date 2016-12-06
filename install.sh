@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -e
 
 working_dir=$PWD
 
@@ -25,6 +24,8 @@ echo "Installing profile"
 ln -s $working_dir/profile ~/.profile
 echo "Installing ssh config"
 ln -s $working_dir/ssh/config ~/.ssh/config
+
+mkdir -p ~/bin
 
 for f in $working_dir/bin/*
 do
