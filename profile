@@ -31,27 +31,17 @@ export EC2_HOME="/usr/local/Cellar/ec2-api-tools/1.3-57419/jars"
 
 source "$HOME/.ec2/access_keys"
 
-### Rails / dev aliases ######################################################
+### Rubby ####################################################################
 alias be='bundle exec'
-
 alias rs='be rails server'
 alias rc='be rails console'
 alias ctags-ruby='ctags -R --languages=ruby --exclude=.git --exclude=log'
 
-# Disable terminal suspend so vim can map ctrl-s
-alias vim="stty stop '' -ixoff ; vim"
+alias chruby-latest="chruby `chruby | tail -n 1 | sed 's/.*ruby-//'`"
 
 alias gem-cull='gem list | cut -d" " -f1 | xargs gem uninstall -aIx'
 alias rackthis="echo \"run Rack::Directory.new('.')\" >> config.ru"
-
-github-pub-key() {
-  curl https://github.com/${1}.keys
-}
-
 alias rspec-dirty="git status --porcelain spec/ | grep -v '^ D' |grep '_spec.rb'| sed 's/^...//' | xargs -o bundle exec rspec"
-alias vim-dirty="git status --porcelain | grep -v '^ D' | sed 's/^...//' | xargs -o vim -O"
-alias vim-changes="git status --porcelain | grep -v '^[D\?]' | sed 's/^...//' | xargs -o vim -O"
-alias vim-conflicts="ack -l '<<<' | xargs -o vim -O"
 
 ### Scala ####################################################################
 
@@ -101,6 +91,18 @@ export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 
 # copy public ssh key to clipboard
 alias copy-key='cat ~/.ssh/id_rsa.pub | pbcopy'
+
+# Get a user's public key from GitHub
+github-pub-key() {
+  curl https://github.com/${1}.keys
+}
+
+# Disable terminal suspend so vim can map ctrl-s
+alias vim="stty stop '' -ixoff ; vim"
+
+alias vim-dirty="git status --porcelain | grep -v '^ D' | sed 's/^...//' | xargs -o vim -O"
+alias vim-changes="git status --porcelain | grep -v '^[D\?]' | sed 's/^...//' | xargs -o vim -O"
+alias vim-conflicts="ack -l '<<<' | xargs -o vim -O"
 
 ##############################################################################
 
