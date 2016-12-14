@@ -111,5 +111,7 @@ alias vim-conflicts="ack -l '<<<' | xargs -o vim -O"
 
 ##############################################################################
 
-source "$HOME/.localprofile"
 
+if [ -a $HOME/.localprofile ]; then
+  source "$HOME/.localprofile"
+fi
