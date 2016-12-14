@@ -92,6 +92,11 @@ export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 # copy public ssh key to clipboard
 alias copy-key='cat ~/.ssh/id_rsa.pub | pbcopy'
 
+# print a UUID
+function uuid {
+  ruby -r securerandom -e 'puts SecureRandom.uuid'
+}
+
 # Get a user's public key from GitHub
 github-pub-key() {
   curl https://github.com/${1}.keys
