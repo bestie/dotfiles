@@ -87,6 +87,8 @@ alias lsof-listening-ports="lsof -i| grep LISTEN"
 
 alias big-directories="du -a . | sort -n -r"
 
+alias image-resize-crop="convert $1 -resize $2x$2^ -gravity center -crop $2x$2+0+0 +repage resultimage"
+
 export EDITOR=vim
 export PATH=$HOME/bin:$PATH
 export CLICOLOR="YES"
