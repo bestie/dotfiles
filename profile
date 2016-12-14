@@ -109,8 +109,13 @@ alias vim-dirty="git status --porcelain | grep -v '^ D' | sed 's/^...//' | xargs
 alias vim-changes="git status --porcelain | grep -v '^[D\?]' | sed 's/^...//' | xargs -o vim -O"
 alias vim-conflicts="ack -l '<<<' | xargs -o vim -O"
 
-##############################################################################
+if [ -a /usr/local/share/chruby/chruby.sh ]; then
+  source /usr/local/share/chruby/chruby.sh
+  chruby-latest
+  source /usr/local/share/chruby/auto.sh
+fi
 
+##############################################################################
 
 if [ -a $HOME/.localprofile ]; then
   source "$HOME/.localprofile"
