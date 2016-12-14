@@ -11,7 +11,7 @@ LIGHT_GREEN="\[\033[1;32m\]"
  COLOR_NONE="\[\e[0m\]"
 
 ### Homebrew bash completion #################################################
-if [ -f `brew --prefix`/etc/bash_completion ]; then
+if [ -x `which brew` -a -f `brew --prefix`/etc/bash_completion ]; then
   . `brew --prefix`/etc/bash_completion
 fi
 
