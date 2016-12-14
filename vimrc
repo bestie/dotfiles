@@ -9,7 +9,8 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'Solarized'
 Plugin 'ctrlp.vim'
 Plugin 'ack.vim'
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tpope/vim-dispatch'
 
 " for general text editing
@@ -353,6 +354,5 @@ nnoremap <leader>] :CtrlPTag<cr>
 
 " Always show Airline status
 set laststatus=2
-let g:airline_powerline_fonts = 1
-let g:Powerline_symbols = 'fancy'
-let g:airline_section_b = ''
+let g:airline_powerline_fonts = 0
+let g:airline_theme='light'
