@@ -33,15 +33,9 @@ source "$HOME/.ec2/access_keys"
 
 ### Rails / dev aliases ######################################################
 alias be='bundle exec'
-alias pryc='pry -r./config/environment'
-alias cf="cucumber features"
-alias cfip="cf --tags @in_progress @wip"
 
 alias rs='be rails server'
 alias rc='be rails console'
-alias rg='be rails generate'
-alias rails-migrate-redo="rake db:migrate:redo VERSION=\$(ls -tr db/migrate| tail -n1 | sed -e s/[^0-9]//g)"
-alias ctags-ruby='ctags -R --languages=ruby --exclude=.git --exclude=log -f.tags'
 alias ctags-ruby='ctags -R --languages=ruby --exclude=.git --exclude=log'
 
 # Disable terminal suspend so vim can map ctrl-s
@@ -49,7 +43,6 @@ alias vim="stty stop '' -ixoff ; vim"
 
 alias gem-cull='gem list | cut -d" " -f1 | xargs gem uninstall -aIx'
 alias rackthis="echo \"run Rack::Directory.new('.')\" >> config.ru"
-alias iphone-simulator="open /Applications/Xcode.app/Contents/Developer/Applications/iOS\ Simulator.app"
 
 github-pub-key() {
   curl https://github.com/${1}.keys
@@ -107,7 +100,4 @@ alias copy-key='cat ~/.ssh/id_rsa.pub | pbcopy'
 ##############################################################################
 
 source "$HOME/.localprofile"
-
-### This loads RVM into a shell session. #####################################
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 
