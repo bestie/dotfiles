@@ -48,7 +48,10 @@ github-pub-key() {
   curl https://github.com/${1}.keys
 }
 
-alias vim-dirty="git status --porcelain | sed 's/^...//' | xargs -o vim -O"
+alias rspec-dirty="git status --porcelain spec/ | grep -v '^ D' |grep '_spec.rb'| sed 's/^...//' | xargs -o bundle exec rspec"
+alias vim-dirty="git status --porcelain | grep -v '^ D' | sed 's/^...//' | xargs -o vim -O"
+alias vim-changes="git status --porcelain | grep -v '^[D\?]' | sed 's/^...//' | xargs -o vim -O"
+alias vim-conflicts="ack -l '<<<' | xargs -o vim -O"
 
 ### Scala ####################################################################
 
