@@ -38,7 +38,9 @@ alias rs='be rails server'
 alias rc='be rails console'
 alias ctags-ruby='ctags -R --languages=ruby --exclude=.git --exclude=log'
 
-alias chruby-latest="chruby `chruby | tail -n 1 | sed 's/.*ruby-//'`"
+function chruby-latest {
+  chruby `chruby | tail -n 1 | sed 's/.*ruby-//'`
+}
 
 alias gem-cull='gem list | cut -d" " -f1 | xargs gem uninstall -aIx'
 alias rackthis="echo \"run Rack::Directory.new('.')\" >> config.ru"
