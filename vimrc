@@ -26,6 +26,10 @@ Plugin 'vim-coffee-script'
 call vundle#end()
 filetype plugin indent on
 
+let g:dispatch_compilers = {
+      \ 'latex': 'tex',
+      \ 'bundle exec': ''}
+
 """ Settings """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 set nocompatible
