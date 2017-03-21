@@ -1,0 +1,11 @@
+--database=postgresql
+--skip-action-cable
+--skip-action-mailer
+--skip-bundle
+--skip-javascript
+--skip-turbolinks
+--skip-keeps
+--skip-spring
+--skip-test
+--skip-listen
+--skip-jbuilder
