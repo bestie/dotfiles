@@ -24,6 +24,9 @@ echo "Installing profile"
 ln -s $working_dir/profile ~/.profile
 echo "Installing ssh config"
 ln -s $working_dir/ssh/config ~/.ssh/config
+echo "Installing Karabiner config"
+mkdir -p ~/.config/karabiner
+ln -s $working_dir/karabiner.json ~/.config/karabiner/karabiner.json
 
 mkdir -p ~/bin
 
