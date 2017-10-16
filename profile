@@ -53,6 +53,10 @@ export DISABLE_SPRING=1
 export SCALA_HOME="/usr/local/opt/scala/idea"
 export SBT_OPTS="-XX:MaxPermSize=256m"
 
+### Node ######################################################################
+export NVM_DIR="$HOME/.nvm"
+source "/usr/local/opt/nvm/nvm.sh"
+
 ### Postgres #################################################################
 alias pgstart='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
 alias pgstop='pg_ctl -D /usr/local/var/postgres stop -s -m fast'
