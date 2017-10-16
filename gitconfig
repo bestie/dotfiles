@@ -4,16 +4,9 @@
 [alias]
   stat = status
   st = status
-  d = diff
   co = checkout
   cob = checkout -b
   cp = cherry-pick
-  l = log
-  ll = log -p
-  lt = log trunk..
-  llt = log -p trunk..
-  lm = log master..
-  llm = log -p master..
   br = branch
   unstage = rm --cached
   staged = diff --cached
