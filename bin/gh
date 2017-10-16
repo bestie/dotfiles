@@ -1,11 +1,13 @@
 #!/usr/bin/env ruby
 
+# origin  git@github.com:ygt/special-adventure (fetch)
+# origin  git@github.com:ygt/special-adventure (push)
+
 organization, repo = %x[git remote --verbose]
   .each_line
-  .select { |line| line.include?("origin") }
-  .select { |line| line.include?("fetch") }
+  .drop_while { |line| !line.strip.start_with?("origin") }
   .select { |line| line.include?("github.com") }
-  .map    { |line| line.match(%r{github.com[:/]([^/]+)/([^/]+)\.git})[1..-1] }
+  .map    { |line| line.match(%r{github.com[:/]([^/]+)/([^/ ]+)}).captures }
   .first || ["drupal"] * 2
 
 github_url = "https://github.com/#{organization}/#{repo}"
