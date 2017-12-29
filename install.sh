@@ -22,6 +22,8 @@ echo "Installing inputrc"
 ln -s $working_dir/inputrc ~/.inputrc
 echo "Installing profile"
 ln -s $working_dir/profile ~/.profile
+echo "Installing Rails config"
+ln -s $working_dir/railsrc ~/.railsrc
 echo "Installing ssh config"
 ln -s $working_dir/ssh/config ~/.ssh/config
 echo "Installing Karabiner config"
