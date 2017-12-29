@@ -46,6 +46,8 @@ alias gem-cull='gem list | cut -d" " -f1 | xargs gem uninstall -aIx'
 alias rackthis="echo \"run Rack::Directory.new('.')\" >> config.ru"
 alias rspec-dirty="git status --porcelain spec/ | grep -v '^ D' |grep '_spec.rb'| sed 's/^...//' | xargs -o bundle exec rspec"
 
+export DISABLE_SPRING=1
+
 ### Scala ####################################################################
 
 export SCALA_HOME="/usr/local/opt/scala/idea"
