@@ -8,4 +8,3 @@
 --skip-spring
 --skip-test
 --skip-listen
---skip-jbuilder
