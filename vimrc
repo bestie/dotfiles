@@ -210,19 +210,6 @@ function! InferSpecFile(filename)
     return path
 endfunction
 
-" Rename current file thanks @samphippen
-function! RenameFile()
-    let old_name = expand('%')
-    let new_name = input('New file name: ', old_name, 'file')
-    if new_name != '' && new_name != old_name
-        exec ':saveas ' . new_name
-        exec ':silent !rm ' . old_name
-        redraw!
-    endif
-endfunction
-
-map <leader>e <esc>:call ExecuteFile(expand("%"), &filetype)<cr>
-
 function! ExecuteFile(filename, filetype)
   let command = ExecuteFileCommand(a:filename, a:filetype)
 
@@ -292,6 +279,17 @@ endfunction
 " This probably isn't necessary but I have no idea what I'm doing
 function! EditFile(filename)
   exec "e " . a:filename
+endfunction
+
+" Rename current file thanks @samphippen
+function! RenameFile()
+  let old_name = expand('%')
+  let new_name = input('New file name: ', old_name, 'file')
+  if new_name != '' && new_name != old_name
+    exec ':saveas ' . new_name
+    exec ':silent !rm ' . old_name
+    redraw!
+  endif
 endfunction
 
 """ Key remaps (standard stuff) """""""""""""""""""""""""""""""""""""""""""""""
