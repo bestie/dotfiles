@@ -259,7 +259,7 @@ endfunction
 " Rename current file thanks @samphippen
 function! RenameFile()
     let old_name = expand('%')
-    let new_name = input('New file name: ', expand('%'), 'file')
+    let new_name = input('New file name: ', old_name, 'file')
     if new_name != '' && new_name != old_name
         exec ':saveas ' . new_name
         exec ':silent !rm ' . old_name
