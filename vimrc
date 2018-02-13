@@ -161,10 +161,10 @@ function! RubyHashConvertSymbolHashRocketKeysToStrings()
   normal ^r"f i"j
 endfunction
 
-" Execute the current file, detects tests
-map <leader>e <esc>:call ExecuteFile(expand("%"), &filetype)<cr>
+" Execute the current file, detects tests, always opens the quickfix window
+map <leader>e :ccl<cr>:w<esc>:call ExecuteFile(expand("%"), &filetype)<cr>:Copen<cr>
 
-" Same as above but 't' for test
+" Same as above but 't' for test and doesn't reopen the quickfix window
 map <leader>t :ccl<cr>:w<cr>:call ExecuteFile(expand('%'), &filetype)<cr>
 
 " Test at line, as above but appends the cursor position to the command
