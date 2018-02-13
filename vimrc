@@ -267,6 +267,49 @@ function! RenameFile()
     endif
 endfunction
 
+map <leader>e <esc>:call ExecuteCurrentFile()<cr>
+
+function! ExecuteCurrentFile()
+  let filename = expand("%")
+
+  if &filetype == "ruby"
+    let command = ExecRubyFileCommand(filename)
+  elseif &filetype == "rust" && filereadable("Cargo.lock")
+    let command = "cargo run"
+  elseif &filetype == "rust"
+    let command = "rustc -o out -- " . filename . " && ./out"
+  endif
+
+  exec "ccl"
+  exec "Dispatch " . command
+  " Since this is for executing, open the quickfix window to show the output
+  " from Dispatch. Default behavior is for a successful (non zero) return to
+  " close the window.
+  exec "Copen"
+endfunction
+
+function! ExecRubyFileCommand(filename)
+  let filename = a:filename
+
+  if filename =~ "_spec.rb"
+    let command = BundlerPrefix() . "rspec " . filename
+  elseif filename =~ "_test.rb"
+    let command = BundlerPrefix() . "ruby -I test -r test_helper.rb " . filename
+  else
+    let command = BundlerPrefix() . "ruby " . filename
+  endif
+
+  return command
+endfunction
+
+function! BundlerPrefix()
+  if filereadable("Gemfile.lock")
+    return "bundle exec "
+  else
+    return ""
+  endif
+endfunction
+
 " This probably isn't necessary but I have no idea what I'm doing
 function! EditFile(filename)
   exec "e " . a:filename
