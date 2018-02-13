@@ -161,25 +161,20 @@ function! RubyHashConvertSymbolHashRocketKeysToStrings()
   normal ^r"f i"j
 endfunction
 
-" Ruby open spec
+" Execute the current file, detects tests
+map <leader>e <esc>:call ExecuteFile(expand("%"), &filetype)<cr>
+
+" Same as above but 't' for test
+map <leader>t :ccl<cr>:w<cr>:call ExecuteFile(expand('%'), &filetype)<cr>
+
+" Test at line, as above but appends the cursor position to the command
+map <leader>tl :ccl<cr>:w<cr>:call RunTestAtLine(expand('%'), line("."))<cr>
+
+" Repeats the previous test run / file execution
+map <leader>r <esc>:ccl<cr>:w<cr>:call RepeatLatestCommand()<cr>
+
+" Ruby open spec, infer spec file for current file and open
 map <leader>ros :call EditFile(InferSpecFile(expand('%')))<cr>
-
-" Run test, support all common Ruby test libs
-map <leader>rt :ccl<cr>:w<cr>:call RunTest(expand('%'))<cr>
-
-" As above but only test on current line
-map <leader>rtl :ccl<cr>:w<cr>:call RunTestAtLine(expand('%'), line("."))<cr>
-
-" Repeats one of the above, for when you've navigated away from the test file
-map <leader>rr <esc>:ccl<cr>:w<cr>:call RepeatLastTest()<cr>
-
-function! RepeatLastTest()
-  if exists("g:last_test")
-    call RunTestCommand(g:last_test)
-  else
-    echo "No last test, <leader>rt to run this file."
-  end
-endfunction
 
 " Generate Ruby classes with a bit less typing
 map <leader>rc :%!ruby-class-generator<cr>
@@ -188,49 +183,17 @@ vmap <leader>rc :!ruby-class-generator<cr>
 " Unjoin
 map <leader>j :s/, /,\r/g<cr>:nohl<cr>
 
-" Run a test file at line (currently supports Ruby only)
+" Run a test file at line (currently supports RSpec only)
 function! RunTestAtLine(filename, line_number)
-  let test_command = InferRubyTestCommand(a:filename)
+  let test_command = RubyFileCommand(a:filename)
 
   if strlen(test_command)
     let test_command_with_line = test_command . ":" . a:line_number
-    call RunTestCommand(test_command_with_line)
+    call RunCommand(test_command_with_line)
   else
     echo "Not a recognized test '" . a:filename . "'"
   end
 endfunction!
-
-" Run a test file (currently supports Ruby only)
-function! RunTest(filename)
-  let test_command = InferRubyTestCommand(a:filename)
-
-  if strlen(test_command)
-    call RunTestCommand(test_command)
-  else
-    echo "Not a recognized test '" . a:filename . "'"
-  end
-endfunction
-
-function! RunTestCommand(test_command)
-  let g:last_test = a:test_command
-  echo a:test_command
-  exec "Dispatch " . a:test_command
-endfunction
-
-" Infer and return corresponding command to run a Ruby test file
-function! InferRubyTestCommand(filename)
-    if a:filename =~ "\.feature$"
-      let command  = "bundle exec cucumber --strict"
-    elseif a:filename =~ "_spec\.rb$"
-      let command = "bundle exec rspec"
-    elseif a:filename =~ "_test\.rb$"
-      let command = "bundle exec ruby -I test"
-    else
-      return ""
-    end
-
-    return command . " " . a:filename
-endfunction
 
 " Infer RSpec file for current file
 function! InferSpecFile(filename)
@@ -258,28 +221,35 @@ function! RenameFile()
     endif
 endfunction
 
-map <leader>e <esc>:call ExecuteCurrentFile()<cr>
+map <leader>e <esc>:call ExecuteFile(expand("%"), &filetype)<cr>
 
-function! ExecuteCurrentFile()
-  let filename = expand("%")
+function! ExecuteFile(filename, filetype)
+  let command = ExecuteFileCommand(a:filename, a:filetype)
 
-  if &filetype == "ruby"
-    let command = ExecRubyFileCommand(filename)
-  elseif &filetype == "rust" && filereadable("Cargo.lock")
-    let command = "cargo run"
-  elseif &filetype == "rust"
-    let command = "rustc -o out -- " . filename . " && ./out"
-  endif
-
-  exec "ccl"
-  exec "Dispatch " . command
-  " Since this is for executing, open the quickfix window to show the output
-  " from Dispatch. Default behavior is for a successful (non zero) return to
-  " close the window.
-  exec "Copen"
+  call RunCommand(command)
 endfunction
 
-function! ExecRubyFileCommand(filename)
+function! ExecuteFileCommand(filename, filetype)
+  let filetype = a:filetype
+  let filename = a:filename
+
+  if filetype == "ruby"
+    let command = RubyFileCommand(filename)
+  elseif filetype == "cucumber"
+    let command = BundlerPrefix() . "cucumber " . filename
+  elseif filetype == "rust" && filereadable("Cargo.lock")
+    let command = "cargo run"
+  elseif filetype == "rust"
+    let command = "rustc -o out -- " . filename . " && ./out"
+  else
+    echo "No execution strategy for filetype " . filetype
+    return ""
+  endif
+
+  return command
+endfunction
+
+function! RubyFileCommand(filename)
   let filename = a:filename
 
   if filename =~ "_spec.rb"
@@ -301,11 +271,28 @@ function! BundlerPrefix()
   endif
 endfunction
 
+function! RepeatLatestCommand()
+  if exists("g:latest_command")
+    call RunCommand(g:latest_command)
+  else
+    echo "No command to repeat"
+  end
+endfunction
+
+function! RunCommand(command)
+  if strlen(a:command)
+    " echo a:command
+    let g:latest_command = a:command
+    exec "Dispatch " . a:command
+  else
+    echo "No command to run"
+  endif
+endfunction
+
 " This probably isn't necessary but I have no idea what I'm doing
 function! EditFile(filename)
   exec "e " . a:filename
 endfunction
-
 
 """ Key remaps (standard stuff) """""""""""""""""""""""""""""""""""""""""""""""
 
