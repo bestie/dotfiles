@@ -41,6 +41,26 @@
                     "identifiers": {
                         "is_keyboard": true,
                         "is_pointing_device": false,
+                        "location_id": 16777216,
+                        "product": "Apple Internal Keyboard / Trackpad",
+                        "product_id": 631,
+                        "registry_entry_id": 4295006293,
+                        "transport": "SPI",
+                        "vendor_id": 1452
+                    },
+                    "ignore": false,
+                    "simple_modifications": {
+                        "left_command": "left_option",
+                        "left_option": "left_command",
+                        "right_option": "right_command"
+                    }
+                },
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "fn_function_keys": {},
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": false,
                         "product_id": 1957,
                         "vendor_id": 1118
                     },
