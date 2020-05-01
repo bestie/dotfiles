@@ -48,10 +48,6 @@ alias rspec-dirty="git status --porcelain spec/ | grep -v '^ D' |grep '_spec.rb'
 
 export DISABLE_SPRING=1
 
-### Scala ####################################################################
-
-export SCALA_HOME="/usr/local/opt/scala/idea"
-export SBT_OPTS="-XX:MaxPermSize=256m"
 
 ### Node ######################################################################
 export NVM_DIR="$HOME/.nvm"
