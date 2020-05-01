@@ -18,7 +18,7 @@
   # Make that last commit eat it
   omnom = commit --amend -C HEAD
   # Remove all trace of file / pattern
-  nuke = "!f() { git filter-branch --force --index-filter \"git rm --cached --ignore-unmatch $1\" --prune-empty --tag-name-filter cat -- --all; }; f"
+  nuke = "!f() { git filter-branch --force --index-filter \"git rm --cached -r --ignore-unmatch $1\" --prune-empty --tag-name-filter cat -- --all; }; f"
   #
   # Found on the internets:
   #
