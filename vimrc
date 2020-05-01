@@ -364,6 +364,7 @@ au BufNewFile,BufRead *.json set ft=javascript
 
 " Remove 80 char line from temporary windows
 au BufReadPost quickfix setlocal colorcolumn=0
+au BufReadPost quickfix setlocal wrap
 
 """ Plugin configs """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
