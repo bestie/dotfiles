@@ -383,4 +383,4 @@ nnoremap <leader>] :CtrlPTag<cr>
 " Always show Airline status
 set laststatus=2
 let g:airline_powerline_fonts = 0
-let g:airline_theme='light'
+let g:airline_theme='lucius'
