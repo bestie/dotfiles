@@ -8,11 +8,14 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'Solarized'
 Plugin 'calmar256-lightdark.vim'
-Plugin 'ctrlp.vim'
-Plugin 'ack.vim'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tpope/vim-dispatch'
+
+nmap <c-p> :Files<cr>
+nmap <leader>rg :Rg
 
 " for general text editing
 Plugin 'tComment'
