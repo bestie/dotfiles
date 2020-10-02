@@ -26,7 +26,6 @@ Plugin 'abolish.vim'
 " language specific
 Plugin 'haskell.vim'
 Plugin 'rust-lang/rust.vim'
-Plugin 'vim-coffee-script'
 
 call vundle#end()
 filetype plugin indent on
