@@ -168,16 +168,17 @@ function! RubyHashConvertSymbolHashRocketKeysToStrings()
 endfunction
 
 " Execute the current file, detects tests, always opens the quickfix window
-map <leader>e :ccl<cr>:w<esc>:call ExecuteFile(expand("%"), &filetype)<cr>:Copen<cr>
+map <leader>e :w<esc>:call ExecuteFile(expand("%"), &filetype)<cr><cr>
 
-" Same as above but 't' for test and doesn't reopen the quickfix window
-map <leader>t :ccl<cr>:w<cr>:call ExecuteFile(expand('%'), &filetype)<cr>
+" Same as above but 't' for test, I just like to press t sometimes
+map <leader>t :w<cr>:call ExecuteFile(expand('%'), &filetype)<cr><cr>
 
 " Test at line, as above but appends the cursor position to the command
-map <leader>tl :ccl<cr>:w<cr>:call RunTestAtLine(expand('%'), line("."))<cr>
+map <leader>l :w<cr>:call RunTestAtLine(expand('%'), line("."))<cr><cr>
 
 " Repeats the previous test run / file execution
-map <leader>r <esc>:ccl<cr>:w<cr>:call RepeatLatestCommand()<cr>
+map <leader>r :w<cr>:call RepeatLatestCommand()<cr><cr>
+map <leader><leader> :w<cr>:call RepeatLatestCommand()<cr><cr>
 
 " Ruby open spec, infer spec file for current file and open
 map <leader>ros :call EditFile(InferSpecFile(expand('%')))<cr>
