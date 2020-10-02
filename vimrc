@@ -93,6 +93,10 @@ set splitright
 " https://github.com/garybernhardt/dotfiles/commit/99b7d2537ad98dd7a9d3c82b8775f0de1718b356#diff-4e12c6a37ff2cbb2c93d1b33324a6051
 set re=1
 
+" Enable project specific configurations, allowing safe commands only
+set exrc
+set secure
+
 " unobtrusive whitespace highlighting
 " http://blog.kamil.dworakowski.name/2009/09/unobtrusive-highlighting-of-trailing.html
 highlight ExtraWhitespace ctermbg=red guibg=red
