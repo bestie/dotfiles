@@ -53,7 +53,6 @@ set wildmode=list:longest,full
 set scrolloff=5               " keep at least 5 lines above/below
 set sidescrolloff=5           " keep at least 5 lines left/right
 
-set path+=./
 set path+=./lib
 set path+=./spec
 set ttyfast                   " Apparently terminals are fast
