@@ -308,9 +308,8 @@ cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 map <leader>/ :noh<CR>
 
 " Save with CTRL-s
-:nmap <c-s> :w<CR>
-:imap <c-s> <Esc>:w<CR>a
-:imap <c-s> <Esc><c-s>
+nmap <c-s> :w<CR>
+imap <c-s> <Esc>:w<CR>
 
 :nnoremap <leader>c :ccl<CR>
 
