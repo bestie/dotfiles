@@ -30,6 +30,13 @@
   wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
   bclean = "!f() { git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs -r git branch -d; }; f"
   bdone = "!f() { git checkout ${1-master} && git up && git bclean ${1-master}; }; f"
+  find-commit = "!f() { git plain-log | fzf | awk '{print $1}'; }; f"
+  find-commit-and = "!f() { git find-commit | xargs -o ${@-echo} ; }; f"
+  date-reset= "git filter-branch --env-filter 'GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE; export GIT_COMMITTER_DATE'"
+  # Add untracked files
+  au = "!f() { git ls-files --others --exclude-standard | fzf --multi | xargs git add ; }; f"
+  # only used in find-commit
+  plain-log = log --pretty=format:'%h -%d %s (%cr) <%an>' --abbrev-commit
 
 [core]
   attributesfile = ~/.gitattributes
