@@ -27,6 +27,31 @@ Plugin 'abolish.vim'
 Plugin 'haskell.vim'
 Plugin 'rust-lang/rust.vim'
 
+" Plugin 'ycm-core/YouCompleteMe'
+" Plugin 'ycm-core/YouCompleteMe'
+" let g:ycm_log_level = "debug"
+" let g:ycm_language_server =
+"   \ [
+"   \   {
+"   \     'name': 'ruby',
+"   \     'cmdline': [ 'bundle', 'exec', 'solargraph', 'stdio'],
+"   \     'filetypes': [ 'ruby' ]
+"   \   }
+"   \ ]
+
+" Plugin 'prabirshrestha/async.vim'
+" Plugin 'prabirshrestha/vim-lsp'
+" Plugin 'prabirshrestha/asyncomplete.vim'
+" Plugin 'prabirshrestha/asyncomplete-lsp.vim'
+
+" if executable('rls')
+"   au User lsp_setup call lsp#register_server({
+"         \ 'name': 'rls',
+"         \ 'cmd': {server_info->['rustup', 'run', 'nightly', 'rls']},
+"         \ 'whitelist': ['rust'],
+"         \ })
+" endif
+
 call vundle#end()
 filetype plugin indent on
 
@@ -65,8 +90,6 @@ set shell=bash\ --login\ -i
 set backspace=indent,eol,start
 
 set t_Co=256                        " force vim to use 256 colors
-colorscheme calmar256-light
-set background=light
 
 " set vertical marker at col 80
 set colorcolumn=80
@@ -299,6 +322,24 @@ function! RenameFile()
   endif
 endfunction
 
+function! ToggleDarkMode()
+  if !exists("g:dark_mode")
+    let g:dark_mode = 0
+  end
+
+  if g:dark_mode
+    let g:dark_mode = 0
+    set background=light
+    colorscheme calmar256-light
+  else
+    let g:dark_mode = 1
+    set background=dark
+    colorscheme solarized
+  end
+endfunction
+
+map <leader>d :call ToggleDarkMode()<cr>
+
 """ Key remaps (standard stuff) """""""""""""""""""""""""""""""""""""""""""""""
 
 " %% For current directory thanks @squil
@@ -390,3 +431,5 @@ nnoremap <leader>] :CtrlPTag<cr>
 set laststatus=2
 let g:airline_powerline_fonts = 0
 let g:airline_theme='lucius'
+
+call ToggleDarkMode()
