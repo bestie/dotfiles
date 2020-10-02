@@ -70,6 +70,7 @@ set background=light
 
 " set vertical marker at col 80
 set colorcolumn=80
+highlight ColorColumn ctermbg=224
 
 " Use the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:▸\ ,eol:¬
