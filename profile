@@ -48,6 +48,10 @@ alias rspec-dirty="git status --porcelain spec/ | grep -v '^ D' |grep '_spec.rb'
 
 export DISABLE_SPRING=1
 
+### Rust ######################################################################
+source $HOME/.cargo/env
+export RUST_BACKTRACE=1
+export PATH="$HOME/.cargo/bin:$PATH"
 
 ### Node ######################################################################
 export NVM_DIR="$HOME/.nvm"
