@@ -322,11 +322,9 @@ function! RenameFile()
   endif
 endfunction
 
-function! ToggleDarkMode()
-  if !exists("g:dark_mode")
-    let g:dark_mode = 0
-  end
+let g:dark_mode = 1
 
+function! ToggleDarkMode()
   if g:dark_mode
     let g:dark_mode = 0
     set background=light
@@ -431,5 +429,3 @@ nnoremap <leader>] :CtrlPTag<cr>
 set laststatus=2
 let g:airline_powerline_fonts = 0
 let g:airline_theme='lucius'
-
-call ToggleDarkMode()
