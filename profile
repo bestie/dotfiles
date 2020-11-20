@@ -39,7 +39,7 @@ alias rc='be rails console'
 alias ctags-ruby='ctags -R --languages=ruby --exclude=.git --exclude=log'
 
 function chruby-latest {
-  chruby `chruby | tail -n 1 | sed 's/.*ruby-//'`
+  chruby `chruby | grep -v truffle | tail -n 1 | sed 's/.*ruby-//'`
 }
 
 alias gem-cull='gem list | cut -d" " -f1 | xargs gem uninstall -aIx'
