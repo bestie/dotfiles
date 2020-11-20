@@ -300,7 +300,11 @@ function! RunCommand(command)
   if strlen(a:command)
     " echo a:command
     let g:latest_command = a:command
-    exec "Dispatch " . a:command
+    if exists("g:run_in_other_tmux_pane") && g:run_in_other_tmux_pane
+      call RunInOtherTmuxPane(a:command)
+    else
+      exec "Dispatch " . a:command
+    endif
   else
     echo "No command to run"
   endif
@@ -337,6 +341,27 @@ function! ToggleDarkMode()
 endfunction
 
 map <leader>d :call ToggleDarkMode()<cr>
+
+function! RunInOtherTmuxPane(command)
+  let cmd = "tmux send-keys -t1 " . a:command
+  let pane_info = system("tmux list-panes|grep -v active|tail -n1")
+  let pane_number = split(pane_info, ":")[0]
+  let result = system("tmux send-keys -t" . pane_number . " '" . a:command . "' ENTER")
+endfunction
+
+function! ToggleRunInOtherTmuxPane()
+  if !exists("g:run_in_other_tmux_pane")
+    let g:run_in_other_tmux_pane = 0
+  end
+
+  if g:run_in_other_tmux_pane
+    let g:run_in_other_tmux_pane = 0
+    echo "Running in existing tmux split is disabled"
+  else
+    let g:run_in_other_tmux_pane = 1
+    echo "Running in existing tmux split is enabled"
+  endif
+endfunction
 
 """ Key remaps (standard stuff) """""""""""""""""""""""""""""""""""""""""""""""
 
