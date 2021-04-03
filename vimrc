@@ -84,7 +84,7 @@ set ttyfast                   " Apparently terminals are fast
 set noerrorbells              " @andrewmcdonough does not like bells
 set fileformats=unix
 set lazyredraw
-set shell=bash\ --login\ -i
+set shell=sh
 
 " Allow backspacing over autoindent, eol and start of lines
 set backspace=indent,eol,start
