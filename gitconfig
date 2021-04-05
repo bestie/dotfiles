@@ -2,41 +2,52 @@
   name = Stephen Best
   email = bestie@gmail.com
 [alias]
-  stat = status
+  # The standards
   st = status
   co = checkout
   cob = checkout -b
   cp = cherry-pick
   br = branch
+
+  # Relatviely basic aliases I like
   unstage = rm --cached
   staged = diff --cached
   recent-branches = for-each-ref --count=10 --sort=-committerdate refs/heads/ --format='%(refname:short)'
   diff-commits = log --oneline --graph HEAD..
   merged-branches = !git branch --merged ${1-master}
-  # origin/master has changed and you to rebase ... AGAIN
-  fucksake = !git up && git rebase origin/master && git push -f
-  # Make that last commit eat it
-  omnom = commit --amend -C HEAD
-  # Remove all trace of file / pattern
-  nuke = "!f() { git filter-branch --force --index-filter \"git rm --cached -r --ignore-unmatch $1\" --prune-empty --tag-name-filter cat -- --all; }; f"
-  #
-  # Found on the internets:
-  #
-  # http://coderwall.com/p/euwpig?i=3&p=1&t=git
-  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-  # Thanks to @haacked http://haacked.com/archive/2014/07/28/github-flow-aliases
   up = !git pull --rebase --prune $@ && git submodule update --init --recursive
   wip = !git add -A && git commit -m "WIP"
-  wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
-  bclean = "!f() { git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs -r git branch -d; }; f"
-  bdone = "!f() { git checkout ${1-master} && git up && git bclean ${1-master}; }; f"
-  find-commit = "!f() { git plain-log | fzf | awk '{print $1}'; }; f"
+  omnom = commit --amend -C HEAD
+
+  ### Some more complicated stuff
+
+  # Show a nice graph of the history up to <revision>. Defaults to current HEAD,
+  # Pipes into less if the graph is longer than a single page.
+  lg = "!f() { git private-log-pretty-graph $@ | less --raw-control-chars --quit-if-one-screen ; }; f"
+
+  # Do the same but stop at the first common anceator with main / specified revision
+  lg-merge-base = "!f() { git private-log-pretty-graph $(git merge-base HEAD ${1-main})^..HEAD | less --raw-control-chars --quit-if-one-screen ; }; f"
+
+  # Find a commit using fzf displayed in graph form.  # Must be an ancestor of HEAD.
+  find-commit = "!f() { git private-log-plain-graph | fzf | awk '{print $1}'; }; f"
   find-commit-and = "!f() { git find-commit | xargs -o ${@-echo} ; }; f"
-  date-reset= "git filter-branch --env-filter 'GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE; export GIT_COMMITTER_DATE'"
-  # Add untracked files
+
+  # Add untracked files via fzf file menu <tab> / <shift-tab> for multi select
   au = "!f() { git ls-files --others --exclude-standard | fzf --multi | xargs git add ; }; f"
-  # only used in find-commit
-  plain-log = log --pretty=format:'%h -%d %s (%cr) <%an>' --abbrev-commit
+
+  # Resets the committer date of rewitten/rebased commits to the original time.
+  # Goes back to the specified revision.
+  date-reset= "!f() { git filter-branch --env-filter 'GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE; export GIT_COMMITTER_DATE' {$1}..HEAD; }; f"
+
+  # Remove all trace of file / pattern
+  nuke = "!f() { git filter-branch --force --index-filter \"git rm --cached -r --ignore-unmatch $1\" --prune-empty --tag-name-filter cat -- --all; }; f"
+
+  # You want to fast-forward merge you commits but origin/main has changed. AGAIN.
+  fucksake = !git up && git rebase origin/main && git push -f
+
+  # "private" functions
+  private-log-plain-graph = log --pretty=format:'%h -%d %s (%cr) <%an>' --abbrev-commit
+  private-log-pretty-graph = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 
 [core]
   attributesfile = ~/.gitattributes
