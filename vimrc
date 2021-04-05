@@ -140,6 +140,9 @@ autocmd BufReadPost * call PositionCursorFromViminfo()
 
 """ Sick functions and macros """""""""""""""""""""""""""""""""""""""""""""""""
 
+" rubyfmt
+map <leader>rf :%!rubyfmt<cr>
+
 " Open and reload vimrc
 map <leader>vrc :edit $MYVIMRC<cr>
 map <leader>vsrc :source $MYVIMRC<cr>:echo "VIMRC reloaded"<cr>
