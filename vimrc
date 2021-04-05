@@ -13,6 +13,7 @@ Plugin 'junegunn/fzf.vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tpope/vim-dispatch'
+Plugin 'airblade/vim-gitgutter'
 
 nmap <c-p> :Files<cr>
 nmap <leader>rg :Rg
