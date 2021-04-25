@@ -152,6 +152,8 @@ map <leader>rhrs :call RubyHashConvertSymbolHashRocketKeysToStrings()<cr>
 
 imap <c-l> <space>=><space>
 
+map <leader>8 "syiw<esc>:let @/ = @s<cr>
+
 function! RefreshRubyCTags()
   if !(bufname("%") =~ '\*.rb\')
     exec(":!tmux new -d 'ctags -R --languages=ruby --exclude=.git --exclude=log'")
