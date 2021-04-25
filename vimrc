@@ -27,6 +27,7 @@ Plugin 'abolish.vim'
 " language specific
 Plugin 'haskell.vim'
 Plugin 'rust-lang/rust.vim'
+Plugin 'slim-template/vim-slim.git'
 
 " Plugin 'ycm-core/YouCompleteMe'
 " Plugin 'ycm-core/YouCompleteMe'
