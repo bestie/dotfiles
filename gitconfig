@@ -15,7 +15,7 @@
   recent-branches = for-each-ref --count=10 --sort=-committerdate refs/heads/ --format='%(refname:short)'
   diff-commits = log --oneline --graph HEAD..
   merged-branches = !git branch --merged ${1-master}
-  up = !git pull --rebase --prune $@ && git submodule update --init --recursive
+  up = !git pull --rebase $@ && git submodule update --init --recursive
   wip = !git add -A && git commit -m "WIP"
   omnom = commit --amend -C HEAD
 
