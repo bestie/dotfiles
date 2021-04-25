@@ -30,31 +30,6 @@ Plugin 'haskell.vim'
 Plugin 'rust-lang/rust.vim'
 Plugin 'slim-template/vim-slim.git'
 
-" Plugin 'ycm-core/YouCompleteMe'
-" Plugin 'ycm-core/YouCompleteMe'
-" let g:ycm_log_level = "debug"
-" let g:ycm_language_server =
-"   \ [
-"   \   {
-"   \     'name': 'ruby',
-"   \     'cmdline': [ 'bundle', 'exec', 'solargraph', 'stdio'],
-"   \     'filetypes': [ 'ruby' ]
-"   \   }
-"   \ ]
-
-" Plugin 'prabirshrestha/async.vim'
-" Plugin 'prabirshrestha/vim-lsp'
-" Plugin 'prabirshrestha/asyncomplete.vim'
-" Plugin 'prabirshrestha/asyncomplete-lsp.vim'
-
-" if executable('rls')
-"   au User lsp_setup call lsp#register_server({
-"         \ 'name': 'rls',
-"         \ 'cmd': {server_info->['rustup', 'run', 'nightly', 'rls']},
-"         \ 'whitelist': ['rust'],
-"         \ })
-" endif
-
 call vundle#end()
 filetype plugin indent on
 
@@ -407,23 +382,6 @@ command! W  w  " Bind :W  to :w
 command! Wq wq " Bind :Wq to :wq
 command! WQ wq " Bind :WQ to :wq
 
-""" Things to disable when you're feeling masochistic / anti-social
-
-" Disable backspace
-" inoremap <BS> <Nop>
-" Disable delete
-" inoremap <Del> <Nop>
-
-" disble arrow keys in insert, command mode
-"nnoremap <up> <nop>
-"nnoremap <down> <nop>
-"nnoremap <left> <nop>
-"nnoremap <right> <nop>
-"inoremap <up> <nop>
-"inoremap <down> <nop>
-"inoremap <left> <nop>
-"inoremap <right> <nop>
-
 """ Syntax highlighting """""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
@@ -446,18 +404,6 @@ au BufReadPost quickfix setlocal colorcolumn=0
 au BufReadPost quickfix setlocal wrap
 
 """ Plugin configs """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" ctrl-p working mode nearest git versioned ancestor
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|tmp'
-
-if executable('rg')
-  set grepprg=rg\ --color=never
-  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
-  let g:ctrlp_use_caching = 0
-endif
-
-nnoremap <leader>] :CtrlPTag<cr>
 
 " Always show Airline status
 set laststatus=2
