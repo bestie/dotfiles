@@ -23,6 +23,7 @@ Plugin 'tComment'
 Plugin 'endwise.vim'
 Plugin 'surround.vim'
 Plugin 'abolish.vim'
+Plugin 'terryma/vim-multiple-cursors'
 
 " language specific
 Plugin 'haskell.vim'
