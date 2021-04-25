@@ -55,7 +55,7 @@
   editor = vim
   pager = diff-so-fancy | less --tabs=4 -RFX
 [push]
-  default = upstream
+  default = current
 [commit]
 	verbose = true
 [init]
