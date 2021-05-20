@@ -39,6 +39,8 @@ let g:dispatch_compilers = {
 
 """ Settings """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+let mapleader = "\<Space>"
+
 set nocompatible
 syntax on
 set autoindent
@@ -132,7 +134,7 @@ map <leader>n :call RenameFile()<cr>
 map <leader>rld Ilet(:wviwyA) { double(:pA) }
 
 " Run all specs
-map <leader>ra :call RunCommand("bundle exec rspec")<cr>
+map <leader>ra :call RunCommand("bundle exec rspec --force-color")<cr>
 
 " Ruby binding pry - insert binding.pry on the line above
 map <leader>rbp Orequire "pry"; binding.pry # DEBUG @bestie
@@ -256,7 +258,7 @@ function! RubyFileCommand(filename)
   let filename = a:filename
 
   if filename =~ "_spec.rb"
-    let command = BundlerPrefix() . "rspec " . filename
+    let command = BundlerPrefix() . "rspec --force-color " . filename
   elseif filename =~ "_test.rb"
     let command = BundlerPrefix() . "ruby -I test -r test_helper.rb " . filename
   else
@@ -329,10 +331,15 @@ endfunction
 map <leader>d :call ToggleDarkMode()<cr>
 
 function! RunInOtherTmuxPane(command)
-  let cmd = "tmux send-keys -t1 " . a:command
   let pane_info = system("tmux list-panes|grep -v active|tail -n1")
   let pane_number = split(pane_info, ":")[0]
-  let result = system("tmux send-keys -t" . pane_number . " '" . a:command . "' ENTER")
+
+  let cmd = a:command . " | less -R"
+  let result = system("tmux send-keys -t" . pane_number . " q")
+  let result = system("tmux send-keys -t" . pane_number . " C-c")
+
+  " let cmd = a:command
+  let result = system("tmux send-keys -t" . pane_number . " '" . cmd . "' ENTER")
 endfunction
 
 function! ToggleRunInOtherTmuxPane()
@@ -360,8 +367,6 @@ map <leader>/ :noh<CR>
 " Save with CTRL-s
 nmap <c-s> :w<CR>
 imap <c-s> <Esc>:w<CR>
-
-:nnoremap <leader>c :ccl<CR>
 
 " Copy and paste from system clipboard
 vmap <leader>y "+y
@@ -404,6 +409,22 @@ au BufNewFile,BufRead *.json set ft=javascript
 " Remove 80 char line from temporary windows
 au BufReadPost quickfix setlocal colorcolumn=0
 au BufReadPost quickfix setlocal wrap
+
+nnoremap <leader>q :call QuickfixToggle()<cr><cr>
+
+let g:quickfix_is_open = 0
+
+function! QuickfixToggle()
+	if g:quickfix_is_open
+		cclose
+		let g:quickfix_is_open = 0
+		execute g:quickfix_return_to_window . "wincmd w"
+	else
+		let g:quickfix_return_to_window = winnr()
+		copen
+		let g:quickfix_is_open = 1
+	endif
+endfunction
 
 """ Plugin configs """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
