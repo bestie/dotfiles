@@ -29,11 +29,11 @@
   lg-merge-base = "!f() { git private-log-pretty-graph $(git merge-base HEAD ${1-main})^..HEAD | less --raw-control-chars --quit-if-one-screen ; }; f"
 
   # Find a commit using fzf displayed in graph form.  # Must be an ancestor of HEAD.
-  find-commit = "!f() { git private-log-plain-graph | fzf | awk '{print $1}'; }; f"
+  find-commit = "!f() { git private-log-pretty-graph | fzf --ansi | awk '{print $1}'; }; f"
   find-commit-and = "!f() { git find-commit | xargs -o ${@-echo} ; }; f"
 
-  # Add untracked files via fzf file menu <tab> / <shift-tab> for multi select
-  au = "!f() { git ls-files --others --exclude-standard | fzf --multi | xargs git add ; }; f"
+  # Add untracked files via fzf file menu <tab>
+  au = "!f() { git ls-files --others --exclude-standard | fzf --multi --cycle --height=9 | xargs git add ; }; f"
 
   # Resets the committer date of rewitten/rebased commits to the original time.
   # Goes back to the specified revision.
@@ -53,7 +53,7 @@
   attributesfile = ~/.gitattributes
   excludesfile = ~/.gitignore
   editor = vim
-  pager = diff-so-fancy | less --tabs=4 -RFX
+  fileMode = false
 [push]
   default = current
 [commit]
