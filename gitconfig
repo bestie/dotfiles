@@ -23,10 +23,10 @@
 
   # Show a nice graph of the history up to <revision>. Defaults to current HEAD,
   # Pipes into less if the graph is longer than a single page.
-  lg = "!f() { git private-log-pretty-graph $@ | less --raw-control-chars --quit-if-one-screen ; }; f"
+  lg = "!f() { git private-log-pretty-graph ${@-HEAD} | less --RAW-CONTROL-CHARS --quit-if-one-screen ; }; f"
 
   # Do the same but stop at the first common anceator with main / specified revision
-  lg-merge-base = "!f() { git private-log-pretty-graph $(git merge-base HEAD ${1-main})^..HEAD | less --raw-control-chars --quit-if-one-screen ; }; f"
+  lg-merge-base = "!f() { git private-log-pretty-graph $(git merge-base HEAD ${1-main})^..HEAD | less --RAW-CONTROL-CHARS --quit-if-one-screen ; }; f"
 
   # Find a commit using fzf displayed in graph form.  # Must be an ancestor of HEAD.
   find-commit = "!f() { git private-log-pretty-graph | fzf --ansi | awk '{print $1}'; }; f"
