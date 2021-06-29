@@ -29,7 +29,8 @@
   lg-merge-base = "!f() { git private-log-pretty-graph $(git merge-base HEAD ${1-${MAIN_BRANCH-main}})^..HEAD | less --RAW-CONTROL-CHARS --quit-if-one-screen ; }; f"
 
   # Find a commit using fzf displayed in graph form.  # Must be an ancestor of HEAD.
-  find-commit = "!f() { git private-log-pretty-graph | fzf --ansi | awk '{print $1}'; }; f"
+  find-commit = "!f() { git private-log-pretty-graph | fzf --ansi | sed -E 's/^[^a-f0-9]+//' | awk '{print $1}'; }; f"
+
   find-commit-and = "!f() { git find-commit | xargs -o ${@-echo} ; }; f"
 
   # Add untracked files via fzf file menu <tab>
