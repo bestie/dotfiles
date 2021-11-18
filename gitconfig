@@ -14,12 +14,17 @@
   staged = diff --cached
   recent-branches = for-each-ref --count=10 --sort=-committerdate refs/heads/ --format='%(refname:short)'
   diff-commits = log --oneline --graph HEAD..
-  merged-branches = !git branch --merged ${1-master}
+  merged-branches = !git branch --merged ${1-main}
   up = !git pull --rebase $@ && git submodule update --init --recursive
   wip = !git add -A && git commit -m "WIP"
   omnom = commit --amend -C HEAD
 
   ### Some more complicated stuff
+
+  co-recent-branch = "!f() { git recent-branches | fzf --height=10 | xargs git checkout ; }; f"
+  branch-delete = "!f() { git branch | fzf --height=10 --multi | xargs git branch -D ; }; f"
+
+  top = "!f() { git private-log-pretty-graph ${@-HEAD} | head -n15 ; }; f"
 
   # Show a nice graph of the history up to <revision>. Defaults to current HEAD,
   # Pipes into less if the graph is longer than a single page.
@@ -34,7 +39,7 @@
   find-commit-and = "!f() { git find-commit | xargs -o ${@-echo} ; }; f"
 
   # Add untracked files via fzf file menu <tab>
-  au = "!f() { git ls-files --others --exclude-standard | fzf --multi --cycle --height=9 | xargs git add ; }; f"
+  au = "!f() { git ls-files --others --exclude-standard | fzf --multi --height=10 | xargs git add ; }; f"
 
   # Resets the committer date of rewitten/rebased commits to the original time.
   # Goes back to the specified revision.
