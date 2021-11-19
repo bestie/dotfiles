@@ -7,7 +7,6 @@ call vundle#begin()
 " for the editor itself
 Plugin 'gmarik/Vundle.vim'
 Plugin 'Solarized'
-Plugin 'calmar256-lightdark.vim'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'vim-airline/vim-airline'
@@ -41,6 +40,8 @@ let g:dispatch_compilers = {
 
 let mapleader = "\<Space>"
 
+colorscheme calmar256-dark
+
 set nocompatible
 syntax on
 set autoindent
@@ -69,11 +70,10 @@ set shell=sh
 " Allow backspacing over autoindent, eol and start of lines
 set backspace=indent,eol,start
 
-set t_Co=256                        " force vim to use 256 colors
+set t_Co=256                        " force vim to use 256 color
 
 " set vertical marker at col 80
 set colorcolumn=80
-highlight ColorColumn ctermbg=224
 
 " Use the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:▸\ ,eol:¬
@@ -321,14 +321,18 @@ function! ToggleDarkMode()
     let g:dark_mode = 0
     set background=light
     colorscheme calmar256-light
+    highlight ColorColumn ctermbg=226
   else
     let g:dark_mode = 1
     set background=dark
-    colorscheme solarized
+    colorscheme calmar256-dark
+    " highlight ColorColumn ctermbg=84
   end
 endfunction
 
 map <leader>d :call ToggleDarkMode()<cr>
+let g:dark_mode = 0
+call ToggleDarkMode()
 
 function! RunInOtherTmuxPane(command)
   let pane_info = system("tmux list-panes|grep -v active|tail -n1")
