@@ -360,6 +360,8 @@ function! ToggleRunInOtherTmuxPane()
   endif
 endfunction
 
+map <leader>tm :call ToggleRunInOtherTmuxPane()<cr>
+
 """ Key remaps (standard stuff) """""""""""""""""""""""""""""""""""""""""""""""
 
 " %% For current directory thanks @squil
