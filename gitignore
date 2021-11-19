@@ -12,5 +12,10 @@ Thumbs.db
 .ruby-gemset
 tags
 PrivateNotes*
+
 # LOL if you don't have ur own file
-.bestie
+bestie/
+
+# Not everyone has the love for ripgrep
+.rgignore
+.ignore
