@@ -13,6 +13,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tpope/vim-dispatch'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'mbbill/undotree'
 
 nmap <c-p> :Files<cr>
 nmap <leader>rg :Rg
@@ -54,10 +55,14 @@ set winwidth=83
 set ignorecase
 set smartcase
 set noswapfile
+set nobackup
+set undodir=~/.vim/undodir
+set undofile
 set showcmd
+set cmdheight=1
 set wildmode=list:longest,full
-set scrolloff=5               " keep at least 5 lines above/below
-set sidescrolloff=5           " keep at least 5 lines left/right
+set scrolloff=8               " keep at least 5 lines above/below
+set sidescrolloff=8           " keep at least 5 lines left/right
 
 set path+=./lib
 set path+=./spec
@@ -66,6 +71,7 @@ set noerrorbells              " @andrewmcdonough does not like bells
 set fileformats=unix
 set lazyredraw
 set shell=sh
+set hidden
 
 " Allow backspacing over autoindent, eol and start of lines
 set backspace=indent,eol,start
@@ -99,6 +105,10 @@ set re=1
 " Enable project specific configurations, allowing safe commands only
 set exrc
 set secure
+
+" Autocomplete with dictionary words when spell check is on
+set complete+=kspell
+set completeopt=menuone,noinsert,noselect
 
 " unobtrusive whitespace highlighting
 " http://blog.kamil.dworakowski.name/2009/09/unobtrusive-highlighting-of-trailing.html
@@ -406,8 +416,6 @@ au BufRead,BufNewFile *.{md,markdown} set filetype=markdown
 " Spell checking for text formats
 au BufRead,BufNewFile *.txt,*.md,*.markdown,*.textile,*.feature setlocal spell
 autocmd FileType gitcommit setlocal spell
-" Autocomplete with dictionary words when spell check is on
-set complete+=kspell
 
 " add json syntax highlighting
 au BufNewFile,BufRead *.json set ft=javascript
