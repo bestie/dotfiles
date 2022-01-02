@@ -68,3 +68,11 @@
 	defaultBranch = main
 [merge]
   conflictStyle = diff3
+[diff]
+  tool = icdiff
+[difftool]
+  prompt = false
+[difftool "icdiff"]
+  cmd = /usr/local/bin/icdiff --line-numbers --highlight --color-map='add:green_bold,change:yellow_bold,description:blue,meta:magenta,separator:blue,subtract:red_bold' $LOCAL $REMOTE
+[pager]
+  difftool = true
