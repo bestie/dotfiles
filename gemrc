@@ -1,1 +1,4 @@
-gem: --no-ri --no-rdoc
+backtrace: true
+install: --no-document
+update: --no-document
+verbose: true  
