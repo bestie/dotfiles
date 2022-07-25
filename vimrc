@@ -397,9 +397,12 @@ imap <c-s> <Esc>:w<CR>
 " Copy and paste from system clipboard
 vmap <leader>y "+y
 nmap <leader>y "+yy
+nmap <leader>Y "+y$
 nmap <leader>p "+p
 vmap <leader>p "+p
 nmap <leader>P "+P
+
+nmap Y y$
 
 """ Forgive """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
