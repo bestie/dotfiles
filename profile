@@ -124,6 +124,8 @@ if [ -a /usr/local/share/chruby/chruby.sh ]; then
   chruby-latest
   source /usr/local/share/chruby/auto.sh
 fi
+# View some nice JSON, sorted!
+alias jqs="jq --sort-keys 'walk(if type == \"array\" then sort else . end)'";
 
 ##############################################################################
 
