@@ -22,6 +22,7 @@
   ### Some more complicated stuff
 
   co-recent-branch = "!f() { git recent-branches | fzf --height=10 | xargs git checkout ; }; f"
+  cor = "!f() { git recent-branches | fzf --height=10 | xargs git checkout ; }; f"
   branch-delete = "!f() { git branch | fzf --height=10 --multi | xargs git branch -D ; }; f"
 
   top = "!f() { git private-log-pretty-graph ${@-HEAD} | head -n15 ; }; f"
