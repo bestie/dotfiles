@@ -129,6 +129,4 @@ alias jqs="jq --sort-keys 'walk(if type == \"array\" then sort else . end)'";
 
 ##############################################################################
 
-if [ -a $HOME/.localprofile ]; then
-  source "$HOME/.localprofile"
-fi
+source "$HOME/.localprofile"
