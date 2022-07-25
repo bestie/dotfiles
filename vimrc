@@ -351,9 +351,8 @@ function! RunInOtherTmuxPane(command)
   let pane_info = system("tmux list-panes|grep -v active|tail -n1")
   let pane_number = split(pane_info, ":")[0]
 
-  let cmd = a:command . " | less -R"
-  let result = system("tmux send-keys -t" . pane_number . " q")
-  let result = system("tmux send-keys -t" . pane_number . " C-c")
+  let cmd = a:command
+  let result = system("tmux send-keys -t" . pane_number . " C-c '" . cmd . "' ENTER")
 
   " let cmd = a:command
   let result = system("tmux send-keys -t" . pane_number . " '" . cmd . "' ENTER")
