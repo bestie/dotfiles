@@ -39,8 +39,6 @@ let g:dispatch_compilers = {
 
 let mapleader = "\<Space>"
 
-colorscheme calmar256-dark
-
 set nocompatible
 syntax on
 set autoindent
@@ -75,6 +73,9 @@ set hidden
 set backspace=indent,eol,start
 
 set t_Co=256                        " force vim to use 256 color
+
+" starting colorscheme
+colorscheme calmar256-dark
 
 " set vertical marker at col 80
 set colorcolumn=80
