@@ -116,7 +116,7 @@ alias vim="stty stop '' -ixoff ; vim"
 
 alias vim-dirty="git status --porcelain | grep -v '^ D' | sed 's/^...//' | xargs -o vim -O"
 alias vim-changes="git status --porcelain | grep -v '^[D\?]' | sed 's/^...//' | xargs -o vim -O"
-alias vim-conflicts="ack -l '<<<' | xargs -o vim -O"
+alias vim-conflicts="git status --porcelain | grep '^UU' | sed 's/^UU //' | xargs -o vim -O"
 export FZF_COMMAND="rg --files"
 
 if [ -a /usr/local/share/chruby/chruby.sh ]; then
