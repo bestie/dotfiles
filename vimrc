@@ -14,9 +14,7 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tpope/vim-dispatch'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'mbbill/undotree'
-
-nmap <c-p> :Files<cr>
-nmap <leader>rg :Rg
+Plugin 'jremmen/vim-ripgrep'
 
 " for general text editing
 Plugin 'tComment'
@@ -404,6 +402,9 @@ command! Q  q  " Bind :Q  to :q
 command! W  w  " Bind :W  to :w
 command! Wq wq " Bind :Wq to :wq
 command! WQ wq " Bind :WQ to :wq
+
+nmap <c-p> :Files<cr>
+nmap <leader>rg :Rg<space>
 
 """ Syntax highlighting """""""""""""""""""""""""""""""""""""""""""""""""""""""
 
