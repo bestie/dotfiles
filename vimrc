@@ -109,6 +109,10 @@ set secure
 set complete+=kspell
 set completeopt=menuone,noinsert,noselect
 
+" Make file browsing nicer
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+
 " unobtrusive whitespace highlighting
 " http://blog.kamil.dworakowski.name/2009/09/unobtrusive-highlighting-of-trailing.html
 highlight ExtraWhitespace ctermbg=red guibg=red
