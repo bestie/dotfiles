@@ -352,11 +352,19 @@ function! RunInOtherTmuxPane(command)
   let pane_number = split(pane_info, ":")[0]
 
   let cmd = a:command
-  let result = system("tmux send-keys -t" . pane_number . " C-c '" . cmd . "' ENTER")
-
-  " let cmd = a:command
+  let result = system("tmux send-keys -t" . pane_number . " q")
+  let result = system("tmux send-keys -t" . pane_number . " C-c")
   let result = system("tmux send-keys -t" . pane_number . " '" . cmd . "' ENTER")
 endfunction
+
+function! TmuxUp()
+  let pane_info = system("tmux list-panes|grep -v active|tail -n1")
+  let pane_number = split(pane_info, ":")[0]
+
+  let result = system("tmux send-keys -t" . pane_number . " C-c Up ENTER")
+endfunction
+
+nmap <leader><Up> :w<cr>:call TmuxUp()<cr>
 
 function! ToggleRunInOtherTmuxPane()
   if !exists("g:run_in_other_tmux_pane")
@@ -372,7 +380,7 @@ function! ToggleRunInOtherTmuxPane()
   endif
 endfunction
 
-map <leader>tm :call ToggleRunInOtherTmuxPane()<cr>
+map <leader>op :call ToggleRunInOtherTmuxPane()<cr>
 
 """ Key remaps (standard stuff) """""""""""""""""""""""""""""""""""""""""""""""
 
