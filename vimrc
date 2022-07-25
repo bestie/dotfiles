@@ -420,6 +420,9 @@ command! WQ wq " Bind :WQ to :wq
 
 nmap <c-p> :Files<cr>
 nmap <leader>rg :Rg<space>
+nmap <leader>b :Buffer<cr>
+nmap <c-l> :bnext<cr>
+nmap <c-h> :bprev<cr>
 
 """ Syntax highlighting """""""""""""""""""""""""""""""""""""""""""""""""""""""
 
