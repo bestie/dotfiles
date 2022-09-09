@@ -218,7 +218,13 @@ map <leader>j :s/, /,\r/g<cr>:nohl<cr>
 function! RunTestAtLine(filename, line_number)
   let test_command = RubyFileCommand(a:filename)
 
-  if strlen(test_command)
+  if test_command =~ "mtest"
+    let test_command_with_line = test_command . ":" . a:line_number
+    call RunCommand(test_command_with_line)
+  elseif test_command =~ "rails test"
+    let test_command_with_line = test_command . ":" . a:line_number
+    call RunCommand(test_command_with_line)
+  elseif test_command =~ "rspec"
     let test_command_with_line = test_command . ":" . a:line_number
     call RunCommand(test_command_with_line)
   else
@@ -243,6 +249,7 @@ endfunction
 
 function! ExecuteFile(filename, filetype)
   let command = ExecuteFileCommand(a:filename, a:filetype)
+  echo "Running: " . command
 
   call RunCommand(command)
 endfunction
@@ -269,9 +276,20 @@ endfunction
 
 function! RubyFileCommand(filename)
   let filename = a:filename
+  let command = ""
 
-  if filename =~ "_spec.rb"
+  if filereadable("Gemfile")
+    let gems = system("bundle show | tail -n +2")
+  else
+    let gems = ""
+  endif
+
+  if gems =~ "maxitest"
+    let command = BundlerPrefix() . "mtest " . filename
+  elseif gems =~ "rspec"
     let command = BundlerPrefix() . "rspec --force-color " . filename
+  elseif gems =~ "rails"
+    let command = BundlerPrefix() . "rails test " . filename
   elseif filename =~ "_test.rb"
     let command = BundlerPrefix() . "ruby -I test -r test_helper.rb " . filename
   else
@@ -282,11 +300,14 @@ function! RubyFileCommand(filename)
 endfunction
 
 function! BundlerPrefix()
-  if filereadable("Gemfile.lock")
-    return "bundle exec "
-  else
-    return ""
+  let ruby_opts = "RUBYOPT='-W0' "
+  let prefix = ""
+
+  if filereadable("Gemfile")
+    let prefix = "bundle exec "
   endif
+
+  return ruby_opts . prefix
 endfunction
 
 function! RepeatLatestCommand()
