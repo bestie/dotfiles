@@ -67,8 +67,8 @@
 	verbose = true
 [init]
 	defaultBranch = main
-[merge]
-  conflictStyle = diff3
+# [merge]
+#   conflictStyle = diff3
 [diff]
   tool = icdiff
 [difftool]
