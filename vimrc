@@ -24,6 +24,7 @@ Plugin 'abolish.vim'
 Plugin 'terryma/vim-multiple-cursors'
 
 " language specific
+Plugin 'vim-ruby/vim-ruby'
 Plugin 'haskell.vim'
 Plugin 'rust-lang/rust.vim'
 Plugin 'slim-template/vim-slim.git'
@@ -32,8 +33,10 @@ call vundle#end()
 filetype plugin indent on
 
 let g:dispatch_compilers = {
-      \ 'latex': 'tex',
-      \ 'bundle exec': ''}
+      \ "latex": 'tex',
+      \ "RUBYOPT='-W0' bundle exec rspec": 'rspec',
+      \ "RUBYOPT='-W0' bundle exec mtest": 'rake',
+      \ "bundle exec rspec": 'rspec' }
 
 """ Settings """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
