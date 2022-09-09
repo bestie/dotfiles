@@ -121,4 +121,6 @@ alias jqs="jq --sort-keys 'walk(if type == \"array\" then sort else . end)'";
 
 ##############################################################################
 
+function it2prof() { echo -e "\033]50;SetProfile=$1\a"; }
+
 source "$HOME/.localprofile"
