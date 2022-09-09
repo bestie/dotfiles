@@ -23,15 +23,6 @@ function prompt_function {
 }
 PROMPT_COMMAND=prompt_function
 
-### Amazon shizzle ###########################################################
-if [ -d "$HOME/.ec2" ]; then
-  export JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Home"
-  export EC2_PRIVATE_KEY="$(/bin/ls $HOME/.ec2/pk-*.pem)"
-  export EC2_CERT="$(/bin/ls $HOME/.ec2/cert-*.pem)"
-  export EC2_HOME="/usr/local/Cellar/ec2-api-tools/1.3-57419/jars"
-  source "$HOME/.ec2/access_keys"
-fi
-
 ### Rubby ####################################################################
 alias be='bundle exec'
 alias rs='be rails server'
@@ -117,6 +108,7 @@ alias vim="stty stop '' -ixoff ; vim"
 alias vim-dirty="git status --porcelain | grep -v '^ D' | sed 's/^...//' | xargs -o vim -O"
 alias vim-changes="git status --porcelain | grep -v '^[D\?]' | sed 's/^...//' | xargs -o vim -O"
 alias vim-conflicts="git status --porcelain | grep '^UU' | sed 's/^UU //' | xargs -o vim -O"
+alias vim-open="xargs -o vim -O"
 export FZF_COMMAND="rg --files"
 
 if [ -a /usr/local/share/chruby/chruby.sh ]; then
