@@ -1,13 +1,16 @@
 ### Foreground Colours #######################################################
         RED="\[\033[0;31m\]"
-     YELLOW="\[\033[0;33m\]"
       GREEN="\[\033[0;32m\]"
+     YELLOW="\[\033[0;33m\]"
        BLUE="\[\033[0;34m\]"
+    MAGENTA="\[\033[0;35m\]"
+       PINK="\[\033[1;35m\]" # Light magenta
+       CYAN="\[\033[0;36m\]"
+ LIGHT_CYAN="\[\033[1;36m\]"
   LIGHT_RED="\[\033[1;31m\]"
 LIGHT_GREEN="\[\033[1;32m\]"
       WHITE="\[\033[1;37m\]"
  LIGHT_GRAY="\[\033[0;37m\]"
-       PINK="\[\033[0;35m\]"
  COLOR_NONE="\[\e[0m\]"
 
 ### Homebrew bash completion #################################################
@@ -82,7 +85,10 @@ alias image-resize-crop="convert $1 -resize $2x$2^ -gravity center -crop $2x$2+0
 export EDITOR=vim
 export PATH=$HOME/bin:$PATH
 export CLICOLOR="YES"
-export LSCOLORS="ExGxFxdxCxDxDxhbadExEx"
+# http://www.bigsoft.co.uk/blog/2008/04/11/configuring-ls_colors
+# export LSCOLORS="ExGxFxdxCxDxDxhbadExEx"
+export LSCOLORS=Exfxcxdxbxegedabagacad
+
 export HISTSIZE=5000
 export HISTCONTROL=ignoreboth
 
