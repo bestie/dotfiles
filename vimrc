@@ -201,7 +201,6 @@ map <leader>t :w<cr>:call ExecuteFile(expand('%'), &filetype)<cr><cr>
 map <leader>l :w<cr>:call RunTestAtLine(expand('%'), line("."))<cr><cr>
 
 " Repeats the previous test run / file execution
-map <leader>r :w<cr>:call RepeatLatestCommand()<cr><cr>
 map <leader><leader> :w<cr>:call RepeatLatestCommand()<cr><cr>
 
 " Ruby open spec, infer spec file for current file and open
@@ -326,8 +325,6 @@ function! RenameFile()
     redraw!
   endif
 endfunction
-
-let g:dark_mode = 1
 
 function! ToggleDarkMode()
   if g:dark_mode
