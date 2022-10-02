@@ -21,6 +21,16 @@ LIGHT_MAGENTA="\[\033[1;35m\]"
 ORANGE256="\[\033[38;5;202m\]"
 PINK256="\[\033[38;2;255;150;255m\]"
 
+### Vim ######################################################################
+export EDITOR=vim
+export FZF_COMMAND="rg --files"
+
+alias vim="stty stop '' -ixoff ; vim" # Disable terminal suspend so vim can map ctrl-s
+alias vim-dirty="git status --porcelain | grep -v '^ D' | sed 's/^...//' | xargs -o vim -O"
+alias vim-changes="git status --porcelain | grep -v '^[D\?]' | sed 's/^...//' | xargs -o vim -O"
+alias vim-conflicts="git status --porcelain | grep '^UU' | sed 's/^UU //' | xargs -o vim -O"
+alias vim-open="xargs -o vim -O"
+
 ### Homebrew bash completion #################################################
 . `brew --prefix`/etc/bash_completion
 
@@ -92,7 +102,6 @@ alias big-directories="du -a . | sort -n -r"
 
 alias image-resize-crop="convert $1 -resize $2x$2^ -gravity center -crop $2x$2+0+0 +repage resultimage"
 
-export EDITOR=vim
 export PATH=$HOME/bin:$PATH
 export CLICOLOR="YES"
 # http://www.bigsoft.co.uk/blog/2008/04/11/configuring-ls_colors
@@ -117,15 +126,6 @@ function uuid {
 github-pub-key() {
   curl https://github.com/${1}.keys
 }
-
-# Disable terminal suspend so vim can map ctrl-s
-alias vim="stty stop '' -ixoff ; vim"
-
-alias vim-dirty="git status --porcelain | grep -v '^ D' | sed 's/^...//' | xargs -o vim -O"
-alias vim-changes="git status --porcelain | grep -v '^[D\?]' | sed 's/^...//' | xargs -o vim -O"
-alias vim-conflicts="git status --porcelain | grep '^UU' | sed 's/^UU //' | xargs -o vim -O"
-alias vim-open="xargs -o vim -O"
-export FZF_COMMAND="rg --files"
 
 # View some nice JSON, sorted!
 alias jqs="jq --sort-keys 'walk(if type == \"array\" then sort else . end)'";
