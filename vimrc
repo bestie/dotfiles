@@ -201,7 +201,7 @@ map <leader>t :w<cr>:call ExecuteFile(expand('%'), &filetype)<cr><cr>
 map <leader>l :w<cr>:call RunTestAtLine(expand('%'), line("."))<cr><cr>
 
 " Repeats the previous test run / file execution
-map <leader><leader> :w<cr>:call RepeatLatestCommand()<cr><cr>
+map <leader><leader> :w<cr>:call RepeatLatestCommand()<cr>
 
 " Ruby open spec, infer spec file for current file and open
 map <leader>ros :call EditFile(InferSpecFile(expand('%')))<cr>
