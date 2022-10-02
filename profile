@@ -22,9 +22,7 @@ ORANGE256="\[\033[38;5;202m\]"
 PINK256="\[\033[38;2;255;150;255m\]"
 
 ### Homebrew bash completion #################################################
-if [ -x `which brew` -a -f `brew --prefix`/etc/bash_completion ]; then
-  . `brew --prefix`/etc/bash_completion
-fi
+. `brew --prefix`/etc/bash_completion
 
 ### Prompt ###################################################################
 source "$HOME/.gitprompt.sh"
@@ -125,11 +123,9 @@ alias vim-conflicts="git status --porcelain | grep '^UU' | sed 's/^UU //' | xarg
 alias vim-open="xargs -o vim -O"
 export FZF_COMMAND="rg --files"
 
-if [ -a /usr/local/share/chruby/chruby.sh ]; then
-  source /usr/local/share/chruby/chruby.sh
-  chruby-latest
-  source /usr/local/share/chruby/auto.sh
-fi
+source /usr/local/share/chruby/chruby.sh
+chruby 3.0.2
+source /usr/local/share/chruby/auto.sh
 
 # View some nice JSON, sorted!
 alias jqs="jq --sort-keys 'walk(if type == \"array\" then sort else . end)'";
