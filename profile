@@ -42,6 +42,10 @@ function chruby-latest {
   chruby `chruby | grep -v truffle | tail -n 1 | sed 's/.*ruby-//'`
 }
 
+source /usr/local/share/chruby/chruby.sh
+chruby 3.0.2
+source /usr/local/share/chruby/auto.sh
+
 alias gem-cull='gem list | cut -d" " -f1 | xargs gem uninstall -aIx'
 alias rackthis="echo \"run Rack::Directory.new('.')\" >> config.ru"
 alias rspec-dirty="git status --porcelain spec/ | grep -v '^ D' |grep '_spec.rb'| sed 's/^...//' | xargs -o bundle exec rspec"
@@ -122,10 +126,6 @@ alias vim-changes="git status --porcelain | grep -v '^[D\?]' | sed 's/^...//' | 
 alias vim-conflicts="git status --porcelain | grep '^UU' | sed 's/^UU //' | xargs -o vim -O"
 alias vim-open="xargs -o vim -O"
 export FZF_COMMAND="rg --files"
-
-source /usr/local/share/chruby/chruby.sh
-chruby 3.0.2
-source /usr/local/share/chruby/auto.sh
 
 # View some nice JSON, sorted!
 alias jqs="jq --sort-keys 'walk(if type == \"array\" then sort else . end)'";
