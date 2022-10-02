@@ -1,4 +1,14 @@
 function git_prompt_segment {
+  color_branch_name=$LIGHT_YELLOW
+  color_remote=$CYAN
+  color_dirty_state=$LIGHT_RED
+  color_clean_state=$LIGHT_GREEN
+  color_reset=$COLOR_NONE
+  dirty_changes_symbol="±"
+  clean_changes_symbol="±"
+  ahead_symbol="↑"
+  behind_symbol="↓"
+
   git rev-parse --git-dir &> /dev/null
   # exit straight away if cwd is not a git repo
   if ! git_status="$(git status 2> /dev/null)"; then
@@ -13,39 +23,39 @@ function git_prompt_segment {
 
   # Green bolt if all changes are staged
   if [[ ${git_status}} =~ "Changes to be committed" ]]; then
-    state="${GREEN}*"
+    state="${color_clean_state}${clean_changes_symbol}"
   fi
 
   # Red bolt for unstaged changes
   if [[ ${git_status}} =~ "Changes not staged for commit" ]]; then
-    state="${RED}*"
+    state="${color_dirty_state}${dirty_changes_symbol}"
   fi
 
   # add an else if or two here if you want to get more specific
   if [[ ${git_status} =~ ${remote_pattern} ]]; then
     if [[ ${BASH_REMATCH[1]} == "ahead" ]]; then
-      remote="${YELLOW}↑"
+      remote="${color_remote}${ahead_symbol}"
     elif [[ ${BASH_REMATCH[1]} == "behind" ]]; then
-      remote="${YELLOW}↓"
+      remote="${color_remote}${behind_symbol}"
     fi
   fi
 
   if [[ ${git_status} =~ ${diverge_pattern} ]]; then
-    remote="${YELLOW}↕"
+    remote="${color_remote}↕"
   fi
 
   if [[ ${git_status} =~ ${branch_pattern} ]]; then
-    branch="${YELLOW}${BASH_REMATCH[1]}"
+    branch="${color_branch_name}${BASH_REMATCH[1]}"
   elif [[ ${git_status} =~ ${detached_branch_pattern} ]]; then
-    branch="${YELLOW}NO BRANCH"
+    branch="${color_branch_name}NO BRANCH"
   elif [[ ${git_status} =~ ${rebasing_pattern} ]]; then
-    branch="${YELLOW}REBASING"
+    branch="${color_branch_name}REBASING"
   fi
 
   if [[ ${#state} -gt "0" || ${#remote} -gt "0" ]]; then
     s=" "
   fi
 
-  echo " (${branch}${s}${remote}${state}${COLOR_NONE})"
+  echo " (${branch}${s}${remote}${state}${color_reset})"
 }
 

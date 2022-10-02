@@ -1,14 +1,25 @@
 ### Foreground Colours #######################################################
-        RED="\[\033[0;31m\]"
-     YELLOW="\[\033[0;33m\]"
-      GREEN="\[\033[0;32m\]"
-       BLUE="\[\033[0;34m\]"
-  LIGHT_RED="\[\033[1;31m\]"
-LIGHT_GREEN="\[\033[1;32m\]"
-      WHITE="\[\033[1;37m\]"
- LIGHT_GRAY="\[\033[0;37m\]"
-       PINK="\[\033[0;35m\]"
- COLOR_NONE="\[\e[0m\]"
+          RED="\[\033[0;31m\]"
+        GREEN="\[\033[0;32m\]"
+       YELLOW="\[\033[0;33m\]"
+         BLUE="\[\033[0;34m\]"
+      MAGENTA="\[\033[0;35m\]"
+         CYAN="\[\033[0;36m\]"
+    LIGHT_RED="\[\033[1;31m\]"
+  LIGHT_GREEN="\[\033[1;32m\]"
+ LIGHT_YELLOW="\[\033[1;33m\]"
+   LIGHT_BLUE="\[\033[1;34m\]"
+         PINK="\[\033[1;35m\]" # Duplicate of LIGHT_MAGENTA
+LIGHT_MAGENTA="\[\033[1;35m\]"
+        WHITE="\[\033[1;37m\]"
+   LIGHT_CYAN="\[\033[1;36m\]"
+   LIGHT_GRAY="\[\033[0;37m\]"
+   COLOR_NONE="\[\e[0m\]"
+
+### 256 Colors ###############################################################
+
+ORANGE256="\[\033[38;5;202m\]"
+PINK256="\[\033[38;2;255;150;255m\]"
 
 ### Homebrew bash completion #################################################
 if [ -x `which brew` -a -f `brew --prefix`/etc/bash_completion ]; then
@@ -19,7 +30,7 @@ fi
 source "$HOME/.gitprompt.sh"
 
 function prompt_function {
-  PS1="${PINK}\w${COLOR_NONE}$(git_prompt_segment)\$ "
+  PS1="${PINK}\w${COLOR_NONE}$(git_prompt_segment)${LIGHT_GREEN}\$${COLOR_NONE} "
 }
 PROMPT_COMMAND=prompt_function
 
@@ -82,7 +93,10 @@ alias image-resize-crop="convert $1 -resize $2x$2^ -gravity center -crop $2x$2+0
 export EDITOR=vim
 export PATH=$HOME/bin:$PATH
 export CLICOLOR="YES"
-export LSCOLORS="ExGxFxdxCxDxDxhbadExEx"
+# http://www.bigsoft.co.uk/blog/2008/04/11/configuring-ls_colors
+# export LSCOLORS="ExGxFxdxCxDxDxhbadExEx"
+export LSCOLORS=Exfxcxdxbxegedabagacad
+
 export HISTSIZE=5000
 export HISTCONTROL=ignoreboth
 
@@ -116,6 +130,7 @@ if [ -a /usr/local/share/chruby/chruby.sh ]; then
   chruby-latest
   source /usr/local/share/chruby/auto.sh
 fi
+
 # View some nice JSON, sorted!
 alias jqs="jq --sort-keys 'walk(if type == \"array\" then sort else . end)'";
 
