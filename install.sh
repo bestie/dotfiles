@@ -2,10 +2,9 @@
 
 working_dir=$PWD
 
-mkdir -p ~/.vim/bundle
-cp -r $working_dir/vim/colors ~/.vim
 mkdir -p ~/.ssh
-ln -s $working_dir/vimrc ~/.vimrc
+
+ln -s $working_dir/vim ~/.vim
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 vim +PluginInstall +qall
 
