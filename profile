@@ -30,6 +30,7 @@ alias vim-dirty="git status --porcelain | grep -v '^ D' | sed 's/^...//' | xargs
 alias vim-changes="git status --porcelain | grep -v '^[D\?]' | sed 's/^...//' | xargs -o vim -O"
 alias vim-conflicts="git status --porcelain | grep '^UU' | sed 's/^UU //' | xargs -o vim -O"
 alias vim-open="xargs -o vim -O"
+alias vim-last-commit="git diff head^ --name-only | xargs -o vim -O"
 
 ### Homebrew bash completion #################################################
 . `brew --prefix`/etc/bash_completion
