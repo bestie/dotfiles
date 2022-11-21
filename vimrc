@@ -133,7 +133,11 @@ autocmd BufReadPost * call PositionCursorFromViminfo()
 """ Sick functions and macros """""""""""""""""""""""""""""""""""""""""""""""""
 
 " rubyfmt
-map <leader>rf :%!rubyfmt<cr>
+map <leader>rf :%!rubyfmt<cr><c-o>
+
+source ~/.vim/bundle/rubyfmt.vim
+" let g:rubyfmt_path = "/Users/stephenbest/bin/rubyfmt"
+
 
 " Open and reload vimrc
 map <leader>vrc :edit $MYVIMRC<cr>
