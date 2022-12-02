@@ -35,7 +35,7 @@ alias vim-open="xargs -o vim -O"
 alias vim-last-commit="git diff head^ --name-only | xargs -o vim -O"
 
 ### Homebrew bash completion #################################################
-. `brew --prefix`/etc/bash_completion
+[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
 ### Prompt ###################################################################
 source "$HOME/.gitprompt.sh"
