@@ -353,6 +353,7 @@ function! RunInOtherTmuxPane(command)
 
   let cmd = a:command
   let result = system("tmux send-keys -t" . pane_number . " q")
+  let result = system("tmux send-keys -t" . pane_number . " ENTER")
   let result = system("tmux send-keys -t" . pane_number . " C-c")
   let result = system("tmux send-keys -t" . pane_number . " '" . cmd . "' ENTER")
 endfunction
