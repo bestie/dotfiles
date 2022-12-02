@@ -195,13 +195,13 @@ function! RubyHashConvertSymbolHashRocketKeysToStrings()
 endfunction
 
 " Execute the current file, detects tests, always opens the quickfix window
-map <leader>e :w<esc>:call ExecuteFile(expand("%"), &filetype)<cr><cr>
+map <leader>e :w<esc>:call ExecuteFile(expand("%"), &filetype)<cr>
 
 " Same as above but 't' for test, I just like to press t sometimes
-map <leader>t :w<cr>:call ExecuteFile(expand('%'), &filetype)<cr><cr>
+map <leader>t :w<cr>:call ExecuteFile(expand('%'), &filetype)<cr>
 
 " Test at line, as above but appends the cursor position to the command
-map <leader>l :w<cr>:call RunTestAtLine(expand('%'), line("."))<cr><cr>
+map <leader>l :w<cr>:call RunTestAtLine(expand('%'), line("."))<cr>
 
 " Repeats the previous test run / file execution
 map <leader><leader> :w<cr>:call RepeatLatestCommand()<cr>
