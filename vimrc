@@ -348,7 +348,8 @@ let g:dark_mode = 0
 call ToggleDarkMode()
 
 function! RunInOtherTmuxPane(command)
-  let pane_number = "2" # That's the second oldest pane in the session, probably the right one most of the time
+  let pane_info = system("tmux list-panes|grep -v active|tail -n1")
+  let pane_number = split(pane_info, ":")[0]
 
   let cmd = a:command
   let result = system("tmux send-keys -t" . pane_number . " q")
@@ -357,7 +358,8 @@ function! RunInOtherTmuxPane(command)
 endfunction
 
 function! TmuxUp()
-  let pane_number = "2" # That's the second oldest pane in the session, probably the right one most of the time
+  let pane_info = system("tmux list-panes|grep -v active|tail -n1")
+  let pane_number = split(pane_info, ":")[0]
 
   let result = system("tmux send-keys -t" . pane_number . " C-c Up ENTER")
 endfunction
