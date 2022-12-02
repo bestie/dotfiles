@@ -130,6 +130,10 @@ endfunction
 
 autocmd BufReadPost * call PositionCursorFromViminfo()
 
+" Abolish aliases that make more sense to me
+nmap cr_ crs<left> " snake_case
+nmap crC crm<left> " MixedCase or UpperCamalCase
+
 """ Sick functions and macros """""""""""""""""""""""""""""""""""""""""""""""""
 
 command! -nargs=1 -complete=customlist,dispatch#command_complete CMD :call RunCommand(<q-args>)
