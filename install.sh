@@ -12,6 +12,10 @@ echo "Installing ackrc"
 ln -s $working_dir/ackrc ~/.ackrc
 echo "Installing gemrc"
 ln -s $working_dir/gemrc ~/.gemrc
+echo "Installing irbrc"
+ln -s $working_dir/irbrc ~/.irbrc
+echo "Installing pryrc"
+ln -s $working_dir/pryrc ~/.pryrc
 echo "Installing gitconfig"
 ln -s $working_dir/gitconfig ~/.gitconfig
 echo "Installing gitignore"
