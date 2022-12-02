@@ -132,6 +132,9 @@ autocmd BufReadPost * call PositionCursorFromViminfo()
 
 """ Sick functions and macros """""""""""""""""""""""""""""""""""""""""""""""""
 
+command! -nargs=1 -complete=customlist,dispatch#command_complete CMD :call RunCommand(<q-args>)
+nmap <leader>x :CMD<space>
+
 " rubyfmt
 map <leader>rf :%!rubyfmt<cr>
 
