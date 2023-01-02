@@ -8,7 +8,7 @@ brew "fzf"
 brew "git"
 brew "htop"
 brew "jq"
-mrew "nvm"
+brew "nvm"
 brew "redis"
 brew "ripgrep"
 brew "ruby-install"
@@ -22,8 +22,8 @@ brew "wget"
 brew "reattach-to-user-namespace"
 brew "sqlite"
 
-brew 'postgresql'
-brew 'mysql'
+brew "postgresql"
+brew "mysql"
 
 cask "alfred"
 cask "docker"
