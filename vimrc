@@ -146,19 +146,55 @@ nmap crC crm<left> " MixedCase or UpperCamalCase
 command! -nargs=1 -complete=customlist,dispatch#command_complete CMD :call RunCommand(<q-args>)
 nmap <leader>x :CMD<space>
 
-" rubyfmt
-map <leader>rf :%!rubyfmt<cr>
-
 " Open and reload vimrc
 map <leader>vrc :edit $MYVIMRC<cr>
 map <leader>vsrc :source $MYVIMRC<cr>:echo "VIMRC reloaded"<cr>
 
-map <leader>ct :call RefreshRubyCTags()<cr>
 " Rename current file
 map <leader>n :call RenameFile()<cr>
 
-" RSpec let double - Convert bare word to let(:thing) { double(:thing) }
-map <leader>rld Ilet(:wviwyA) { double(:pA) }
+" Unjoin
+map <leader>j :s/[,\(\[\{]/&\r/g<cr>:s/[\)\]\}]/\r&/g<cr>=%:nohl<cr>
+
+" Highlight word under cursor without advancing the search
+map <leader>8 "syiw<esc>:let @/ = @s<cr>
+
+" It's just mv. Thanks @fables-tales (circa 2014 😀)
+function! RenameFile()
+  let old_name = expand('%')
+  let new_name = input('New file name: ', old_name, 'file')
+  if new_name != '' && new_name != old_name
+    exec ':saveas ' . new_name
+    exec ':silent !rm ' . old_name
+    redraw!
+  endif
+endfunction
+
+function! ToggleDarkMode()
+  if g:dark_mode
+    let g:dark_mode = 0
+    set background=light
+    colorscheme calmar256-light
+    highlight ColorColumn ctermbg=226
+  else
+    let g:dark_mode = 1
+    set background=dark
+    colorscheme calmar256-dark
+    " highlight ColorColumn ctermbg=84
+  end
+endfunction
+
+map <leader>d :call ToggleDarkMode()<cr>
+let g:dark_mode = 0
+call ToggleDarkMode()
+
+""" Ruby specific things
+
+" rubyfmt
+map <leader>rf :%!rubyfmt<cr>
+source /Users/stephenbest/.vim/bundle/rubyfmt.vim
+
+map <leader>ct :call RefreshRubyCTags()<cr>
 
 " Run all specs
 map <leader>ra :call RunCommand("bundle exec rspec --force-color")<cr>
@@ -169,40 +205,10 @@ map <leader>rbp Orequire "pry"; binding.pry # DEBUG @bestie
 " Ruby tap and pry
 map <leader>rtp o.tap { \|o\| "DEBUG @bestie"; require "pry"; binding.pry }<esc>
 
-" Ruby no pry - remove a binding.pry from the current file, hope it's the one you wanted
-map <leader>rnp /binding.pry<cr>dd:noh
-
-" Convert Ruby hash keys, works with visual selection
-" Works with single quotes too.
-map <leader>rhn :call RubyHashConvertStringKeysToNewSyntax()<cr>
-map <leader>rho :call RubyHashConvertNewSyntaxKeysToStrings()<cr>
-map <leader>rh19 :call RubyHashConvertSymbolHashRocketKeysToNewSyntax()<cr>
-map <leader>rhrs :call RubyHashConvertSymbolHashRocketKeysToStrings()<cr>
-
-imap <c-l> <space>=><space>
-
-map <leader>8 "syiw<esc>:let @/ = @s<cr>
-
 function! RefreshRubyCTags()
   if !(bufname("%") =~ '\*.rb\')
-    exec(":!tmux new -d 'ctags -R --languages=ruby --exclude=.git --exclude=log'")
+    let result = system("tmux split-window -d -l2 'ctags -R  --languages=ruby --exclude=.git --exclude=log && echo \"tags generated 🏷🥳 \" || echo \"Error generating tags 😭\" && sleep 2'")
   endif
-endfunction
-
-function! RubyHashConvertStringKeysToNewSyntax()
-  normal ^xf=dwbr:j^
-endfunction
-
-function! RubyHashConvertNewSyntaxKeysToStrings()
-  normal I"f:i"lcl =>j
-endfunction
-
-function! RubyHashConvertSymbolHashRocketKeysToNewSyntax()
-  normal ^xf r:ldt j
-endfunction
-
-function! RubyHashConvertSymbolHashRocketKeysToStrings()
-  normal ^r"f i"j
 endfunction
 
 " Execute the current file, detects tests, always opens the quickfix window
@@ -223,9 +229,6 @@ map <leader>ros :call EditFile(InferSpecFile(expand('%')))<cr>
 " Generate Ruby classes with a bit less typing
 map <leader>rc :%!ruby-class-generator<cr>
 vmap <leader>rc :!ruby-class-generator<cr>
-
-" Unjoin
-map <leader>j :s/, /,\r/g<cr>:nohl<cr>
 
 " Run a test file at line (currently supports RSpec only)
 function! RunTestAtLine(filename, line_number)
@@ -329,36 +332,6 @@ function! EditFile(filename)
   exec "e " . a:filename
 endfunction
 
-" Rename current file thanks @samphippen
-function! RenameFile()
-  let old_name = expand('%')
-  let new_name = input('New file name: ', old_name, 'file')
-  if new_name != '' && new_name != old_name
-    exec ':saveas ' . new_name
-    exec ':silent !rm ' . old_name
-    redraw!
-  endif
-endfunction
-
-function! ToggleDarkMode()
-  if g:dark_mode
-    let g:dark_mode = 0
-    set background=light
-    colorscheme calmar256-light
-    highlight ColorColumn ctermbg=226
-  else
-    let g:dark_mode = 1
-    set background=dark
-    colorscheme calmar256-dark
-    " highlight ColorColumn ctermbg=84
-  end
-endfunction
-
-
-map <leader>d :call ToggleDarkMode()<cr>
-let g:dark_mode = 0
-call ToggleDarkMode()
-
 """ tmux things """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
 " This is all about generating a command within Vim and sending it to a second
@@ -417,6 +390,7 @@ function! ToggleRunInTargetTmuxPane()
   else
     let g:run_in_target_tmux_pane = 1
     echo "Running in existing tmux split is enabled"
+
   endif
 endfunction
 
@@ -473,6 +447,9 @@ au BufRead,BufNewFile *.{md,markdown} set filetype=markdown
 " Spell checking for text formats
 au BufRead,BufNewFile *.txt,*.md,*.markdown,*.textile,*.feature setlocal spell
 autocmd FileType gitcommit setlocal spell
+
+" Default action should save and reload vimrc when editing a vim file
+autocmd FileType vim nnoremap <leader><leader> :w<cr>:source $MYVIMRC<cr>:echom "vimrc reloaded"<cr>
 
 " add json syntax highlighting
 au BufNewFile,BufRead *.json set ft=javascript
