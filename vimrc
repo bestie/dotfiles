@@ -307,8 +307,8 @@ function! RunCommand(command)
   if strlen(a:command)
     " echo a:command
     let g:latest_command = a:command
-    if exists("g:run_in_other_tmux_pane") && g:run_in_other_tmux_pane
-      call RunInOtherTmuxPane(a:command)
+    if exists("g:run_in_target_tmux_pane") && g:run_in_target_tmux_pane
+      call RunInTargetTmuxPane(a:command)
     else
       exec "Dispatch " . a:command
     endif
@@ -347,13 +347,27 @@ function! ToggleDarkMode()
   end
 endfunction
 
+
 map <leader>d :call ToggleDarkMode()<cr>
 let g:dark_mode = 0
 call ToggleDarkMode()
 
-function! RunInOtherTmuxPane(command)
-  let pane_info = system("tmux list-panes|grep -v active|tail -n1")
-  let pane_number = split(pane_info, ":")[0]
+""" tmux things """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" This is all about generating a command within Vim and sending it to a second
+" tmux pane. This is often better than Dispatch, especially for more complex
+" situations.
+"
+" The 'target' pane is the just one I open after the one I'm editing in.
+" Hacky, but 99% of the time it works every time.
+
+map <leader>op :call ToggleRunInTargetTmuxPane()<cr>
+map <pageup> :call ScrollTargetTmuxPane("PageUp")<cr>
+map <pagedown> :call ScrollTargetTmuxPane("PageDown")<cr>
+nmap <leader><Up> :w<cr>:call TmuxUp()<cr>
+
+function! RunInTargetTmuxPane(command)
+  let pane_number = GuessTheTargetTmuxPane()
 
   let cmd = a:command
   let result = system("tmux send-keys -t" . pane_number . " q")
@@ -362,30 +376,42 @@ function! RunInOtherTmuxPane(command)
   let result = system("tmux send-keys -t" . pane_number . " '" . cmd . "' ENTER")
 endfunction
 
+" Send Page up and down to the target tmux pane
+function! ScrollTargetTmuxPane(page_key)
+  let pane_number = GuessTheTargetTmuxPane()
+
+  let result = system("tmux copy-mode -t" . pane_number . " -e")
+
+  echom "Paging " . a:page_key . " pane number " . pane_number
+  let _x = system("tmux send-keys -t" . pane_number . " " . a:page_key)
+endfunction
+
+" Send up enter to the target pane
 function! TmuxUp()
-  let pane_info = system("tmux list-panes|grep -v active|tail -n1")
-  let pane_number = split(pane_info, ":")[0]
+  let pane_number = GuessTheTargetTmuxPane()
 
   let result = system("tmux send-keys -t" . pane_number . " C-c Up ENTER")
 endfunction
 
-nmap <leader><Up> :w<cr>:call TmuxUp()<cr>
+function! GuessTheTargetTmuxPane()
+  let pane_info = system("tmux list-panes|grep -v active|tail -n1")
+  let pane_number = split(pane_info, ":")[0]
+  return pane_number
+endfunction
 
-function! ToggleRunInOtherTmuxPane()
-  if !exists("g:run_in_other_tmux_pane")
-    let g:run_in_other_tmux_pane = 0
+function! ToggleRunInTargetTmuxPane()
+  if !exists("g:run_in_target_tmux_pane")
+    let g:run_in_target_tmux_pane = 0
   end
 
-  if g:run_in_other_tmux_pane
-    let g:run_in_other_tmux_pane = 0
+  if g:run_in_target_tmux_pane
+    let g:run_in_target_tmux_pane = 0
     echo "Running in existing tmux split is disabled"
   else
-    let g:run_in_other_tmux_pane = 1
+    let g:run_in_target_tmux_pane = 1
     echo "Running in existing tmux split is enabled"
   endif
 endfunction
-
-map <leader>op :call ToggleRunInOtherTmuxPane()<cr>
 
 """ Key remaps (standard stuff) """""""""""""""""""""""""""""""""""""""""""""""
 
