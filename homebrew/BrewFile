@@ -1,4 +1,3 @@
-brew "ack"
 brew "bash"
 brew "bash-completion"
 brew "chruby"
@@ -9,18 +8,42 @@ brew "git"
 brew "htop"
 brew "jq"
 brew "nvm"
+brew "pstree"
+brew "pv"               # Pipe Viewer https://github.com/icetee/pv
+brew "reattach-to-user-namespace"
 brew "redis"
 brew "ripgrep"
 brew "ruby-install"
+brew "rubyfmt"
 brew "rustup-init"
+brew "sqlite"
 brew "tig"
 brew "tmux"
 brew "tree"
 brew "vim"
 brew "watch"
 brew "wget"
-brew "reattach-to-user-namespace"
-brew "sqlite"
+
+# New hotness
+brew "bat"              # 🦇 👈 🦀 + 🐈 https://github.com/sharkdp/bat
+brew "btop"             # like htop but 🔥 https://github.com/aristocratos/btop
+brew "choose"           # 🦀 replaces the one thing you do with awk, faster and easier https://github.com/theryangeary/choose
+brew "difftastic"       # 🦀 structural diff tool Rust https://github.com/Wilfred/difftastic
+brew "dust"             # 🦀 du but jazzy and Rust https://github.com/bootandy/dust
+brew "exa"              # 🦀 ls but jazzy and Rust https://github.com/ogham/exa
+brew "fd"               # 🦀 more capable 'find' replacement https://github.com/sharkdp/fd
+brew "fq"               # 🐿 jq for binary data https://github.com/wader/fq
+brew "git-delta"        # 🦀 delta pager for git, diff, and grep output https://github.com/dandavison/delta
+brew "gron"             # 🐿 grep for JSON https://github.com/tomnomnom/gron
+brew "hexyl"            # 🦀 xxd but jazzy https://github.com/sharkdp/hexyl
+brew "hwatch"           # 🦀 watch, but jazzy, Rust ofc https://github.com/blacknon/hwatch
+brew "jc"               # 🦀 convert various CLI output to JSON https://jless.io
+brew "jless"            # 🦀 jq but Rust https://jless.io https://github.com/PaulJuliusMartinez/jless
+brew "lazydocker"       # 🐿 Docker terminal UI https://github.com/jesseduffield/lazydocker
+brew "lazygit"          # 🐿 git terminal UI https://github.com/jesseduffield/lazygit
+brew "lsd"              # 🦀 ls but jazzy https://github.com/Peltoche/lsd
+brew "mosh"             # 🔥 Mobile Shell, replacement for interactive SSH terminals https://mosh.org
+brew "thefuck"          # 🐍 command line 'did you mean?' and correction https://github.com/nvbn/thefuck
 
 brew "postgresql"
 brew "mysql"
