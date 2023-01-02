@@ -68,6 +68,7 @@ set fileformats=unix
 set lazyredraw
 set shell=sh
 set hidden
+set mouse=a
 
 " Allow backspacing over autoindent, eol and start of lines
 set backspace=indent,eol,start
