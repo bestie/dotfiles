@@ -95,6 +95,13 @@ set ts=2 sts=2 sw=2 expandtab
 set splitbelow
 set splitright
 
+" Resize horizontal splits more easily and bigger increments
+nmap <silent> <c-w>. :vertical resize +5<CR>
+nmap <silent> <c-w>, :vertical resize -5<CR>
+" Resize vertical splits with the same keys but bigger increments
+nmap <silent> <c-w>+ :resize +3<CR>
+nmap <silent> <c-w>- :resize -3<CR>
+
 " Use the old vim regex engine (version 1, as opposed to version 2, which was
 " introduced in Vim 7.3.969). The Ruby syntax highlighting is significantly
 " slower with the new regex engine.
