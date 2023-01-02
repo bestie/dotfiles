@@ -148,6 +148,9 @@ autocmd BufReadPost * call PositionCursorFromViminfo()
 nmap cr_ crs<left> " snake_case
 nmap crC crm<left> " MixedCase or UpperCamalCase
 
+nmap - f_
+nmap _ F_
+
 """ Sick functions and macros """""""""""""""""""""""""""""""""""""""""""""""""
 
 command! -nargs=1 -complete=customlist,dispatch#command_complete CMD :call RunCommand(<q-args>)
@@ -440,8 +443,10 @@ command! WQ wq " Bind :WQ to :wq
 nmap <c-p> :Files<cr>
 nmap <leader>rg :Rg<space>
 nmap <leader>b :Buffer<cr>
-nmap <c-l> :bnext<cr>
-nmap <c-h> :bprev<cr>
+nmap [b :bprevious<cr>
+nmap ]b :bnext<cr>
+nmap [B :bfirst<cr>
+nmap ]B :blast<cr>
 
 """ Syntax highlighting """""""""""""""""""""""""""""""""""""""""""""""""""""""
 
