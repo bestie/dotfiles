@@ -68,6 +68,9 @@ set fileformats=unix
 set shell=sh
 set hidden
 set mouse=a
+set ttymouse=xterm2
+set virtualedit=block,insert,onemore " all also works
+" set mousemoveevent
 
 " Allow backspacing over autoindent, eol and start of lines
 set backspace=indent,eol,start
