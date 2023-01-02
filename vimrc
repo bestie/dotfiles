@@ -65,7 +65,6 @@ set path+=./spec
 set ttyfast                   " Apparently terminals are fast
 set noerrorbells              " @andrewmcdonough does not like bells
 set fileformats=unix
-set lazyredraw
 set shell=sh
 set hidden
 set mouse=a
