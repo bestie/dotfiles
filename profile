@@ -71,14 +71,6 @@ source $HOME/.cargo/env
 export RUST_BACKTRACE=1
 export PATH="$HOME/.cargo/bin:$PATH"
 
-### Node ######################################################################
-export NVM_DIR="$HOME/.nvm"
-source "/usr/local/opt/nvm/nvm.sh"
-
-### Postgres #################################################################
-alias pgstart='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
-alias pgstop='pg_ctl -D /usr/local/var/postgres stop -s -m fast'
-
 ### Misc CLI #################################################################
 alias ll="ls -l"
 alias psgrep="ps aux|grep"
@@ -89,21 +81,14 @@ function random-word {
   ruby -e "puts File.readlines('/usr/share/dict/words').shuffle.take(${1-1})"
 }
 
+alias fzfkill="ps aux | fzf --multi | awk '{print \$2}' | xargs kill $@"
+
 # Quick and easy CPU benchmark, calculate pi to 5000 sf
 alias bc-benchmark='time echo "scale=5000; a(1)*4" | bc -l'
 
-# Kill coreaudio for when Airplay device refused to be selected
-alias coreaudio-restart="sudo kill `ps ax | grep 'coreaudiod' | grep -v grep | awk '{print $1}'`"
-
-# names of processes keeping deleting files open
-# https://twitter.com/climagic/status/289382853555392513
 alias lsof-openfiles="lsof / | awk '/ DEL /{proc[$1]=1;} END{for (name in proc){print name;}}'"
-
-# List all processes listening on ports
 alias lsof-listening-ports="lsof -i| grep LISTEN"
-
 alias big-directories="du -a . | sort -n -r"
-
 alias image-resize-crop="convert $1 -resize $2x$2^ -gravity center -crop $2x$2+0+0 +repage resultimage"
 
 export PATH=$HOME/bin:$PATH
