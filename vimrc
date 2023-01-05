@@ -27,6 +27,7 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'haskell.vim'
 Plugin 'rust-lang/rust.vim'
 Plugin 'slim-template/vim-slim.git'
+Plugin 'dag/vim-fish'
 
 call vundle#end()
 filetype plugin indent on
