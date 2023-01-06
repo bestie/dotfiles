@@ -126,7 +126,7 @@ github-pub-key() {
 }
 
 # View some nice JSON, sorted!
-alias jqs="jq --sort-keys 'walk(if type == \"array\" then sort else . end)'";
+alias jqsorted="jq --sort-keys 'walk(if type == \"array\" then sort else . end)'";
 
 alias fzfkill=" ps -je | fzf --height=20 --multi --header-lines=1 --cycle --layout=reverse | awk '{print \$2}' | xargs kill $@"
 
