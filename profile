@@ -74,7 +74,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 
 ### Misc CLI #################################################################
 alias ll="ls -l"
-alias psgrep="ps aux|grep"
+alias psgrep="ps -je|grep"
 alias rsyncwoptions='rsync -ruv -e ssh'
 alias look-busy='cat /dev/urandom | hexdump -C | grep "ca fe"'
 alias fuck='sudo $(history -p \!\!)'
@@ -119,6 +119,8 @@ github-pub-key() {
 
 # View some nice JSON, sorted!
 alias jqs="jq --sort-keys 'walk(if type == \"array\" then sort else . end)'";
+
+alias fzfkill=" ps -je | fzf --height=20 --multi --header-lines=1 --cycle --layout=reverse | awk '{print \$2}' | xargs kill $@"
 
 ##############################################################################
 
