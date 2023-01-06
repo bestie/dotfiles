@@ -102,6 +102,13 @@ export LSCOLORS=Exfxcxdxbxegedabagacad
 export HISTSIZE=5000
 export HISTCONTROL=ignoreboth
 
+# Always open less with these options
+export LESS="--raw-control-chars --incsearch --jump-target=8 --mouse --window=-10 --SILENT --use-color"
+export PAGER="less"
+function page() {
+  cat ${1-\-} | ${PAGER}
+}
+
 # Homebrew only
 export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 
