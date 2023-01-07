@@ -329,8 +329,8 @@ function! RunCommand(command)
   if strlen(a:command)
     " echo a:command
     let g:latest_command = a:command
-    if exists("g:run_in_target_tmux_pane") && g:run_in_target_tmux_pane
-      call RunInTargetTmuxPane(a:command)
+    if exists("g:tmux_run_in_target_pane") && g:tmux_run_in_target_pane
+      call TMUX_RunInTargetTmuxPane(a:command)
     else
       exec "Dispatch " . a:command
     endif
@@ -353,57 +353,102 @@ endfunction
 " The 'target' pane is the just one I open after the one I'm editing in.
 " Hacky, but 99% of the time it works every time.
 
-map <leader>op :call ToggleRunInTargetTmuxPane()<cr>
-map <pageup> :call ScrollTargetTmuxPane("PageUp")<cr>
-map <pagedown> :call ScrollTargetTmuxPane("PageDown")<cr>
-nmap <leader><Up> :w<cr>:call TmuxUp()<cr>
+map <leader>op :call TMUX_ToggleRunInTargetTmuxPane()<cr>
+map <pageup> :call TMUX_ScrollTargetTmuxPane("PageUp")<cr>
+map <pagedown> :call TMUX_ScrollTargetTmuxPane("PageDown")<cr>
+nmap <leader><Up> :w<cr>:call TMUX_UpEnter()<cr>
 
-function! RunInTargetTmuxPane(command)
-  let pane_number = GuessTheTargetTmuxPane()
+if !exists("g:tmux_run_in_target_pane")
+  let g:tmux_run_in_target_pane = 0
+endif
+if !exists("g:tmux_target_pane")
+  let g:tmux_target_pane = { }
+endif
+
+function! TMUX_RunInTargetTmuxPane(command)
+  let pane_number = g:tmux_target_pane['uid']
 
   let cmd = a:command
-  let result = system("tmux send-keys -t" . pane_number . " q")
-  let result = system("tmux send-keys -t" . pane_number . " ENTER")
-  let result = system("tmux send-keys -t" . pane_number . " C-c")
-  let result = system("tmux send-keys -t" . pane_number . " '" . cmd . "' ENTER")
+  " ctrl+c will not quit interactive programs like irb so try q, enter first.
+  " the leading space prevents shell history filling up with q characters.
+  call system("tmux send-keys -t" . pane_number . " ' 'q ENTER C-c")
+  call system("tmux send-keys -t" . pane_number . " '" . cmd . "' ENTER")
+  if v:shell_error != 0
+    echom "Error targeting tmux pane with index `" . pane_number
+    echom "tmux says: `" . result
+    call TMUX_ToggleRunInTargetTmuxPane()
+    return
+  endif
+endfunction
+
+" Manually set the target pane
+function! TMUX_UserSetPane()
+  echo 'Select target pane by index:'
+  echo join(map(split(system('tmux list-panes |grep -v active'), "\n"), { _i,line -> "    " . line }))
+  let selected_index = input(" -> ")
+  let pane = filter(GetPanes(), { _i,pane_info -> pane_info['index'] == selected_index })[0]
+  call TMUX___GivePaneSomeSparkles(pane['uid'])
+  let g:tmux_target_pane = pane
 endfunction
 
 " Send Page up and down to the target tmux pane
-function! ScrollTargetTmuxPane(page_key)
-  let pane_number = GuessTheTargetTmuxPane()
-
+function! TMUX_ScrollTargetTmuxPane(page_key)
+  let pane_number = g:tmux_target_pane['uid']
   let result = system("tmux copy-mode -t" . pane_number . " -e")
-
-  echom "Paging " . a:page_key . " pane number " . pane_number
   let _x = system("tmux send-keys -t" . pane_number . " " . a:page_key)
 endfunction
 
 " Send up enter to the target pane
-function! TmuxUp()
-  let pane_number = GuessTheTargetTmuxPane()
-
-  let result = system("tmux send-keys -t" . pane_number . " C-c Up ENTER")
+function! TMUX_UpEnter()
+  let pane_number = g:tmux_target_pane['uid']
+  call system("tmux send-keys -t" . pane_number . " C-c Up ENTER")
 endfunction
 
-function! GuessTheTargetTmuxPane()
-  let pane_info = system("tmux list-panes|grep -v active|tail -n1")
-  let pane_number = split(pane_info, ":")[0]
-  return pane_number
-endfunction
-
-function! ToggleRunInTargetTmuxPane()
-  if !exists("g:run_in_target_tmux_pane")
-    let g:run_in_target_tmux_pane = 0
-  end
-
-  if g:run_in_target_tmux_pane
-    let g:run_in_target_tmux_pane = 0
-    echo "Running in existing tmux split is disabled"
+" Toggle feature, creates a new pane if non target pane is set
+function! TMUX_ToggleRunInTargetTmuxPane()
+  if g:tmux_run_in_target_pane == 1
+    let g:tmux_run_in_target_pane = 0
+    echo "Running in tmux split is disabled"
   else
-    let g:run_in_target_tmux_pane = 1
-    echo "Running in existing tmux split is enabled"
-
+    let g:tmux_run_in_target_pane = 1
+    if has_key(g:tmux_target_pane, 'uid') && TMUX___CheckPaneExists(g:tmux_target_pane['uid'])
+    else
+      call TMUX___CreateNewTmuxPane()
+    endif
+    echo "Running in tmux split is enabled (using " . g:tmux_target_pane['index'] ." uid=" . g:tmux_target_pane['uid'] . ")"
   endif
+  return
+endfunction
+
+function! TMUX___CheckPaneExists(uid)
+  let list_pane_uids_cmd = 'tmux list-panes -F "#{pane_id}"| grep ' . a:uid
+  let result = system(list_pane_uids_cmd)
+  return(result != "")
+endfunction
+
+function! TMUX___CreateNewTmuxPane()
+  let create_split_window_cmd = 'tmux split-window -hdP -F "#{pane_id} #{pane_index} #{pane_tty}" -c "$(pwd)"'
+  let result = system(create_split_window_cmd)
+  let fields = split(result, " ")
+  let g:tmux_target_pane = { 'uid': fields[0], 'index': fields[1], 'tty_dev': fields[2] }
+  call TMUX___GivePaneSomeSparkles(g:tmux_target_pane['uid'])
+  return g:tmux_target_pane
+endfunction
+
+function! TMUX___GivePaneSomeSparkles(pane_id)
+  let get_border_format = 'tmux show-option -g pane-border-format'
+  let tmux_border_format = system(get_border_format)
+  let tmux_border_format = substitute(tmux_border_format, '#P', '✨#P', '')
+  call system("tmux set-option -p -t" . a:pane_id . " " . tmux_border_format)
+endfunction
+
+function! TMUX___GetPanes()
+  let list_panes_cmd = 'tmux list-panes -F "#{pane_id} #{pane_index} #{pane_tty} #{pane_active}"'
+  let cmd_output = system(list_panes_cmd)
+  let pane_list = split(cmd_output, "\n")
+  call map(pane_list, { k,v -> split(v, " ")})
+  call map(pane_list, { _i,row -> { 'uid': row[0], 'index': row[1], 'tty_dev': row[2], 'active': row[3] } })
+  return pane_list
 endfunction
 
 """ Key remaps (standard stuff) """""""""""""""""""""""""""""""""""""""""""""""
