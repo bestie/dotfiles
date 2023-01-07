@@ -60,6 +60,7 @@ set cmdheight=1
 set wildmode=list:longest,full
 set scrolloff=8               " keep at least 5 lines above/below
 set sidescrolloff=8           " keep at least 5 lines left/right
+set textwidth=0
 
 set path+=./lib
 set path+=./spec
