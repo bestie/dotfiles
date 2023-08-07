@@ -23,6 +23,28 @@ PINK256="\[\033[38;2;255;150;255m\]"
 YELLOW256="\[\033[38;5;190m\]"
 LIGHT_YELLOW=$YELLOW256
 
+### Remember to use the new and shiny things #################################
+
+if [ -x "$(command -v rg)" ]; then
+  alias grep="rg"
+fi
+if [ -x "$(command -v hexyl)" ]; then
+  alias xxd="hexyl"
+fi
+if [ -x "$(command -v bat)" ]; then
+  alias cat="bat"
+fi
+if [ -x "$(command -v dust)" ]; then
+  alias du="dust"
+fi
+if [ -x "$(command -v lsd)" ]; then
+  alias ls="lsd"
+  alias tree="lsd --tree"
+fi
+if [ -x "$(command -v hwatch)" ]; then
+  alias watch="hwatch"
+fi
+
 ### Vim ######################################################################
 export EDITOR=vim
 export FZF_COMMAND="rg --files"

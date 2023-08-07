@@ -21,14 +21,13 @@ brew "rustup-init"
 brew "sqlite"
 brew "tig"
 brew "tmux"
-brew "tree"
 brew "vim"
-brew "watch"
 brew "wget"
 
 # New hotness
 brew "bat"              # 🦇 👈 🦀 + 🐈 https://github.com/sharkdp/bat
-brew "btop"             # like htop but 🔥 https://github.com/aristocratos/btop
+brew "btop"             # Like htop but 🔥 https://github.com/aristocratos/btop
+brew "ctop"             # 🐿 Top-like interface for container metrics https://github.com/bcicen/ctop
 brew "choose"           # 🦀 replaces the one thing you do with awk, faster and easier https://github.com/theryangeary/choose
 brew "difftastic"       # 🦀 structural diff tool Rust https://github.com/Wilfred/difftastic
 brew "dust"             # 🦀 du but jazzy and Rust https://github.com/bootandy/dust
