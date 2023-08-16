@@ -33,7 +33,7 @@ brew "difftastic"       # 🦀 structural diff tool Rust https://github.com/Wilf
 brew "dust"             # 🦀 du but jazzy and Rust https://github.com/bootandy/dust
 brew "exa"              # 🦀 ls but jazzy and Rust https://github.com/ogham/exa
 brew "fd"               # 🦀 more capable 'find' replacement https://github.com/sharkdp/fd
-brew "fq"               # 🐿 jq for binary data https://github.com/wader/fq
+brew "wader/tap/fq"     # 🐿 jq for binary data https://github.com/wader/fq
 brew "git-delta"        # 🦀 delta pager for git, diff, and grep output https://github.com/dandavison/delta
 brew "gron"             # 🐿 grep for JSON https://github.com/tomnomnom/gron
 brew "hexyl"            # 🦀 xxd but jazzy https://github.com/sharkdp/hexyl
