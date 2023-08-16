@@ -330,7 +330,7 @@ function! RunCommand(command)
   if strlen(a:command)
     " echo a:command
     let g:latest_command = a:command
-    if exists("g:tmux_run_in_target_pane") && g:tmux_run_in_target_pane
+    if exists("g:tmux_run_in_target_pane")
       call TMUX_RunInTargetTmuxPane(a:command)
     else
       exec "Dispatch " . a:command
@@ -387,7 +387,7 @@ function! TMUX_UserSetPane()
   echo 'Select target pane by index:'
   echo join(map(split(system('tmux list-panes |grep -v active'), "\n"), { _i,line -> "    " . line }))
   let selected_index = input(" -> ")
-  let pane = filter(GetPanes(), { _i,pane_info -> pane_info['index'] == selected_index })[0]
+  let pane = filter(TMUX___GetPanes(), { _i,pane_info -> pane_info['index'] == selected_index })[0]
   call TMUX___GivePaneSomeSparkles(pane['uid'])
   let g:tmux_target_pane = pane
 endfunction
