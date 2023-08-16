@@ -126,9 +126,9 @@ set completeopt=menuone,noinsert,noselect
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
 let g:netrw_altfile = 1
-let g:netrw_browse_split = 4 "s1 hs, 2 vs, 3 tab, 4 previous window
 let g:netrw_altv = 1
-" let g:netrw_list_hide = &wildignore " Nothing to hide
+let g:netrw_browse_split = 2 "s1 hs, 2 vs, 3 tab, 4 previous window
+let g:netrw_list_hide = &wildignore " Nothing to hide
 
 " unobtrusive whitespace highlighting
 " http://blog.kamil.dworakowski.name/2009/09/unobtrusive-highlighting-of-trailing.html
