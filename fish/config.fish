@@ -16,7 +16,7 @@ if command -q dust
 end
 if command -q lsd
   alias ls="lsd"
-  alias tree="lsd--tree"
+  alias tree="lsd --tree"
 end
 if command -q hwatch
   alias watch="hwatch"
@@ -51,6 +51,7 @@ alias gem-cull='gem list | cut -d" " -f1 | xargs gem uninstall -aIx'
 alias rackthis="echo \"run Rack::Directory.new('.')\" >> config.ru"
 alias rspec-dirty="git status --porcelain spec/ | grep -v '^ D' |grep '_spec.rb'| sed 's/^...//' | xargs -o bundle exec rspec"
 alias ll="ls -l"
+alias ltr="ls -ltr"
 alias psgrep="ps -je|grep"
 alias rsyncwoptions='rsync -ruv -e ssh'
 alias look-busy='cat /dev/urandom | hexdump -C | grep "ca fe"'
