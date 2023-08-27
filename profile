@@ -45,9 +45,23 @@ if [ -x "$(command -v hwatch)" ]; then
   alias watch="hwatch"
 fi
 
+### fzf ######################################################################
+
+if [[ ! "$PATH" == */usr/local/opt/fzf/bin* ]]; then
+  PATH="${PATH:+${PATH}:}/usr/local/opt/fzf/bin"
+fi
+[[ $- == *i* ]] && source "/usr/local/opt/fzf/shell/completion.bash" 2> /dev/null
+source /usr/local/opt/fzf/shell/key-bindings.bash
+
+export FZF_COMMAND="fd --max-depth=3"
+source ~/.fzf_default_opts
+
+alias fzfkill="ps aux | fzf --multi | awk '{print \$2}' | xargs kill $@"
+alias fzfjobs='jobid=$(jobs -l | fzf --height=~10 --no-multi | sed "s/^\[\([0-9]*\).*/\1/") && eval "fg %$jobid"'
+alias fzfkill=" ps -je | fzf --height=20 --multi --header-lines=1 --cycle --layout=reverse | awk '{print \$2}' | xargs kill $@"
+
 ### Vim ######################################################################
 export EDITOR=vim
-export FZF_COMMAND="rg --files"
 
 alias vim="stty stop '' -ixoff ; vim" # Disable terminal suspend so vim can map ctrl-s
 alias vim-dirty="git status --porcelain | grep -v '^ D' | sed 's/^...//' | xargs -o vim -O"
@@ -149,9 +163,6 @@ github-pub-key() {
 
 # View some nice JSON, sorted!
 alias jqsorted="jq --sort-keys 'walk(if type == \"array\" then sort else . end)'";
-
-alias fzfjobs='jobid=$(jobs -l | fzf --height=~10 --no-multi | sed "s/^\[\([0-9]*\).*/\1/") && eval "fg %$jobid"'
-alias fzfkill=" ps -je | fzf --height=20 --multi --header-lines=1 --cycle --layout=reverse | awk '{print \$2}' | xargs kill $@"
 
 ##############################################################################
 
