@@ -147,7 +147,9 @@ export HISTCONTROL=ignoreboth
 export LESS="--raw-control-chars --incsearch --jump-target=8 --mouse --window=-10 --SILENT --use-color"
 export PAGER="less"
 function page() {
-  cat ${1-\-} | ${PAGER}
+  if [ -x "$(command -v bat)" ]; then
+    bat --color=always --pager=less "${1-\-}"
+  fi
 }
 
 # copy public ssh key to clipboard
