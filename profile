@@ -19,8 +19,9 @@ LIGHT_MAGENTA="\[\033[1;35m\]"
 ### 256 Colors ###############################################################
 
 ORANGE256="\[\033[38;5;202m\]"
-PINK256="\[\033[38;2;255;150;255m\]"
+PINK256="\[\033[38;5;201m\]"
 YELLOW256="\[\033[38;5;190m\]"
+GREEN256="\[\033[38;5;82m\]"
 LIGHT_YELLOW=$YELLOW256
 
 ### Remember to use the new and shiny things #################################
@@ -56,9 +57,8 @@ source /usr/local/opt/fzf/shell/key-bindings.bash
 export FZF_COMMAND="fd --max-depth=3"
 source ~/.fzf_default_opts
 
-alias fzfkill="ps aux | fzf --multi | awk '{print \$2}' | xargs kill $@"
-alias fzfjobs='jobid=$(jobs -l | fzf --height=~10 --no-multi | sed "s/^\[\([0-9]*\).*/\1/") && eval "fg %$jobid"'
 alias fzfkill=" ps -je | fzf --height=20 --multi --header-lines=1 --cycle --layout=reverse | awk '{print \$2}' | xargs kill $@"
+source "$HOME/.job_control.bash"
 
 ### Vim ######################################################################
 export EDITOR=vim
@@ -78,7 +78,8 @@ alias vim-stdin="vim --not-a-term"
 source "$HOME/.gitprompt.sh"
 
 function prompt_function {
-  PS1="${PINK}\w${COLOR_NONE}$(git_prompt_segment)${LIGHT_GREEN}\$${COLOR_NONE} "
+  glyphs=$(jobs | awk '{print $3}' | job_glyphs | xargs)
+  PS1="${PINK256}\w${COLOR_NONE}$(git_prompt_segment) ${LIGHT_CYAN}${glyphs} ${GREEN256}\$${COLOR_NONE} "
 }
 PROMPT_COMMAND=prompt_function
 

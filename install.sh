@@ -8,8 +8,16 @@ ln -s $working_dir/vim ~/.vim
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 vim +PluginInstall +qall
 
-echo "Installing ackrc"
-ln -s $working_dir/ackrc ~/.ackrc
+echo "Installing .config"
+mkdir -p ~/.config
+echo "  fish"
+ln -s $working_dir/fish ~/.config/fish
+echo "  NeoVim"
+ln -s $working_dir/nvim ~/.config/nvim
+echo "  Karibiner"
+mkdir -p ~/.config/karabiner
+ln -s $working_dir/karabiner.json ~/.config/karabiner/karabiner.json
+
 echo "Installing gemrc"
 ln -s $working_dir/gemrc ~/.gemrc
 echo "Installing irbrc"
@@ -26,15 +34,14 @@ echo "Installing inputrc"
 ln -s $working_dir/inputrc ~/.inputrc
 echo "Installing profile"
 ln -s $working_dir/profile ~/.profile
+echo "Installing job_control.bash"
+ln -s $working_dir/job_control.bash ~/.job_control.bash
 echo "Installing Rails config"
 ln -s $working_dir/railsrc ~/.railsrc
 echo "Installing tmux.conf"
 ln -s $working_dir/tmux.conf ~/.tmux.conf
 echo "Installing ssh config"
 ln -s $working_dir/ssh/config ~/.ssh/config
-echo "Installing Karabiner config"
-mkdir -p ~/.config/karabiner
-ln -s $working_dir/karabiner.json ~/.config/karabiner/karabiner.json
 
 mkdir -p ~/bin
 
@@ -43,5 +50,10 @@ do
   echo "Installing $(basename $f)"
   ln -s $f ~/bin
 done
+
+echo "Installing job_glyphs"
+cd job_glyphs/c
+make
+mv job_glyphs ~/bin
 
 source ~/.profile

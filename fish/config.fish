@@ -64,5 +64,6 @@ alias big-directories="du -a . | sort -n -r"
 alias image-resize-crop="convert $1 -resize $2x$2^ -gravity center -crop $argv[2]x$argv[2]+0+0 +repage resultimage"
 alias copy-key='cat ~/.ssh/id_rsa.pub | pbcopy'
 alias jqsorted="jq --sort-keys 'walk(if type == \"array\" then sort else . end)'";
-#alias fzfjobs='jobid=$(jobs -l | fzf --height=~10 --no-multi | sed "s/^\[\([0-9]*\).*/\1/") && eval "fg %$jobid"'
 alias fzfkill="ps -je | fzf --height=20 --multi --header-lines=1 --cycle --layout=reverse | awk '{print \$2}' | xargs kill $argv"
+
+source "job_control.fish"
