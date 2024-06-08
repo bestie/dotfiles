@@ -12,9 +12,9 @@ vim +PluginInstall +qall
 echo "Installing .config"
 mkdir -p ~/.config
 echo "  fish"
-ln -s $working_dir/fish ~/.config
+ln -s $working_dir/fish/ ~/.config
 echo "  NeoVim"
-ln -s $working_dir/nvim ~/.config
+ln -s $working_dir/nvim/ ~/.config
 echo "  Karibiner"
 mkdir -p ~/.config/karabiner
 ln -s $working_dir/karabiner.json ~/.config/karabiner/karabiner.json
