@@ -149,6 +149,7 @@ endfunction
 autocmd BufReadPost * call PositionCursorFromViminfo()
 
 " Abolish aliases that make more sense to me
+" Erratta: Aliases for the Abolish plugin's functionality that make more sense to me.
 nmap cr_ crs<left> " snake_case
 nmap crC crm<left> " MixedCase or UpperCamalCase
 
