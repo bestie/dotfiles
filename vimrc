@@ -81,7 +81,8 @@ set backspace=indent,eol,start
 set t_Co=256                        " force vim to use 256 color
 
 " starting colorscheme
-colorscheme calmar256-dark
+" colorscheme solarized
+colorscheme bestie256dark
 
 " set vertical marker at col 80
 set colorcolumn=80
@@ -193,7 +194,7 @@ function! ToggleDarkMode()
     let g:dark_mode = 1
     set background=dark
     colorscheme calmar256-dark
-    " highlight ColorColumn ctermbg=84
+    highlight ColorColumn ctermbg=84
   end
 endfunction
 
