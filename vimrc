@@ -167,7 +167,7 @@ map <leader>vrc :edit $MYVIMRC<cr>
 autocmd BufEnter $MYVIMRC nnoremap <buffer> <leader><leader> :w<CR>:source $MYVIMRC<CR>
 
 " Rename current file
-map <leader>n :call RenameFile()<cr>
+map <leader>mv :call RenameFile()<cr>
 
 " Unjoin
 map <leader>j :s/[,\(\[\{]/&\r/g<cr>:s/[\)\]\}]/\r&/g<cr>=%:nohl<cr>
