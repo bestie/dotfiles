@@ -82,7 +82,7 @@ source "$HOME/.gitprompt.sh"
 
 function prompt_function {
   glyphs=$(jobs | awk '{print $3}' | job_glyphs | xargs)
-  PS1="${PINK256}\w${COLOR_NONE}$(git_prompt_segment) ${LIGHT_CYAN}${glyphs} ${GREEN256}\$${COLOR_NONE} "
+  PS1="${PINK256}\w${COLOR_NONE}$(git_prompt_segment)${LIGHT_CYAN}${glyphs} ${GREEN256}\$${COLOR_NONE} "
 }
 PROMPT_COMMAND=prompt_function
 
