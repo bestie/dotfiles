@@ -72,7 +72,10 @@ alias vim-last-commit="git diff head^ --name-only | xargs -o vim -O"
 alias vim-stdin="vim --not-a-term"
 
 ### Homebrew bash completion #################################################
-[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+if [ -x "$(command -v brew)" ]; then
+  [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+  export PATH=/usr/local/bin:/usr/local/sbin:$PATH
+fi
 
 ### Prompt ###################################################################
 source "$HOME/.gitprompt.sh"
@@ -145,9 +148,6 @@ export PAGER="less"
 function page() {
   cat ${1-\-} | ${PAGER}
 }
-
-# Homebrew only
-export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 
 # copy public ssh key to clipboard
 alias copy-key='cat ~/.ssh/id_rsa.pub | pbcopy'
