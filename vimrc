@@ -162,7 +162,8 @@ nmap <leader>x :CMD<space>
 
 " Open and reload vimrc
 map <leader>vrc :edit $MYVIMRC<cr>
-map <leader>vsrc :source $MYVIMRC<cr>:echo "VIMRC reloaded"<cr>
+" Save and reload with a double tap
+autocmd BufEnter $MYVIMRC nnoremap <buffer> <leader><leader> :w<CR>:source $MYVIMRC<CR>
 
 " Rename current file
 map <leader>n :call RenameFile()<cr>
@@ -510,9 +511,6 @@ au BufRead,BufNewFile *.{md,markdown} set filetype=markdown
 " Spell checking for text formats
 au BufRead,BufNewFile *.txt,*.md,*.markdown,*.textile,*.feature setlocal spell
 autocmd FileType gitcommit setlocal spell
-
-" Default action should save and reload vimrc when editing a vim file
-autocmd FileType vim nnoremap <leader><leader> :w<cr>:source $MYVIMRC<cr>:echom "vimrc reloaded"<cr>
 
 " add json syntax highlighting
 au BufNewFile,BufRead *.json set ft=javascript
