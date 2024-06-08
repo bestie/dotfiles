@@ -397,7 +397,8 @@ function! TMUX_RunInTargetTmuxPane(command)
   let cmd = a:command
   " ctrl+c will not quit interactive programs like irb so try q, enter first.
   " the leading space prevents shell history filling up with q characters.
-  call system("tmux send-keys -t" . pane_number . " ' 'q ENTER C-c")
+  call system("tmux send-keys -t" . pane_number . " SPACE q ENTER")
+  call system("tmux send-keys -t" . pane_number . " C-c")
   call system("tmux send-keys -t" . pane_number . " '" . cmd . "' ENTER")
   if v:shell_error != 0
     echom "Error targeting tmux pane with index `" . pane_number
