@@ -278,7 +278,7 @@ function! RunTestAtLine(filename, line_number)
   else
     echo "Not a recognized test '" . a:filename . "'"
   end
-endfunction!
+endfunction
 
 " Infer RSpec file for current file
 function! InferSpecFile(filename)
