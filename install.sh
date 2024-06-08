@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
-working_dir=$PWD
+working_dir=$(dirname $0)
 
 mkdir -p ~/.ssh
 
 ln -s $working_dir/vim ~/.vim
+mkdir -p ~/.vim/bundle
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 vim +PluginInstall +qall
 
