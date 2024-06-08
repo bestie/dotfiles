@@ -489,6 +489,8 @@ command! W  w  " Bind :W  to :w
 command! Wq wq " Bind :Wq to :wq
 command! WQ wq " Bind :WQ to :wq
 
+command! SUDOW tee % > /dev/null
+
 nmap <c-p> :Files<cr>
 nmap <leader>rg :Rg<space>
 nmap <leader>b :Buffer<cr>
