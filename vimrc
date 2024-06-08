@@ -204,6 +204,28 @@ map <leader>d :call ToggleDarkMode()<cr>
 let g:dark_mode = 0
 call ToggleDarkMode()
 
+nnoremap <leader>q :call QuickfixToggle(0)<cr><cr>
+nnoremap <leader>qq :call QuickfixToggle(1)<cr><cr>
+
+function! QuickfixToggle(focus_quickfix)
+  let l:quick_fix_is_open = 0
+  for win in getwininfo()
+    if win.quickfix
+      let l:quick_fix_is_open = 1
+    endif
+  endfor
+
+  if l:quick_fix_is_open
+    cclose
+  else
+    copen
+    if !a:focus_quickfix
+      wincmd p
+    endif
+  endif
+endfunction
+
+
 """ Ruby specific things
 
 " rubyfmt
@@ -519,22 +541,6 @@ au BufNewFile,BufRead *.json set ft=javascript
 " Remove 80 char line from temporary windows
 au BufReadPost quickfix setlocal colorcolumn=0
 au BufReadPost quickfix setlocal wrap
-
-nnoremap <leader>q :call QuickfixToggle()<cr><cr>
-
-let g:quickfix_is_open = 0
-
-function! QuickfixToggle()
-	if g:quickfix_is_open
-		cclose
-		let g:quickfix_is_open = 0
-		execute g:quickfix_return_to_window . "wincmd w"
-	else
-		let g:quickfix_return_to_window = winnr()
-		copen
-		let g:quickfix_is_open = 1
-	endif
-endfunction
 
 """ Plugin configs """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
