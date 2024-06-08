@@ -55,7 +55,7 @@ fi
 source /usr/local/opt/fzf/shell/key-bindings.bash
 
 export FZF_COMMAND="fd --max-depth=3"
-source ~/.fzf_default_opts
+source ~/.config/fzf/fzf_default_opts.sh
 
 alias fzfkill=" ps -je | fzf --height=20 --multi --header-lines=1 --cycle --layout=reverse | awk '{print \$2}' | xargs kill $@"
 source "$HOME/.job_control.bash"

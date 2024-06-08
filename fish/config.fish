@@ -66,4 +66,5 @@ alias copy-key='cat ~/.ssh/id_rsa.pub | pbcopy'
 alias jqsorted="jq --sort-keys 'walk(if type == \"array\" then sort else . end)'";
 alias fzfkill="ps -je | fzf --height=20 --multi --header-lines=1 --cycle --layout=reverse | awk '{print \$2}' | xargs kill $argv"
 
-source "job_control.fish"
+source "$HOME/.config/fish/job_control.fish"
+source "$HOME/.config/fzf/fzf_default_opts.sh"
