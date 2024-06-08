@@ -119,6 +119,7 @@ alias rsyncwoptions='rsync -ruv -e ssh'
 alias look-busy='cat /dev/urandom | hexdump -C | grep "ca fe"'
 alias fuck='sudo $(history -p \!\!)'
 alias reload='source ~/.profile'
+alias ssh-add="ssh-add && echo '' | pbcopy"
 function random-word {
   ruby -e "puts File.readlines('/usr/share/dict/words').shuffle.take(${1-1})"
 }
