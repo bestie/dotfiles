@@ -1,3 +1,18 @@
+#   ⚡⎇  ፨ ⌇᠅⁞
+set background_job_symbol "⚙"
+set git_prompt_char "" #(set_color cyan)"┋"
+set yellow "afd700"
+set color_branch $yellow
+set color_detached "brred"
+set color_remote "cyan"
+
+set dirty_state (set_color brred)'±'
+set clean_changes (set_color brgreen)'✚'
+set ahead_origin (set_color cyan)"↑"
+set behind_origin (set_color cyan)"↓"
+set ahead_and_behing (set_color cyan)"⇅⮃"
+set untracked_files (set_color brgreen)"" #
+
 function fish_right_prompt
     set -l cmd_status $status
     if test $cmd_status -ne 0
@@ -112,15 +127,17 @@ function fish_right_prompt
         set status_untracked 1
     end
 
-    set_color -o
+    # set_color -o
+
+    echo -n $git_prompt_char
 
     if test -n "$branch"
         if test $branch_detached -ne 0
-            set_color brmagenta
+            set_color $color_detached
         else
-            set_color green
+            set_color $color_branch
         end
-        echo -n " $branch"
+        echo -n "$branch "
     end
     if test -n "$commit"
         echo -n ' '(set_color yellow)"$commit"
@@ -129,34 +146,37 @@ function fish_right_prompt
         set_color normal
         echo -n (set_color white)':'(set_color -o brred)"$action"
     end
-    if test $status_ahead -ne 0
-        echo -n ' '(set_color brmagenta)'⬆'
-    end
-    if test $status_behind -ne 0
-        echo -n ' '(set_color brmagenta)'⬇'
-    end
-    if test $status_stashed -ne 0
-        echo -n ' '(set_color cyan)'✭'
-    end
+    # if test ($status_ahead -ne 0) and test ($status_behind -ne 0)
+    #     echo -n $ahead_and_behind
+    # else                              
+        if test $status_ahead -ne 0
+            echo -n $behind_origin
+        end
+        if test $status_behind -ne 0
+            echo -n $ahead_of_origin
+        end
+    # end
+    # if test $status_stashed -ne 0
+    #     echo -n ' '(set_color cyan)'✭'
+    # end
     if test $status_added -ne 0
-        echo -n ' '(set_color green)'✚'
+        echo -n $clean_changes
     end
-    if test $status_deleted -ne 0
-        echo -n ' '(set_color red)'✖'
-    end
+    # if test $status_deleted -ne 0
+    #     echo -n ' '(set_color red)'✖'
+    # end
     if test $status_modified -ne 0
-        echo -n ' '(set_color blue)'✱'
+        echo -n $dirty_state
     end
-    if test $status_renamed -ne 0
-        echo -n ' '(set_color magenta)'➜'
-    end
-    if test $status_unmerged -ne 0
-        echo -n ' '(set_color yellow)'═'
-    end
+    # if test $status_renamed -ne 0
+    #     echo -n ' '(set_color magenta)'➜'
+    # end
+    # if test $status_unmerged -ne 0
+    #     echo -n ' '(set_color yellow)'═'
+    # end
     if test $status_untracked -ne 0
-        echo -n ' '(set_color white)'◼'
+        echo -n $untracked_files
     end
 
-    echo -n ' '(set_color brmagenta)'🦠'
     set_color normal
 end
