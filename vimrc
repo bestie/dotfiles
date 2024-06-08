@@ -161,10 +161,13 @@ nmap _ F_
 command! -nargs=1 -complete=customlist,dispatch#command_complete CMD :call RunCommand(<q-args>)
 nmap <leader>x :CMD<space>
 
-" Open and reload vimrc
+" Edit vimrc
 map <leader>vrc :edit $MYVIMRC<cr>
 " Save and reload with a double tap
-autocmd BufEnter $MYVIMRC nnoremap <buffer> <leader><leader> :w<CR>:source $MYVIMRC<CR>
+augroup vimrc_specific_mappings
+  autocmd!
+  autocmd BufEnter vimrc nnoremap <buffer> <leader><leader> :w<CR>:source $MYVIMRC<CR>
+augroup END
 
 " Rename current file
 map <leader>mv :call RenameFile()<cr>
