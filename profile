@@ -92,10 +92,6 @@ alias rs='be rails server'
 alias rc='be rails console'
 alias ctags-ruby='ctags -R --languages=ruby --exclude=.git --exclude=log'
 
-function chruby-latest {
-  chruby `chruby | grep -v truffle | tail -n 1 | sed 's/.*ruby-//'`
-}
-
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
 chruby 3.2
