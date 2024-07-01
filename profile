@@ -75,6 +75,7 @@ alias vim-stdin="vim --not-a-term"
 if [ -x "$(command -v brew)" ]; then
   [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
   export PATH=/usr/local/bin:/usr/local/sbin:$PATH
+  export HOMEBREW_NO_AUTO_UPDATE=1
 fi
 
 ### Prompt ###################################################################

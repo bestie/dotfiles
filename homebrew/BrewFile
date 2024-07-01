@@ -1,7 +1,7 @@
 # vim: ft=ruby
 
 brew "bash"
-brew "bash-completion"
+brew "bash-completion@2"
 brew "chruby"
 brew "chruby-fish"
 brew "ctags"
@@ -15,7 +15,6 @@ brew "jq"
 brew "nvm"
 brew "pstree"
 brew "pv"               # Pipe Viewer https://github.com/icetee/pv
-brew "reattach-to-user-namespace"
 brew "redis"
 brew "ripgrep"
 brew "ruby-install"
@@ -31,10 +30,10 @@ brew "wget"
 brew "bat"              # 🦇 👈 🦀 + 🐈 https://github.com/sharkdp/bat
 brew "btop"             # Like htop but 🔥 https://github.com/aristocratos/btop
 brew "ctop"             # 🐿 Top-like interface for container metrics https://github.com/bcicen/ctop
-brew "choose"           # 🦀 replaces the one thing you do with awk, faster and easier https://github.com/theryangeary/choose
+brew "choose-rust"      # 🦀 replaces the one thing you do with awk, faster and easier https://github.com/theryangeary/choose
 brew "difftastic"       # 🦀 structural diff tool Rust https://github.com/Wilfred/difftastic
 brew "dust"             # 🦀 du but jazzy and Rust https://github.com/bootandy/dust
-brew "exa"              # 🦀 ls but jazzy and Rust https://github.com/ogham/exa
+brew "dutree"           # 🦀 Tool to analyze file system usage https://github.com/nachoparker/dutree
 brew "fd"               # 🦀 more capable 'find' replacement https://github.com/sharkdp/fd
 brew "wader/tap/fq"     # 🐿 jq for binary data https://github.com/wader/fq
 brew "git-delta"        # 🦀 delta pager for git, diff, and grep output https://github.com/dandavison/delta
@@ -48,23 +47,28 @@ brew "lazygit"          # 🐿 git terminal UI https://github.com/jesseduffield/
 brew "lsd"              # 🦀 ls but jazzy https://github.com/Peltoche/lsd
 brew "mosh"             # 🔥 Mobile Shell, replacement for interactive SSH terminals https://mosh.org
 brew "thefuck"          # 🐍 command line 'did you mean?' and correction https://github.com/nvbn/thefuck
+# brew "gitu"             # 🦀 git tui like Magit
+# brew "viu"              # 🦀 terminal image viewer
+# brew "yazi"             # 🦀 file manager
+# brew "yazi"             # 🦀 file manager
 
-brew "postgresql"
-brew "mysql"
+brew "ncspot"           # 🦀 ncurses spotify client
 
-cask "alfred"
-cask "docker"
-cask "spotify"
-cask "ngrok"
-cask "gitup"
-cask "visual-studio-code"
+# brew "postgresql"
+# brew "mysql"
 
-cask "divvy"
-cask "keybase"
-cask "iterm"
-cask "caffeine"
-cask "nordvpn"
-cask "firefox"
-cask "chrome"
-cask "smcfancontrol"
-cask "virtualbox"
+# cask "alfred"
+# cask "docker"
+# cask "spotify"
+# cask "ngrok"
+# cask "gitup"
+# cask "visual-studio-code"
+
+# cask "divvy"
+# cask "keybase"
+# cask "iterm"
+# cask "caffeine"
+# cask "firefox"
+# cask "chrome"
+# cask "smcfancontrol"
+# cask "virtualbox"
