@@ -56,6 +56,6 @@ function git_prompt_segment {
     s=" "
   fi
 
-  echo " (${branch}${s}${remote}${state}${color_reset})"
+  echo "${branch}${s}${remote}${state}${color_reset}"
 }
 
