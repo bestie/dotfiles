@@ -91,7 +91,7 @@ function prompt_function {
     last_exit_seg="❌​ ${LIGHT_RED}${last_exit} ${RESET}"
   fi
 
-  local glyph_seg=$(jobs | awk '{print $3}' | job_glyphs --separator '')
+  local glyph_seg=$(jobs | awk '{print $3}' | job_glyphs '')
   [[ "$glyph_seg" ]] && glyph_seg="\[$LIGHT_YELLOW\][\[$CYAN\]${glyph_seg}\[$LIGHT_YELLOW\]]\[$RESET\]"
   local git_seg=$(git_prompt_segment)
   local terminal_width=$(tput cols)
@@ -102,12 +102,16 @@ function prompt_function {
   local right_prompt_len=$(echo "${right_prompt_content}" | ruby --disable=gems -e "s=STDIN.read.strip; sg=s.gsub(/\\\\033\[\d+(;\d+)*\w/,''); puts sg.length")
   local right_prompt_start_column=$(($terminal_width-$right_prompt_len))
 
-  local right_prompt="\[\033[${right_prompt_start_column}G${right_prompt_content}\033[0G\]"
+  local move_to_right_prompt_start_column="\[\033[${right_prompt_start_column}G\]"
+  local right_prompt="${move_to_right_prompt_start_column}${right_prompt_content}"
   local current_dir="\[${PINK256}\]\w\[${COLOR_NONE}\]"
   local bg_glyphs="\[${CYAN}\]${glyph_seg}\[${COLOR_NONE}\]"
   local dollar="\[${GREEN256}\]\$\[${RESET}\]"
 
-  PS1="${right_prompt}🔨${current_dir}${bg_glyphs}${dollar} "
+  local save_position="\[\033[s\]"
+  local restore_position="\[\033[u\]"
+
+  PS1="${save_position}${right_prompt}${restore_position}🔨${current_dir}${bg_glyphs}${dollar} "
 }
 PROMPT_COMMAND=prompt_function
 

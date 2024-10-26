@@ -6,6 +6,7 @@
 #define MAX_APP_NAME_LENGTH 20
 #define MAX_GLYPH_LENGTH 10
 #define DEFAULT_GLYPH "⚙"
+#define DEFAULT_SEPARATOR "\n"
 
 typedef struct {
   char name[MAX_APP_NAME_LENGTH];
@@ -53,8 +54,12 @@ int main(int argc, char *argv[]) {
       {"emacs", ""},
   };
   int list_length = sizeof(app_list) / sizeof(App);
-
   char job_line[MAX_JOB_LINE_LENGTH];
+  char separator[16] = DEFAULT_SEPARATOR;
+
+  if (argc > 1) {
+    strcpy(separator, argv[1]);
+  }
 
   while (fgets(job_line, MAX_JOB_LINE_LENGTH, stdin)) {
     char *job_name = strtok(job_line, " \n");
@@ -63,8 +68,9 @@ int main(int argc, char *argv[]) {
     if (job_name != NULL) {
       glyph = get_glyph_by_job_name(job_name, app_list, list_length);
 
-      printf("%s\n", glyph);
+      printf("%s%s", glyph, separator);
     }
   }
+
   return 0;
 }
