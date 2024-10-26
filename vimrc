@@ -5,13 +5,12 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " for the editor itself
+Plugin 'bestie/nocowards256.vim'
 Plugin 'gmarik/Vundle.vim'
-Plugin 'Solarized'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'tpope/vim-rsi'
-Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tpope/vim-dispatch'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'mbbill/undotree'
@@ -80,9 +79,8 @@ set backspace=indent,eol,start
 
 set t_Co=256                        " force vim to use 256 color
 
-" starting colorscheme
-" colorscheme solarized
-colorscheme bestie256dark
+colorscheme nocowards256
+" colorscheme calmar256-dark
 
 " set vertical marker at col 80
 set colorcolumn=80
