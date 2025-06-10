@@ -24,6 +24,20 @@ LIGHT_MAGENTA="\033[1;35m"
      GREEN256="\033[38;5;82m"
  LIGHT_YELLOW=$YELLOW256
 
+prefix="/opt/homebrew"
+
+PATH="$prefix/bin:$PATH"
+PATH=$HOME/bin:$PATH
+
+### Bash things ##############################################################
+
+echo "Bash version is $BASH_VERSION"
+if [ -n "$BASH_VERSION" ]; then
+  if [ -f "$HOME/.bashrc" ]; then
+    . "$HOME/.bashrc"
+  fi
+fi
+
 ### Remember to use the new and shiny things #################################
 
 if [ -x "$(command -v rg)" ]; then
@@ -48,17 +62,13 @@ fi
 
 ### fzf ######################################################################
 
-if [[ ! "$PATH" == */usr/local/opt/fzf/bin* ]]; then
-  PATH="${PATH:+${PATH}:}/usr/local/opt/fzf/bin"
+if [ -x "$(command -v fzf)" ]; then
+  [[ $- == *i* ]] && source "$prefix/opt/fzf/shell/completion.bash" 2> /dev/null
+  source $prefix/opt/fzf/shell/key-bindings.bash
+  export FZF_COMMAND="fd --max-depth=3"
+  source ~/.config/fzf/fzf_default_opts.sh
+  alias fzfkill=" ps -je | fzf --height=20 --multi --header-lines=1 --cycle --layout=reverse | awk '{print \$2}' | xargs kill $@"
 fi
-[[ $- == *i* ]] && source "/usr/local/opt/fzf/shell/completion.bash" 2> /dev/null
-source /usr/local/opt/fzf/shell/key-bindings.bash
-
-export FZF_COMMAND="fd --max-depth=3"
-source ~/.config/fzf/fzf_default_opts.sh
-
-alias fzfkill=" ps -je | fzf --height=20 --multi --header-lines=1 --cycle --layout=reverse | awk '{print \$2}' | xargs kill $@"
-source "$HOME/.job_control.bash"
 
 ### Vim ######################################################################
 export EDITOR=vim
@@ -71,59 +81,17 @@ alias vim-open="xargs -o vim -O"
 alias vim-last-commit="git diff head^ --name-only | xargs -o vim -O"
 alias vim-stdin="vim --not-a-term"
 
-### Homebrew bash completion #################################################
-if [ -x "$(command -v brew)" ]; then
-  [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
-  export PATH=/usr/local/bin:/usr/local/sbin:$PATH
-  export HOMEBREW_NO_AUTO_UPDATE=1
-fi
-
-### Prompt ###################################################################
-source "$HOME/.gitprompt.sh"
-
-function prompt_function {
-  local last_exit=$?
-
-  if (( $last_exit == 0 )); then
-    last_exit_seg=""
-  else
-    # add a zero width space here so character count matches width
-    last_exit_seg="❌​ ${LIGHT_RED}${last_exit} ${RESET}"
-  fi
-
-  local glyph_seg=$(jobs | awk '{print $3}' | job_glyphs '')
-  [[ "$glyph_seg" ]] && glyph_seg="\[$LIGHT_YELLOW\][\[$CYAN\]${glyph_seg}\[$LIGHT_YELLOW\]]\[$RESET\]"
-  local git_seg=$(git_prompt_segment)
-  local terminal_width=$(tput cols)
-
-  local git_info="${branch}${dirty}${untracked}"
-
-  local right_prompt_content="${last_exit_seg}${git_seg}"
-  local right_prompt_len=$(echo "${right_prompt_content}" | ruby --disable=gems -e "s=STDIN.read.strip; sg=s.gsub(/\\\\033\[\d+(;\d+)*\w/,''); puts sg.length")
-  local right_prompt_start_column=$(($terminal_width-$right_prompt_len))
-
-  local move_to_right_prompt_start_column="\[\033[${right_prompt_start_column}G\]"
-  local right_prompt="${move_to_right_prompt_start_column}${right_prompt_content}"
-  local current_dir="\[${PINK256}\]\w\[${COLOR_NONE}\]"
-  local bg_glyphs="\[${CYAN}\]${glyph_seg}\[${COLOR_NONE}\]"
-  local dollar="\[${GREEN256}\]\$\[${RESET}\]"
-
-  local save_position="\[\033[s\]"
-  local restore_position="\[\033[u\]"
-
-  PS1="${save_position}${right_prompt}${restore_position}🔨${current_dir}${bg_glyphs}${dollar} "
-}
-PROMPT_COMMAND=prompt_function
-
 ### Rubby ####################################################################
 alias be='bundle exec'
 alias rs='be rails server'
 alias rc='be rails console'
 alias ctags-ruby='ctags -R --languages=ruby --exclude=.git --exclude=log'
 
-source /usr/local/share/chruby/chruby.sh
-source /usr/local/share/chruby/auto.sh
-chruby 3.2
+source "$prefix/share/chruby/chruby.sh"
+source "$prefix/share/chruby/auto.sh"
+if [ -x "$(command -v chruby)" ]; then
+  chruby 3
+fi
 
 alias gem-edit="bundle list --name-only | fzf | xargs -I{} -o bash -c 'bundle open {}; gem pristine {}'"
 alias gem-cull='gem list | cut -d" " -f1 | xargs gem uninstall -aIx'
@@ -144,6 +112,7 @@ alias rsyncwoptions='rsync -ruv -e ssh'
 alias look-busy='cat /dev/urandom | hexdump -C | grep "ca fe"'
 alias reload='source ~/.profile'
 alias ssh-add="ssh-add && echo '' | pbcopy"
+
 function random-word {
   ruby -e "puts File.readlines('/usr/share/dict/words').shuffle.take(${1-1})"
 }
@@ -158,7 +127,6 @@ alias lsof-listening-ports="lsof -i| grep LISTEN"
 alias big-directories="du -a . | sort -n -r"
 alias image-resize-crop="convert $1 -resize $2x$2^ -gravity center -crop $2x$2+0+0 +repage resultimage"
 
-export PATH=$HOME/bin:$PATH
 export CLICOLOR="YES"
 
 shopt -s histappend
@@ -166,46 +134,17 @@ export HISTSIZE=100000
 export HISTCONTROL=ignoreboth
 export HISTFILE=~/.bash_histories/$(date +%Y-%m)
 export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
-
-# Always open less with these options
-export LESS="--raw-control-chars --incsearch --jump-target=8 --mouse --window=-10 --SILENT --use-color"
-export PAGER="less"
 function page() {
   if [ -x "$(command -v bat)" ]; then
     bat --color=always --pager=less "${1-\-}" $@ 2>&1
   fi
 }
 
-# copy public ssh key to clipboard
-alias copy-key='cat ~/.ssh/id_rsa.pub | pbcopy'
-
-# print a UUID
-function uuid {
-  ruby -r securerandom -e 'puts SecureRandom.uuid'
-}
-
-# Get a user's public key from GitHub
-github_pub_key() {
-  curl https://github.com/${1}.keys
-}
-
-# View some nice JSON, sorted!
-alias jqsorted="jq --sort-keys 'walk(if type == \"array\" then sort else . end)'";
-
-# Using a script to do this for portability
-# alias fzfkill="ps -A | fzf --height=20 --multi --header-lines=1 --cycle --layout=reverse | awk '{print \$2}' | xargs kill $@"
-
-docker-nuke-containers() {
-  docker rm -vf $(docker ps -aq)
-}
-
-docker-nuke-images() {
-  docker rmi -f $(docker images -aq)
-}
+# Always open less with these options
+export LESS="--raw-control-chars --incsearch --jump-target=8 --mouse --window=-10 --SILENT --use-color"
+export PAGER="less"
 
 ##############################################################################
-
-function it2prof() { echo -e "\033]50;SetProfile=$1\a"; }
 
 source "$HOME/.localprofile"
 
