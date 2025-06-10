@@ -147,38 +147,3 @@ export PAGER="less"
 ##############################################################################
 
 source "$HOME/.localprofile"
-
-export KAFKA_BROKERS="localhost:9092"
-kafka-topic-create() {
-  kafka-topics --bootstrap-server $KAFKA_BROKERS --create --topic $1 --partitions ${2-1} --replication-factor 1
-}
-kafka-topic-delete() {
-  kafka-topics --bootstrap-server $KAFKA_BROKERS --delete --topic $1
-}
-kafka-topics-list() {
-  kafka-topics --bootstrap-server $KAFKA_BROKERS --list
-}
-kafka-consumers-groups-list() {
-  kakfa-consumer-groups --list --bootstrap-server $KAFKA_BROKERS
-#  5041  kafka-consumer-groups   --broker-list localhost:9092 --list
-}
-kafka-consumer-group-describe() {
-  kafka-consumer-groups --bootstrap-server $KAFKA_BROKERS --describe --group $1
-}
-kafka-topic-consumer-group-offsets() {
-  kafka-run-class kafka.tools.GetOffsetShell --broker-list $KAFKA_BROKERS --topic $1
-}
-
-# Kafka commands
-#  5040  kafka-consumer-groups --list
-#  5011  kafka-topics --bootstrap-server localhost:9092
-#  5030  kakfa-run-class kafka.tools.ConsumerOffsetChecker
-#  5037  kafka-consumer-groups --topic interesting --group boop
-#  5041  kafka-consumer-groups   --broker-list localhost:9092 --list
-#  5045  kafka-consumer-groups --bootstrap-server localhost:9092 --list --offsets
-#  5027  watch kafka-consumer-groups --bootstrap-server localhost:9092 --describe --group boop
-#  5017  kafka-run-class kafka.tools.GetOffsetShell   --broker-list localhost:9092 --topic interesting
-
-
-export JAVA_HOME="/Library/Java/JavaVirtualMachines/graalvm-jdk-22+36.1/Contents/Home/"
-export PATH="$JAVA_HOME/bin:$PATH"
