@@ -229,9 +229,9 @@ endfunction
 
 """ Ruby specific things
 
-" rubyfmt
-map <leader>rf :%!rubyfmt<cr>
-source /Users/stephenbest/.vim/bundle/rubyfmt.vim
+" " rubyfmt
+" map <leader>rf :%!rubyfmt<cr>
+" source /Users/stephenbest/.vim/bundle/rubyfmt.vim
 
 map <leader>ct :call RefreshRubyCTags()<cr>
 

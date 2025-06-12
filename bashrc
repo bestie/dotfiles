@@ -1,11 +1,32 @@
 
 ### Homebrew #################################################################
-
 if [ -x "$(command -v brew)" ]; then
   prefix=/opt/homebrew
   [[ -r "$prefix/etc/profile.d/bash_completion.sh" ]] && . "$prefix/etc/profile.d/bash_completion.sh"
   export PATH=$prefix/bin:$prefix/sbin:$PATH
   export HOMEBREW_NO_AUTO_UPDATE=1
+fi
+
+### History ##################################################################
+shopt -s histappend
+export HISTSIZE=100000
+export HISTCONTROL=ignoreboth
+export HISTFILE=~/.bash_histories/$(date +%Y-%m)
+export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
+function page() {
+  if [ -x "$(command -v bat)" ]; then
+    bat --color=always --pager=less "${1-\-}" $@ 2>&1
+  fi
+}
+
+### fzf ######################################################################
+
+if [ -x "$(command -v fzf)" ]; then
+  [[ $- == *i* ]] && source "$prefix/opt/fzf/shell/completion.bash" 2> /dev/null
+  source $prefix/opt/fzf/shell/key-bindings.bash
+  source ~/.config/fzf/fzf_default_opts.sh
+  export FZF_COMMAND="fd --max-depth=3"
+  alias fzfkill=" ps -je | fzf --height=20 --multi --header-lines=1 --cycle --layout=reverse | awk '{print \$2}' | xargs kill $@"
 fi
 
 ### Prompt ###################################################################
@@ -25,10 +46,9 @@ function prompt_function {
   local glyph_seg=$(jobs | awk '{print $3}' | job_glyphs '')
   [[ "$glyph_seg" ]] && glyph_seg="\[$LIGHT_YELLOW\][\[$CYAN\]${glyph_seg}\[$LIGHT_YELLOW\]]\[$RESET\]"
   local git_seg=$(git_prompt_segment)
+  [[ "$git_seg" ]] && git_seg=" $git_seg"
+
   local terminal_width=$(tput cols)
-
-  local git_info="${branch}${dirty}${untracked}"
-
   local right_prompt_content="${last_exit_seg}${git_seg}"
   local right_prompt_len=$(echo "${right_prompt_content}" | ruby --disable=gems -e "s=STDIN.read.strip; sg=s.gsub(/\\\\033\[\d+(;\d+)*\w/,''); puts sg.length")
   local right_prompt_start_column=$(($terminal_width-$right_prompt_len))
@@ -42,7 +62,8 @@ function prompt_function {
   local save_position="\[\033[s\]"
   local restore_position="\[\033[u\]"
 
-  PS1="${save_position}${right_prompt}${restore_position}🔨${current_dir}${bg_glyphs}${dollar} "
+  # PS1="${save_position}${right_prompt}${restore_position}🔨${current_dir}${bg_glyphs}${dollar} "
+  PS1="🔨${current_dir}${git_seg}${bg_glyphs}${dollar} "
 }
 PROMPT_COMMAND=prompt_function
 

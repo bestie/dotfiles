@@ -1,8 +1,8 @@
 return {
-	dir = "/Users/stephenbest/code/paneity.nvim",
-	--  name = "paneity",
-	dev = true,
   "bestie/paneity.nvim",
+	-- name = "paneity",
+	-- dev = true,
+	-- dir = "/Users/stephenbest/code/paneity.nvim",
   config = function()
     local paneity = require("paneity")
     paneity.setup({

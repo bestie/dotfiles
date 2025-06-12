@@ -1,10 +1,17 @@
 #!/usr/bin/env bash
 
-working_dir=$(dirname $0)
+echo "Installing Rosetta"
+softwareupdate --install-rosetta --agree-to-license
+echo "Done."
+
+working_dir=$(pwd)
+cat .git/config | grep "bestie/dotfiles"
+target_dir=$HOME
 
 mkdir -p ~/.ssh
 
 ln -s $working_dir/vim ~/.vim
+ln -s $working_dir/vimrc ~/.vimrc
 mkdir -p ~/.vim/bundle
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 vim +PluginInstall +qall
@@ -46,7 +53,7 @@ ln -s $working_dir/tmux.conf ~/.tmux.conf
 echo "Installing ssh config"
 ln -s $working_dir/ssh/config ~/.ssh/config
 
-mkdir -p ~/bin
+mkdir -p $HOME/bin
 
 for f in $working_dir/bin/*
 do
@@ -59,4 +66,7 @@ cd job_glyphs/c
 make
 mv job_glyphs ~/bin
 
-source ~/.profile
+
+brew bundle install --file $working_dir/homebrew/Brewfile
+echo "/opt/homebrew/bin/bash" >> /etc/shells
+

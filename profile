@@ -29,10 +29,11 @@ prefix="/opt/homebrew"
 PATH="$prefix/bin:$PATH"
 PATH=$HOME/bin:$PATH
 
-### Bash things ##############################################################
+### We bashin'? 🔨🔨🔨 #######################################################
 
 echo "Bash version is $BASH_VERSION"
 if [ -n "$BASH_VERSION" ]; then
+  export SHELL="$prefix/bin/bash"
   if [ -f "$HOME/.bashrc" ]; then
     . "$HOME/.bashrc"
   fi
@@ -60,16 +61,6 @@ if [ -x "$(command -v hwatch)" ]; then
   alias watch="hwatch"
 fi
 
-### fzf ######################################################################
-
-if [ -x "$(command -v fzf)" ]; then
-  [[ $- == *i* ]] && source "$prefix/opt/fzf/shell/completion.bash" 2> /dev/null
-  source $prefix/opt/fzf/shell/key-bindings.bash
-  export FZF_COMMAND="fd --max-depth=3"
-  source ~/.config/fzf/fzf_default_opts.sh
-  alias fzfkill=" ps -je | fzf --height=20 --multi --header-lines=1 --cycle --layout=reverse | awk '{print \$2}' | xargs kill $@"
-fi
-
 ### Vim ######################################################################
 export EDITOR=vim
 
@@ -95,7 +86,6 @@ fi
 
 alias gem-edit="bundle list --name-only | fzf | xargs -I{} -o bash -c 'bundle open {}; gem pristine {}'"
 alias gem-cull='gem list | cut -d" " -f1 | xargs gem uninstall -aIx'
-alias rackthis="echo \"run Rack::Directory.new('.')\" >> config.ru"
 alias rspec-dirty="git status --porcelain spec/ | grep -v '^ D' |grep '_spec.rb'| sed 's/^...//' | xargs -o bundle exec rspec"
 
 export DISABLE_SPRING=1
@@ -129,21 +119,13 @@ alias image-resize-crop="convert $1 -resize $2x$2^ -gravity center -crop $2x$2+0
 
 export CLICOLOR="YES"
 
-shopt -s histappend
-export HISTSIZE=100000
-export HISTCONTROL=ignoreboth
-export HISTFILE=~/.bash_histories/$(date +%Y-%m)
-export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
-function page() {
-  if [ -x "$(command -v bat)" ]; then
-    bat --color=always --pager=less "${1-\-}" $@ 2>&1
-  fi
-}
-
 # Always open less with these options
 export LESS="--raw-control-chars --incsearch --jump-target=8 --mouse --window=-10 --SILENT --use-color"
 export PAGER="less"
 
 ##############################################################################
 
-source "$HOME/.localprofile"
+# if file exists, source it
+if [ -f "$HOME/.localprofile" ]; then
+  source "$HOME/.localprofile"
+fi
