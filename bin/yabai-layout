@@ -1,0 +1,89 @@
+#!/usr/bin/env bash
+
+
+thirds-cycle() {
+  local direction=$1  # horizontal or vertical
+  local step=$2       # optional: 1 or -1 to reverse cycle
+
+  step=${step:-1}
+
+  local win=$(yabai -m query --windows --window)
+  local win_x=$(printf "%.0f" $(echo "$win" | jq -r '.frame.x'))
+  local win_y=$(printf "%.0f" $(echo "$win" | jq -r '.frame.y'))
+  echo "Window position: $win_x, $win_y"
+
+  if [ "$direction" = "horizontal" ]; then
+    local third_w=$((screen_w / 3))
+    local index=$(( (win_x - screen_x) / third_w ))
+    local next_index=$(( (index + step + 3) % 3 ))
+    move_resize "$((screen_x + third_w * next_index))" "$screen_y" "$third_w" "$screen_h"
+  elif [ "$direction" = "vertical" ]; then
+    local third_h=$((screen_h / 3))
+    local index=$(( (win_y - screen_y) / third_h ))
+    local next_index=$(( (index + step + 3) % 3 ))
+    move_resize "$screen_x" "$((screen_y + third_h * next_index))" "$screen_w" "$third_h"
+  else
+    echo "Invalid direction: $direction"
+    exit 1
+  fi
+}
+
+# Format is <rows>:<cols>:<start-x>:<start-y>:<width>:<height>
+
+case "$1" in
+  fullscreen)
+    yabai -m window --grid 1:1:0:0:1:1
+    ;;
+  half-left)
+    yabai -m window --grid 1:2:0:0:1:1
+    ;;
+  half-right)
+    yabai -m window --grid 1:2:1:0:1:1
+    ;;
+  half-top)
+    yabai -m window --grid 2:1:0:0:1:1
+    ;;
+  half-bottom)
+    yabai -m window --grid 2:1:0:1:1:1
+    ;;
+  sixty-forty-left)
+    yabai -m window --grid 1:10:0:0:6:1
+    ;;
+  sixty-forty-right)
+    yabai -m window --grid 1:10:6:0:4:1
+    ;;
+  sixty-forty-top)
+    yabai -m window --grid 10:1:0:0:1:6
+    ;;
+  sixty-forty-bottom)
+    yabai -m window --grid 10:1:0:6:1:4
+    ;;
+  thirds-1)
+    yabai -m window --grid 1:3:0:0:1:1
+    ;;
+  thirds-2)
+    yabai -m window --grid 1:3:1:0:1:1
+    ;;
+  thirds-3)
+    yabai -m window --grid 1:3:2:0:1:1
+    ;;
+  quads-1)
+    yabai -m window --grid 2:2:0:0:1:1
+    ;;
+  quads-2)
+    yabai -m window --grid 2:2:1:0:1:1
+    ;;
+  quads-3)
+    yabai -m window --grid 2:2:0:1:1:1
+    ;;
+  quads-4)
+    yabai -m window --grid 2:2:1:1:1:1
+    ;;
+  thirds)
+    thirds-cycle horizontal
+    ;;
+  *)
+    echo "Usage: $0 {fullscreen|half-left|half-right|half-top|half-bottom|sixty-forty-left|sixty-forty-right|sixty-forty-top|sixty-forty-bottom|thirds-1|thirds-2|thirds-3|quads-1|quads-2|quads-3|quads-4}"
+    exit 1
+    ;;
+esac
