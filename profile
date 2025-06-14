@@ -31,12 +31,16 @@ PATH=$HOME/bin:$PATH
 
 ### We bashin'? 🔨🔨🔨 #######################################################
 
-echo "Bash version is $BASH_VERSION"
 if [ -n "$BASH_VERSION" ]; then
+  echo "Bash version is $BASH_VERSION, so we bashin' 🔨🔨🔨"
   export SHELL="$prefix/bin/bash"
   if [ -f "$HOME/.bashrc" ]; then
     . "$HOME/.bashrc"
+  else
+    echo "No $HOME/.bashrc"
   fi
+else
+  echo "Not bash!"
 fi
 
 ### Remember to use the new and shiny things #################################

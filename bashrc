@@ -35,12 +35,17 @@ source "$HOME/.job_control.bash"
 
 function prompt_function {
   local last_exit=$?
+  local prefix=""
+  local last_exit_seg=""
 
   if (( $last_exit == 0 )); then
     last_exit_seg=""
+    prefix="🐚🔨"
   else
     # add a zero width space here so character count matches width
-    last_exit_seg="❌​ ${LIGHT_RED}${last_exit} ${RESET}"
+    last_exit_seg=" ❌​ \[${LIGHT_RED}\]${last_exit} \[${RESET}\]"
+    prefix="🤕🔨"
+    last_exit=0
   fi
 
   local glyph_seg=$(jobs | awk '{print $3}' | job_glyphs '')
@@ -63,7 +68,7 @@ function prompt_function {
   local restore_position="\[\033[u\]"
 
   # PS1="${save_position}${right_prompt}${restore_position}🔨${current_dir}${bg_glyphs}${dollar} "
-  PS1="🔨${current_dir}${git_seg}${bg_glyphs}${dollar} "
+  PS1="${prefix}${current_dir}${git_seg}${bg_glyphs}${last_exit_seg}${dollar} "
 }
 PROMPT_COMMAND=prompt_function
 
