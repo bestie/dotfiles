@@ -68,7 +68,7 @@ PROMPT_COMMAND=prompt_function
 
 
 # copy public ssh key to clipboard
-alias copy-key='cat ~/.ssh/id_rsa.pub | pbcopy'
+alias copy-key='cat ~/.ssh/id_ed25519.pub | pbcopy'
 
 # print a UUID
 function uuid {
