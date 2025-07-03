@@ -1,8 +1,8 @@
 return {
-  "bestie/paneity.nvim",
-	-- name = "paneity",
-	-- dev = true,
-	-- dir = "/Users/stephenbest/code/paneity.nvim",
+  -- "bestie/paneity.nvim",
+	name = "paneity",
+	dev = true,
+	dir = "/Users/stephenbest/code/paneity.nvim",
   config = function()
     local paneity = require("paneity")
     paneity.setup({
@@ -37,12 +37,16 @@ return {
         else
           return prefix .. "ruby " .. vim.fn.expand("%")
         end
+      elseif filetype == "rust" then
+        if vim.fn.filereadable("Cargo.toml") == 1 then
+          return "cargo test"
+        else
+          return "rustc " .. vim.fn.expand("%") .. " && ./" .. vim.fn.expand("%:r")
+        end
       elseif filetype == "sh" or filetype == "bash" then
         return "bash " .. vim.fn.expand("%")
-      -- Docker
       elseif filetype == "dockerfile" then
         return "docker build ."
-      -- C/C++
       elseif filetype == "c" or filetype == "cpp" then
         return "gcc " .. vim.fn.expand("%") .. " -o " .. vim.fn.expand("%:r") .. " && ./" .. vim.fn.expand("%:r")
       else
@@ -51,19 +55,15 @@ return {
     end
 
     local save_then_repeat = function()
+      if paneity.previous_command == "" then
+        local command = guess_command()
+        paneity.run(command)
+        return
+      end
       vim.cmd("w!")
       paneity.repeat_command()
     end
 
-    -- local commander = require("commander")
-    -- commander.setup({
-    --   runner = function(command)
-    --     paneity.set_command(command)
-    --     paneity.exec_in_pane(command)
-    --   end
-    -- })
-
-    --  save before re-running the command
     vim.keymap.set("n", "<leader><leader>", save_then_repeat)
   end,
 }
