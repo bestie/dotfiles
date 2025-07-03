@@ -33,14 +33,16 @@ fi
 source "$HOME/.gitprompt.sh"
 source "$HOME/.job_control.bash"
 
+error_pid=0
 function prompt_function {
   local last_exit=$?
+  local prefix="🐚🔨"
 
-  if (( $last_exit == 0 )); then
-    last_exit_seg=""
+  if (( $last_exit == 0 || $last_exit == 130 || "$!" == "$error_pid" )); then
+    local prefix="🐚🔨"
   else
-    # add a zero width space here so character count matches width
-    last_exit_seg="❌​ ${LIGHT_RED}${last_exit} ${RESET}"
+    local prefix="🤕🔨"
+    error_pid=$!
   fi
 
   local glyph_seg=$(jobs | awk '{print $3}' | job_glyphs '')
@@ -49,21 +51,18 @@ function prompt_function {
   [[ "$git_seg" ]] && git_seg=" $git_seg"
 
   local terminal_width=$(tput cols)
-  local right_prompt_content="${last_exit_seg}${git_seg}"
-  local right_prompt_len=$(echo "${right_prompt_content}" | ruby --disable=gems -e "s=STDIN.read.strip; sg=s.gsub(/\\\\033\[\d+(;\d+)*\w/,''); puts sg.length")
+  local right_prompt_content="${git_seg}"
+  local right_prompt_len=$(echo -n "${right_prompt_content}" | ruby --disable=gems -e "s=STDIN.read.strip; sg=s.gsub(/\\\\033\[\d+(;\d+)*\w/,''); print sg.length")
   local right_prompt_start_column=$(($terminal_width-$right_prompt_len))
 
-  local move_to_right_prompt_start_column="\[\033[${right_prompt_start_column}G\]"
-  local right_prompt="${move_to_right_prompt_start_column}${right_prompt_content}"
-  local current_dir="\[${PINK256}\]\w\[${COLOR_NONE}\]"
+  local move_to_right_prompt_start_column="\033[${right_prompt_start_column}G"
+  local move_to_first_column="\033[1G"
+
+  local current_dir="\[${PINK256}\]\w"
   local bg_glyphs="\[${CYAN}\]${glyph_seg}\[${COLOR_NONE}\]"
   local dollar="\[${GREEN256}\]\$\[${RESET}\]"
 
-  local save_position="\[\033[s\]"
-  local restore_position="\[\033[u\]"
-
-  # PS1="${save_position}${right_prompt}${restore_position}🔨${current_dir}${bg_glyphs}${dollar} "
-  PS1="🔨${current_dir}${git_seg}${bg_glyphs}${dollar} "
+  PS1="\[${move_to_right_prompt_start_column}${right_prompt_content}${move_to_first_column}\]${prefix}${current_dir}${bg_glyphs}${dollar} "
 }
 PROMPT_COMMAND=prompt_function
 
