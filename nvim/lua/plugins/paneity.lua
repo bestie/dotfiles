@@ -54,6 +54,28 @@ return {
       end
     end
 
+    local add_cursor_line_number = function(command)
+      local line_number = vim.fn.line(".")
+
+      -- if command contains rspec and ends with _spec.rb
+      if command:match("rspec") and command:match("_spec%.rb$") then
+        command = command .. ":" .. line_number
+      else
+        -- show an error to the user
+        vim.notify("Command does not support line numbers: " .. command, vim.log.levels.ERROR)
+      end
+
+      return command
+    end
+
+    local run_with_line_number = function()
+      local command = guess_command()
+      command = add_cursor_line_number(command)
+
+      vim.cmd("w!")
+      paneity.run(command)
+    end
+
     local save_then_repeat = function()
       if paneity.previous_command == "" then
         local command = guess_command()
@@ -65,6 +87,7 @@ return {
     end
 
     vim.keymap.set("n", "<leader><leader>", save_then_repeat)
+    vim.keymap.set("n", "<leader>l", run_with_line_number, { desc = "Run with line number" })
   end,
 }
 
