@@ -32,6 +32,9 @@
   # Pipes into less if the graph is longer than a single page.
   lg = "!f() { git private-log-pretty-graph ${@-HEAD} | less --RAW-CONTROL-CHARS --quit-if-one-screen ; }; f"
 
+  # Same nice graph view but with preview window
+  lgp = "!f() { git private-log-pretty-graph ${@-HEAD} | fzf --tmux=center,90%,border-native --height=+90% --multi --ansi --delimiter=' ' --preview='git log --color=always -p {2}' | awk '{print $2}' ; }; f"
+
   # Do the same but stop at the first common anceator with main / specified revision
   lg-merge-base = "!f() { git private-log-pretty-graph $(git merge-base HEAD ${1-${MAIN_BRANCH-main}})^..HEAD | less --RAW-CONTROL-CHARS --quit-if-one-screen ; }; f"
 
