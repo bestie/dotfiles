@@ -15,7 +15,12 @@ return {
             symbols = { added = '+', modified = '~', removed = '-' },
           }
         },
-        lualine_c = { { 'filename', path=1, } },
+        lualine_c = {
+          { 'filename', path=1, },
+          function()
+            return require('lsp-progress').progress()
+          end,
+        },
         lualine_x = { 'encoding', 'fileformat', 'filetype' },
         lualine_y = { 'progress' },
         lualine_z = { 'location' },
@@ -30,5 +35,12 @@ return {
       },
       extensions = { 'nvim-tree' },
     }
+
+    vim.api.nvim_create_augroup("lualine_augroup", { clear = true })
+    vim.api.nvim_create_autocmd("User", {
+      group = "lualine_augroup",
+      pattern = "LspProgressStatusUpdated",
+      callback = require("lualine").refresh,
+    })
   end,
 }
