@@ -12,6 +12,7 @@ return {
       keybindings = {
         toggle = "<leader>t",
         repeat_command = false,
+        new_command = false,
       },
       -- close_pane_on_exit
       -- default_command
@@ -75,6 +76,15 @@ return {
       vim.cmd("w!")
       paneity.run(command)
     end
+    vim.keymap.set("n", "<leader>tc", function()
+      local prefill = guess_command()
+      paneity.new_command({
+        prefill = prefill,
+        post_exec = function(command)
+          vim.notify("Command finished: " .. command, vim.log.levels.INFO)
+        end,
+      })
+    end)
 
     local save_then_repeat = function()
       if paneity.previous_command == "" then
