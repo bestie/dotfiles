@@ -52,7 +52,7 @@ local function save_and_reload()
 end
 
 vim.keymap.set("n", "<leader>so", save_and_reload , opts("Source current file"))
--- vim.keymap.set("n", "<leader>mv", require("mv_file").mv_file, opts("[M]o[v]e current file"))
+vim.keymap.set("n", "<leader>mv", require("mv_file").mv_file, opts("[M]o[v]e current file"))
 
 -- Select all
 vim.keymap.set("n", "<leader>va", "gg<S-v>G", opts("[V]isual select [a]ll"))

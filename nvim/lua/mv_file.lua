@@ -2,7 +2,6 @@ M = {}
 
 M.mv_file = function()
   local current_path = vim.fn.expand("%:.")
-  local new_path = ""
 
   local ok, new_path = pcall(function()
     -- Prompt for new file name with file name completion
@@ -13,7 +12,6 @@ M.mv_file = function()
     vim.notify("Rename aborted", vim.log.levels.ERROR)
     return
   end
-
 
   -- exec command :saveas
   local success, err = pcall(vim.cmd, "saveas " .. new_path)
