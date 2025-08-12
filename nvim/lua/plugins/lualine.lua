@@ -20,6 +20,9 @@ return {
           function()
             return require('lsp-progress').progress()
           end,
+          function()
+            return require('paneity').status_line()
+          end
         },
         lualine_x = { 'encoding', 'fileformat', 'filetype' },
         lualine_y = { 'progress' },
