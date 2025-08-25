@@ -52,7 +52,6 @@ brew "hexyl"            # 🦀 xxd but jazzy https://github.com/sharkdp/hexyl
 brew "hwatch"           # 🦀 watch, but jazzy, Rust ofc https://github.com/blacknon/hwatch
 brew "jc"               # 🦀 convert various CLI output to JSON https://jless.io
 brew "jless"            # 🦀 jq but Rust https://jless.io https://github.com/PaulJuliusMartinez/jless
-brew "lazydocker"       # 🐿 Docker terminal UI https://github.com/jesseduffield/lazydocker
 brew "lazygit"          # 🐿 git terminal UI https://github.com/jesseduffield/lazygit
 brew "lsd"              # 🦀 ls but jazzy https://github.com/Peltoche/lsd
 brew "mosh"             # 🔥 Mobile Shell, replacement for interactive SSH terminals https://mosh.org
