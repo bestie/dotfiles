@@ -62,15 +62,16 @@ if [ -x "$(command -v hwatch)" ]; then
 fi
 
 ### Vim ######################################################################
-export EDITOR=vim
+export EDITOR=nvim
 
-alias vim="stty stop '' -ixoff ; vim" # Disable terminal suspend so vim can map ctrl-s
-alias vim-dirty="git status --porcelain | grep -v '^ D' | sed 's/^...//' | xargs -o vim -O"
-alias vim-changes="git status --porcelain | grep -v '^[D\?]' | sed 's/^...//' | xargs -o vim -O"
-alias vim-conflicts="git status --porcelain | grep '^UU' | sed 's/^UU //' | xargs -o vim -O"
-alias vim-open="xargs -o vim -O"
-alias vim-last-commit="git diff head^ --name-only | xargs -o vim -O"
+alias vim-dirty="git status --porcelain | grep -v '^ D|^\?' | sed 's/^...//' | xargs -o nvim -O"
+alias vim-conflicts="git status --porcelain | grep '^UU' | sed 's/^UU //' | xargs -o nvim -O"
+alias vim-last-commit="git diff head^ --name-only | xargs -o nvim -O"
+
+###### OG Vim
+# Neovim doesn't support this
 alias vim-stdin="vim --not-a-term"
+alias vim="stty stop '' -ixoff ; vim" # Disable terminal suspend so vim can map ctrl-s
 
 ### Rubby ####################################################################
 alias be='bundle exec'
