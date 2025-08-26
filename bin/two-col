@@ -1,0 +1,97 @@
+#!/usr/bin/env -S ruby --disable=gems
+
+require "io/console"
+
+def cursor_x = IO.console.cursor[1]
+def terminal_width = IO.console.winsize[1]
+def remove_ansi_escape(str) = str.gsub(/\e\[[0-9;]*m/, "")
+def ansi_color_reset = "\e[0m"
+
+class String
+  def print_width(string) = remove_ansi_escape(string).length
+end
+
+def debug(message)
+  $stderr.puts "\n[DEBUG] #{message}" if ENV["DEBUG"]
+end
+
+debug "terminal_width: #{terminal_width}"
+
+def usage
+<<USAGE
+  Usage: two-col FILE1 FILE2
+    Prints the contents of FILE1 and FILE2 side by side in two columns.
+
+    FILE1 is on the left, FILE2 is on the right.
+
+    The left column is full width, the right column is truncated to fit the terminal width.
+
+    ANSI colors codes are supported 🌈
+
+  Examples:
+    Two existing files:
+      two-col file1.txt file2.txt
+
+    Two commands using process substitution (Bash/Zsh):
+    two-col <(ls -1) <(git log --oneline)
+
+USAGE
+end
+
+if ARGV.length != 2 || ARGV.first == "--help"
+  puts usage
+  exit 1
+end
+
+separator = " | "
+padding = separator.length
+
+files = ARGV.map { |f| File.readlines(f, chomp: true) }
+file_widths = files.map { |lines|
+  lines.map(&method(:remove_ansi_escape)).map(&:length).max
+}
+
+# left column is full width, right column is truncated
+column_widths = [ file_widths[0], terminal_width - file_widths[0] - padding ]
+
+Column = Struct.new(:width, :lines) do
+  def content_width
+    @content_width ||= lines.map { _1.print_width}.max
+  end
+
+  def line_count
+    lines.length
+  end
+end
+
+columns = files.zip(column_widths).map { |lines, column_width|
+  Column.new(column_width, lines)
+}
+
+columns.map(&:line_count).max.times do |i|
+  left = files[0][i] || ""
+  right = files[1][i] || ""
+
+  print left + ansi_color_reset
+
+  remaining_space = columns[0].width - cursor_x
+
+  print " " * remaining_space
+  print separator
+
+  # This many single byte characters can be printed safely without overflow
+  safe_print_width = columns[1].width - 1
+  safe = right[0..safe_print_width-1]
+  print safe
+
+
+  # Print the rest one at a time, checking for overflow
+  unsafe = right[safe_print_width..]
+  unsafe && unsafe.each_char do |char|
+    break if cursor_x < terminal_width
+    print char
+  end
+
+  print "\n"
+  print ansi_color_reset
+end

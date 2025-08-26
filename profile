@@ -102,6 +102,17 @@ alias look-busy='cat /dev/urandom | hexdump -C | grep "ca fe"'
 alias reload='source ~/.profile'
 alias ssh-add="ssh-add && echo '' | pbcopy"
 
+alias git='_git_default'
+_git_default() {
+  if [ $# -eq 0 ]; then
+    echo ""
+    two-col <(GIT_CONFIG_PARAMETERS="'color.ui=always'" git status --short) <(git top)
+    echo ""
+  else
+    command git "$@"
+  fi
+}
+
 function random-word {
   ruby -e "puts File.readlines('/usr/share/dict/words').shuffle.take(${1-1})"
 }
