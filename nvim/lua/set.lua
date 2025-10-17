@@ -42,8 +42,8 @@ vim.opt.undofile = true
 
 vim.opt.completeopt = "menuone,noinsert,noselect"
 
-vim.cmd([[command! W :write]])
-vim.cmd([[command! Q :quit]])
+vim.cmd([[command! W :wall]])
+vim.cmd([[command! Q :qall]])
 
 vim.cmd("source " .. vim.fn.stdpath("config") .. "/lua/set.vim")
 

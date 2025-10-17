@@ -2,8 +2,6 @@ local function opts(description)
   return { noremap = true, silent = true, desc = description }
 end
 
-vim.keymap.set("n", "Q", "<nop>")
-
 vim.keymap.set("i", "<C-c>", [[<Esc>:nohlsearch<cr><Esc>]], { desc = "ESC (and clear highlight)" })
 vim.keymap.set({'n', 'i'}, '<C-l>', ':nohlsearch<cr><C-l>', { desc = "Redraw screen (and clear highlight)" })
 vim.keymap.set('n', '<leader>/', ':nohlsearch<cr>', { desc = "Clear highlight" })
