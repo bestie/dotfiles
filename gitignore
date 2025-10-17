@@ -21,3 +21,4 @@ PrivateNotes*
 .ignore
 
 kubernetes/jsonnet/manifests
+.tool-versions
