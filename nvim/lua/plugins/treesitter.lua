@@ -110,7 +110,7 @@ return {
         smart_rename = {
           enable = true,
           keymaps = {
-            smart_rename = "R",
+            smart_rename = "<leader>rn",
           },
         },
       },
