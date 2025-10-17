@@ -1,6 +1,7 @@
 [user]
   name = Stephen Best
   email = bestie@gmail.com
+
 [alias]
   # The standards
   st = status
@@ -9,43 +10,55 @@
   cp = cherry-pick
   br = branch
 
-  # Relatviely basic aliases I like
-  unstage = rm --cached
-  staged = diff --cached
-  recent-branches = for-each-ref --count=10 --sort=-committerdate refs/heads/ --format='%(refname:short)'
-  diff-commits = log --oneline --graph HEAD..
-  merged-branches = !git branch --merged ${1-main}
+  # The hits
   up = !git pull --rebase $@ && git submodule update --init --recursive
   wip = !git add -A && git commit -m "WIP"
   omnom = commit --amend -C HEAD
+  staged = diff --cached
+  rmb = rebase -i $(git mb)
 
-  ### Some more complicated stuff
+  # Useful
+  unstage = rm --cached
+  recent-branches = branches-time-sorted --count 10
+  diff-commits = log --oneline --graph HEAD..
+  merged-branches = !git branch --merged ${1-$(git trunk)}
+  dt = -c diff.external=difft diff --ext-diff
 
-  co-recent-branch = "!f() { git recent-branches | fzf --height=10 | xargs git checkout ; }; f"
-  cor = "!f() { git recent-branches | fzf --height=10 | xargs git checkout ; }; f"
-  bb = "!f() { git recent-branches | fzf --height=20 --delimiter=' ' --preview='git lg {-1}' --preview-window='70%' ; }; f"
-  branch-delete = "!f() { git branch | fzf --height=10 --multi | xargs git branch -D ; }; f"
+  # Good building blocks / private functions
+  private-log-plain-graph = log --pretty=format:'%h -%d %s (%cr) <%an>' --abbrev-commit
+  private-log-pretty-graph = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  branches-time-sorted= for-each-ref --sort=-committerdate refs/heads/ --format='%(refname:short)'
 
-  top = "!f() { git private-log-pretty-graph ${@-HEAD} | head -n15 ; }; f"
+  # Some more complicated stuff
 
-  # Show a nice graph of the history up to <revision>. Defaults to current HEAD,
-  # Pipes into less if the graph is longer than a single page.
-  lg = "!f() { git private-log-pretty-graph ${@-HEAD} | less --RAW-CONTROL-CHARS --quit-if-one-screen ; }; f"
+  # Dynamically determine the 'main' branch name
+  trunk = !git symbolic-ref refs/remotes/origin/HEAD | cut -d/ -f4
 
-  # Same nice graph view but with preview window
-  lgp = "!f() { git private-log-pretty-graph ${@-HEAD} | fzf --tmux=center,90%,border-native --height=+90% --multi --ansi --delimiter=' ' --preview='git log --color=always -p {2}' | awk '{print $2}' ; }; f"
+  # Get the merge-base with the junk in the trunk
+  mb = !git merge-base HEAD $(git trunk)
 
-  # Do the same but stop at the first common anceator with main / specified revision
-  lg-merge-base = "!f() { git private-log-pretty-graph $(git merge-base HEAD ${1-${MAIN_BRANCH-main}})^..HEAD | less --RAW-CONTROL-CHARS --quit-if-one-screen ; }; f"
+  # Show the graph view of HEAD or given ref, will use the pager
+  lg = "!f() { git private-log-pretty-graph ${@-HEAD} ; }; f"
 
-  # Find a commit using fzf displayed in graph form.  # Must be an ancestor of HEAD.
+  # Show the last 15 commits in graph view
+  ls = "!f() { git --no-pager private-log-pretty-graph -15 ${@-HEAD} ; }; f"
+
+  # fzf all the things! lazygit is also good.
+  # # Checkout a recently updated branch from a short fzf menu, the menu shows a graph preview of the branch
+  cor = "!f() { git recent-branches | fzf --height=20 --delimiter=' ' --preview='git lg {-1}' --preview-window='70%' | xargs git checkout ; }; f"
+  # # Select a branch to delete from a an fzf menu with graph preview
+  branch-delete = "!f() { git branch | grep -v '*' | fzf --height=20 --multi --preview='git lg {-1}' --preview-window='70%' | xargs git branch --delete ; }; f"
+  # Linear view of commits in fzf, with diff on the right
+  browse-commits = "!f() { git log --color --oneline ${@-HEAD} | fzf --tmux=center,90%,border-native --height=+90% --multi --ansi --delimiter=' ' --preview='git show "{1}"' | cut -d' ' -f1 ; }; f"
+  # # Find a commit using fzf displayed in graph form. Must be an ancestor of HEAD.
   find-commit = "!f() { git private-log-pretty-graph | fzf --ansi --reverse | sed -E 's/^[^a-f0-9]+//' | awk '{print $1}'; }; f"
-
+  # # As above and use that as the last argument in the given command
   find-commit-and = "!f() { git find-commit | xargs -o ${@-echo} ; }; f"
-  rebase-on = "!f() { git find-commit | xargs -o -I_commit_ git rebase -i _commit_^ ; }; f"
-
-  # Add untracked files via fzf file menu <tab>
+  # # Add untracked files via fzf
   au = "!f() { git ls-files --others --exclude-standard | fzf --multi --height=10 | xargs git add ; }; f"
+
+  rebase-to = "!f() { git find-commit | xargs -o -I_commit_ git rebase -i _commit_^ ; }; f"
+  rebase-on = "!f() { git find-commit | xargs -o -I_commit_ git rebase -i _commit_ ; }; f"
 
   # Resets the committer date of rewitten/rebased commits to the original time.
   # Goes back to the specified revision.
@@ -54,18 +67,15 @@
   # Remove all trace of file / pattern
   nuke = "!f() { git filter-branch --force --index-filter \"git rm --cached -r --ignore-unmatch $1\" --prune-empty --tag-name-filter cat -- --all; }; f"
 
-  # You want to fast-forward merge you commits but origin/main has changed. AGAIN.
-  fucksake = !git up && git rebase origin/main && git push -f
-
-  # "private" functions
-  private-log-plain-graph = log --pretty=format:'%h -%d %s (%cr) <%an>' --abbrev-commit
-  private-log-pretty-graph = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  # You want to rebase your commits but origin/main has changed. AGAIN.
+  fucksake = !git up && git rebase $(git trunk) && git push -f
 
 [core]
   attributesfile = ~/.gitattributes
   excludesfile = ~/.gitignore
   editor = vim
   fileMode = false
+  pager = less --quit-if-one-screen
 [push]
   default = current
 [commit]
@@ -74,10 +84,5 @@
 	defaultBranch = main
 # [merge]
 #   conflictStyle = diff3
-[diff]
-  tool = difft
-	external = difft
-[difftool]
-  prompt = false
 [pager]
   difftool = true
