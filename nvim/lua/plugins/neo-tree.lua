@@ -8,6 +8,7 @@ return {
   },
   lazy = false,
   opts = {
+    close_if_last_window = true,
     git_status = {
       symbols = {
         -- Change type
@@ -33,6 +34,7 @@ return {
         ["<2-LeftMouse>"] = "open",
         ["<cr>"] = "open",
         ["<esc>"] = "cancel", -- close preview or floating neo-tree window
+        ["q"] = "close", -- close preview or floating neo-tree window
         ["P"] = { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
         ["v"] = { "open_rightbelow_vs" },
         ["V"] = { "open_leftabove_vs" },
