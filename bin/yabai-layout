@@ -1,5 +1,31 @@
 #!/usr/bin/env bash
 
+# Usage: yabai [option]
+# Options:
+#     --load-sa              Install and load the scripting-addition.
+#     --uninstall-sa         Uninstall the scripting-addition.
+#     --install-service      Write launchd service file to disk.
+#     --uninstall-service    Remove launchd service file from disk.
+#     --start-service        Enable, load, and start the launchd service.
+#     --restart-service      Attempts to restart the service instance.
+#     --stop-service         Stops a running instance of the service.
+#     --message, -m <msg>    Send message to a running instance of yabai.
+#     --config, -c <config>  Use the specified configuration file.
+#     --verbose, -V          Output debug information to stdout.
+#     --version, -v          Print version to stdout and exit.
+#     --help, -h             Print options to stdout and exit.
+# Type `man yabai` for more information, or visit: https://github.com/koekeishiya/yabai/blob/v7.1.15/doc/yabai.asciidoc
+
+log=/tmp/yabai.log
+CURRENT_WINDOW=""
+
+query_current_window() {
+  yabai -m query --windows --window
+}
+
+current_window_size() {
+  query_current_window | jq .frame
+}
 
 thirds-cycle() {
   local direction=$1  # horizontal or vertical
@@ -7,7 +33,7 @@ thirds-cycle() {
 
   step=${step:-1}
 
-  local win=$(yabai -m query --windows --window)
+  local win=$(query_current_window)
   local win_x=$(printf "%.0f" $(echo "$win" | jq -r '.frame.x'))
   local win_y=$(printf "%.0f" $(echo "$win" | jq -r '.frame.y'))
   echo "Window position: $win_x, $win_y"
@@ -28,11 +54,26 @@ thirds-cycle() {
   fi
 }
 
+move_to_next_display() {
+  yabai -m window --display next
+  yabai -m display --focus next
+}
+
 # Format is <rows>:<cols>:<start-x>:<start-y>:<width>:<height>
 
 case "$1" in
   fullscreen)
+    before=$(current_window_size)
     yabai -m window --grid 1:1:0:0:1:1
+    after=$(current_window_size)
+
+    if test "$before" == "$after"; then
+      echo "window didn't change, moving to next display" >> $log
+      move_to_next_display
+    else
+      echo "window maximized" >> $log
+    fi
+
     ;;
   half-left)
     yabai -m window --grid 1:2:0:0:1:1
@@ -87,3 +128,5 @@ case "$1" in
     exit 1
     ;;
 esac
+
+
