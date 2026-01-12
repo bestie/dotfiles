@@ -15,6 +15,7 @@ vim.keymap.set("n", "<leader>yy", [["+yy]], opts("[Y]ank line to clipboard"))
 vim.keymap.set("n", "<leader>Y", [["+y$]], opts("[Y]ank end of line to clipboard"))
 vim.keymap.set({"n", "v"}, "<leader>p", [["+p]], opts("[P]aste from clipboard"))
 vim.keymap.set("n", "<leader>P", [["+P]], opts("[P]aste before cursor from clipboard"))
+vim.keymap.set("n", "<leader>ya", [[ggVG]], opts("[Y]ank [a]ll"))
 
 -- Resize windows in increments of 5
 vim.keymap.set("n", "<C-w>.", ":vertical resize +5<CR>", opts("Increase window height +5"))
@@ -56,3 +57,9 @@ vim.keymap.set("n", "<leader>mv", require("mv_file").mv_file, opts("[M]o[v]e cur
 vim.keymap.set("n", "<leader>va", "gg<S-v>G", opts("[V]isual select [a]ll"))
 -- Copy whole buffer to paste buffer
 vim.keymap.set("n", "<leader>ya", "gg<S-v>G\"+y<c-o>", opts("[Y]ank [a]ll"))
+
+local function sub_quotes()
+    vim.cmd([[%s/"/'/g<cr>]])
+end
+
+vim.keymap.set("v", "<leader>'", sub_quotes, opts("Substitute double quotes with single quotes"))
