@@ -20,6 +20,7 @@ require("keymaps")
 require("hard_case").setup()
 require("resume_position").setup()
 require("hard_case").setup()
+require("ruby_debugger").setup()
 
 -- TODO
 -- [x] undo tree
