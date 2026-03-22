@@ -4,6 +4,7 @@ local env_file_config = vim.env.RUBY_DEBUG_INIT_SCRIPT
 
 local config = {
   toggle_key = "<leader>br",
+  list_key = "<leader>bl",
   debugger_file = (env_file_config or ".rdbgrc"),
   gutter_glyph = "⏸️", -- also good: Ⓑ ●🫸
   sign_hl = "BreakpointSign",
@@ -97,6 +98,37 @@ function M.toggle(file, lnum)
   end
 end
 
+function M.to_quickfix()
+  local items = {}
+  local root = get_root()
+
+  for file, lines in pairs(breakpoints) do
+    local abs = root .. "/" .. file
+    for lnum, _ in pairs(lines) do
+      table.insert(items, {
+        filename = abs,
+        lnum = lnum,
+        col = 1,
+        text = "breakpoint",
+      })
+    end
+  end
+
+  table.sort(items, function(a, b)
+    if a.filename == b.filename then
+      return a.lnum < b.lnum
+    end
+    return a.filename < b.filename
+  end)
+
+  vim.fn.setqflist({}, " ", {
+    title = "Ruby Breakpoints",
+    items = items,
+  })
+
+  vim.cmd("copen")
+end
+
 -- buffer wrappers
 
 local function current_file()
@@ -164,6 +196,7 @@ function M.setup(opts)
     callback = function()
       if vim.bo.filetype == "ruby" then
         vim.keymap.set("n", config.toggle_key, M.toggle_here, { buffer = true })
+        vim.keymap.set("n", config.list_key, M.to_quickfix, { buffer = true })
       end
     end,
   })
