@@ -1,8 +1,8 @@
 return {
-  -- "bestie/paneity.nvim",
-	name = "paneity",
-	dev = true,
-	dir = "/Users/stephenbest/code/paneity.nvim",
+  "bestie/paneity.nvim",
+	-- name = "paneity",
+	-- dev = true,
+	-- dir = "/Users/stephenbest/code/paneity.nvim",
   config = function()
     local paneity = require("paneity")
     paneity.setup({
@@ -17,6 +17,7 @@ return {
       -- close_pane_on_exit
       -- default_command
     })
+
 
     local guess_command = function()
       local filetype = vim.bo.filetype
@@ -76,7 +77,7 @@ return {
       vim.cmd("w!")
       paneity.run(command)
     end
-    vim.keymap.set("n", "<leader>tc", function()
+    vim.keymap.set("n", "<leader>c", function()
       local prefill = guess_command()
       paneity.new_command({
         prefill = prefill,

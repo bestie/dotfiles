@@ -84,10 +84,6 @@ alias rs='be rails server'
 alias rc='be rails console'
 alias ctags-ruby='ctags -R --languages=ruby --exclude=.git --exclude=log'
 
-source "$prefix/share/chruby/chruby.sh"
-source "$prefix/share/chruby/auto.sh"
-chruby 4
-
 alias gem-edit="bundle list --name-only | fzf | xargs -I{} -o bash -c 'bundle open {}; gem pristine {}'"
 alias gem-cull='gem list | cut -d" " -f1 | xargs gem uninstall -aIx'
 alias rspec-dirty="git status --porcelain spec/ | grep -v '^ D' |grep '_spec.rb'| sed 's/^...//' | xargs -o bundle exec rspec"
@@ -122,7 +118,13 @@ function random-word {
   ruby -e "puts File.readlines('/usr/share/dict/words').shuffle.take(${1-1})"
 }
 
-alias repeat="while true; do; $@ ; done"
+repeat() {
+  local n=$1
+  shift
+  for ((i=0; i<n; i++)); do
+    "$@"
+  done
+}
 
 # Quick and easy CPU benchmark, calculate pi to 5000 sf
 alias bc-benchmark='time echo "scale=5000; a(1)*4" | bc -l'
@@ -135,7 +137,7 @@ alias image-resize-crop="convert $1 -resize $2x$2^ -gravity center -crop $2x$2+0
 export CLICOLOR="YES"
 
 # Always open less with these options
-export LESS="--raw-control-chars --incsearch --jump-target=8 --mouse --window=-10 --SILENT --use-color"
+export LESS="--raw-control-chars --incsearch --jump-target=8 --mouse --window=-10 --SILENT --use-color "
 export PAGER="less"
 
 ##############################################################################
@@ -144,3 +146,5 @@ export PAGER="less"
 if [ -f "$HOME/.localprofile" ]; then
   source "$HOME/.localprofile"
 fi
+
+. "$HOME/.local/bin/env"

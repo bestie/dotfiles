@@ -94,3 +94,24 @@ docker-nuke-images() {
   docker rmi -f $(docker images -aq)
 }
 
+source "$prefix/share/chruby/chruby.sh"
+source "$prefix/share/chruby/auto.sh"
+chruby 4.0
+
+eval "$(direnv hook bash)"
+
+# . "$HOME/.local/bin/env"
+# eval "$(mise activate bash)"
+
+# _rv_autoload_hook() {
+#     eval "$(/opt/homebrew/bin/rv shell env bash)"
+# }
+# _rv_autoload_hook
+# _chpwd_hook() {
+#     if [[ "$PWD" != "$_OLDPWD" ]]; then
+#         _rv_autoload_hook
+#         _OLDPWD="$PWD"
+#     fi
+# }
+# _OLDPWD="$PWD"
+# PROMPT_COMMAND="_chpwd_hook${PROMPT_COMMAND:+; $PROMPT_COMMAND}"

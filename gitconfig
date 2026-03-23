@@ -27,10 +27,13 @@
 
   # Good building blocks / private functions
   private-log-plain-graph = log --pretty=format:'%h -%d %s (%cr) <%an>' --abbrev-commit
-  private-log-pretty-graph = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  private-log-pretty-graph = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)<%an>%Creset' --date=format:'%Y-%m-%d %H:%M:%S' --abbrev-commit
   branches-time-sorted= for-each-ref --sort=-committerdate refs/heads/ --format='%(refname:short)'
 
   # Some more complicated stuff
+
+  # Push just the latest tag
+  tag-push-latest = !git tag | sort -V | tail -n1 | xargs git push origin
 
   # Dynamically determine the 'main' branch name
   trunk = !git symbolic-ref refs/remotes/origin/HEAD | cut -d/ -f4
@@ -52,11 +55,15 @@
   # Linear view of commits in fzf, with diff on the right
   browse-commits = "!f() { git log --color --oneline ${@-HEAD} | fzf --tmux=center,90%,border-native --height=+90% --multi --ansi --delimiter=' ' --preview='git show "{1}"' | cut -d' ' -f1 ; }; f"
   # # Find a commit using fzf displayed in graph form. Must be an ancestor of HEAD.
-  find-commit = "!f() { git private-log-pretty-graph | fzf --ansi --reverse | sed -E 's/^[^a-f0-9]+//' | awk '{print $1}'; }; f"
+  find-commit = "!f() { git private-log-pretty-graph | fzf --ansi | sed -E 's/^[^a-f0-9]+//' | awk '{print $1}'; }; f"
   # # As above and use that as the last argument in the given command
   find-commit-and = "!f() { git find-commit | xargs -o ${@-echo} ; }; f"
   # # Add untracked files via fzf
   au = "!f() { git ls-files --others --exclude-standard | fzf --multi --height=10 | xargs git add ; }; f"
+  # # Interactive delete tags
+  tag-delete = "!f() { git tag | sort --reverse | fzf --height=20 --multi --preview='git show {-1}' --preview-window='70%' | xargs git tag --delete ; }; f"
+  # # Interactive push tag
+  tag-push = "!f() { git tag | sort --reverse | fzf --height=20 --multi --preview='git show {-1}' --preview-window='70%' | xargs -o -I_tag_ git push origin _tag_ ; }; f"
 
   rebase-on = "!f() { git find-commit | xargs -o -I_commit_ git rebase -i _commit_^ ; }; f"
 

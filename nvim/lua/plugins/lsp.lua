@@ -48,6 +48,12 @@ return {
     vim.keymap.set({"n", "v"}, "<leader>ca", vim.lsp.buf.code_action, { noremap = true, silent = true, desc = "Code Action" })
     vim.keymap.set("n", "<leader>dd", toggle_diagnostic_location_list, { noremap = true, silent = true })
     vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { noremap = true, silent = true })
+    vim.keymap.set("n", "gd", toggle_diagnostic_location_list, { noremap = true, silent = true })
+    vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { noremap = true, silent = true })
+
+    vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
+    vim.keymap.set("n", "<c-]>", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
+    vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", { noremap = true, silent = true })
 
     -- Open diagnostic float on hover
     vim.o.updatetime = 250
@@ -66,8 +72,6 @@ return {
 
       -- Additional LSP-specific keybindings or settings can go here
       -- Example: Set keybindings specific to this LSP client
-      vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
-      vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", { noremap = true, silent = true })
 
       -- enable auto-formatting
       if client.capabilities.document_formatting then
@@ -130,5 +134,6 @@ return {
     lspconfig.rust_analyzer.setup({})
     lspconfig.sqlls.setup({})
     lspconfig.vimls.setup({})
+    lspconfig.yamlls.setup({})
   end,
 }

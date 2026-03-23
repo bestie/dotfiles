@@ -40,9 +40,9 @@ vim.keymap.set("n", "*", "<esc>:let @/ = \"<C-r><C-w>\"<cr>:set hlsearch<cr>", o
 vim.keymap.set("n", "_", "f_", opts("Jump to next underscore"))
 vim.keymap.set("n", "-", "F_", opts("Jump to prev underscore"))
 
-vim.keymap.set('n', '<leader>rbp', [[Orequire "pry"; binding.pry; # DEBUG @bestie<cr><esc>]], opts("Ruby: insert pry breakpoint"))
-local tap_and_pry = ".tap { require 'pry'; binding.pry }"
-vim.keymap.set('n', '<leader>rtp', [[o]] .. tap_and_pry .. [[<esc>==]], opts("Ruby: insert pry breakpoint within tap"))
+vim.keymap.set('n', '<leader>rbp', [[Obinding.irb; # DEBUG @bestie<cr><esc>]], opts("Ruby: insert a breakpoint"))
+local tap_and_irb = ".tap { |obj| binding.irb }"
+vim.keymap.set('n', '<leader>rtp', [[o]] .. tap_and_irb .. [[<esc>==]], opts("Ruby: insert a breakpoint within tap"))
 
 local function save_and_reload()
     vim.cmd("write")
@@ -58,6 +58,7 @@ vim.keymap.set("n", "<leader>va", "gg<S-v>G", opts("[V]isual select [a]ll"))
 -- Copy whole buffer to paste buffer
 vim.keymap.set("n", "<leader>ya", "gg<S-v>G\"+y<c-o>", opts("[Y]ank [a]ll"))
 
+<<<<<<< HEAD
 local function sub_quotes()
     vim.cmd([[%s/"/'/g<cr>]])
 end
@@ -100,3 +101,5 @@ vim.keymap.set("n", "<Esc>", function()
 end)
 
 vim.keymap.set({"n", "v"}, "<leader>ca", vim.lsp.buf.code_action, { noremap = true, silent = true, desc = "Code Action" })
+vim.keymap.set("v", "<leader>\"", [[:s/'/"/g<cr>]], opts("Replace single quotes with double quotes"))
+vim.keymap.set("n", '<leader>"', ":s/'/\"/g <cr>", opts("Replace double quotes with single quotes"))
