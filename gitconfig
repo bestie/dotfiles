@@ -16,6 +16,7 @@
   omnom = commit --amend -C HEAD
   staged = diff --cached
   rmb = rebase -i $(git mb)
+  dt = -c diff.external=difft diff --ext-diff
 
   # Useful
   unstage = rm --cached
@@ -57,8 +58,7 @@
   # # Add untracked files via fzf
   au = "!f() { git ls-files --others --exclude-standard | fzf --multi --height=10 | xargs git add ; }; f"
 
-  rebase-to = "!f() { git find-commit | xargs -o -I_commit_ git rebase -i _commit_^ ; }; f"
-  rebase-on = "!f() { git find-commit | xargs -o -I_commit_ git rebase -i _commit_ ; }; f"
+  rebase-on = "!f() { git find-commit | xargs -o -I_commit_ git rebase -i _commit_^ ; }; f"
 
   # Resets the committer date of rewitten/rebased commits to the original time.
   # Goes back to the specified revision.
