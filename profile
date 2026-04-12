@@ -24,6 +24,11 @@ LIGHT_MAGENTA="\033[1;35m"
      GREEN256="\033[38;5;82m"
  LIGHT_YELLOW=$YELLOW256
 
+#### Apple, how did you get this so wrong?
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_STATE_HOME=$HOME/.local/state
+
 prefix="/opt/homebrew"
 
 PATH="$prefix/bin:$PATH"
