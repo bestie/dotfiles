@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-echo "Installing Rosetta"
-softwareupdate --install-rosetta --agree-to-license
-echo "Done."
 
 working_dir=$(pwd)
 cat .git/config | grep "bestie/dotfiles"
