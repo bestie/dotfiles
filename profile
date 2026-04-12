@@ -86,7 +86,7 @@ alias ctags-ruby='ctags -R --languages=ruby --exclude=.git --exclude=log'
 
 source "$prefix/share/chruby/chruby.sh"
 source "$prefix/share/chruby/auto.sh"
-chruby 3.4
+chruby 4
 
 alias gem-edit="bundle list --name-only | fzf | xargs -I{} -o bash -c 'bundle open {}; gem pristine {}'"
 alias gem-cull='gem list | cut -d" " -f1 | xargs gem uninstall -aIx'
