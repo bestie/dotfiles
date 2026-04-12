@@ -63,3 +63,40 @@ local function sub_quotes()
 end
 
 vim.keymap.set("v", "<leader>'", sub_quotes, opts("Substitute double quotes with single quotes"))
+
+
+local toggle_diagnostic_location_list = function()
+  local is_open = false
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    if vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(win), "filetype") == "qf" then
+      is_open = true
+      break
+    end
+  end
+
+  if is_open then
+    vim.cmd("lclose")
+  else
+    vim.diagnostic.setloclist()
+    vim.cmd("set wrap")
+    vim.cmd("wincmd p")
+  end
+end
+
+vim.keymap.set("n", "<leader>gn", vim.diagnostic.goto_next, { noremap = true, silent = true, desc = "Next Diagnostic" })
+vim.keymap.set("n", "<leader>gp", vim.diagnostic.goto_prev, { noremap = true, silent = true, desc = "Previous Diagnostic" })
+vim.keymap.set({"n", "v"}, "<leader>ca", vim.lsp.buf.code_action, { noremap = true, silent = true, desc = "Code Action" })
+vim.keymap.set("n", "<leader>dd", toggle_diagnostic_location_list, { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { noremap = true, silent = true })
+
+-- Esc closes all popups
+vim.keymap.set("n", "<Esc>", function()
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    local config = vim.api.nvim_win_get_config(win)
+    if config.relative ~= "" then
+      vim.api.nvim_win_close(win, false)
+    end
+  end
+end)
+
+vim.keymap.set({"n", "v"}, "<leader>ca", vim.lsp.buf.code_action, { noremap = true, silent = true, desc = "Code Action" })
