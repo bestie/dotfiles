@@ -7,7 +7,7 @@ cat .git/config | grep "bestie/dotfiles"
 target_dir=$HOME
 
 mkdir -p ~/.ssh
-chmod 700 .shh
+chmod 700 ~/.ssh
 
 echo "Installing .config"
 mkdir -p ~/.config
