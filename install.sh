@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+set -e
 
 working_dir=$(pwd)
 cat .git/config | grep "bestie/dotfiles"
@@ -57,6 +58,7 @@ done
 
 echo "Installing job_glyphs"
 cd job_glyphs/c && make && make install
+
 
 brew bundle install --file $working_dir/homebrew/Brewfile
 echo "/opt/homebrew/bin/bash" >> /etc/shells
