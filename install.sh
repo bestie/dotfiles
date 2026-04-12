@@ -9,12 +9,7 @@ cat .git/config | grep "bestie/dotfiles"
 target_dir=$HOME
 
 mkdir -p ~/.ssh
-
-ln -s $working_dir/vim ~/.vim
-ln -s $working_dir/vimrc ~/.vimrc
-mkdir -p ~/.vim/bundle
-git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-vim +PluginInstall +qall
+chmod 700 .shh
 
 echo "Installing .config"
 mkdir -p ~/.config
@@ -28,16 +23,11 @@ ln -s $working_dir/karabiner.json ~/.config/karabiner/karabiner.json
 echo "  fzf"
 ln -s $working_dir/fzf/ ~/.config
 
-echo "Installing gemrc"
-ln -s $working_dir/gemrc ~/.gemrc
-echo "Installing irbrc"
-ln -s $working_dir/irbrc ~/.irbrc
-echo "Installing pryrc"
-ln -s $working_dir/pryrc ~/.pryrc
 echo "Installing gitconfig"
 ln -s $working_dir/gitconfig ~/.gitconfig
 echo "Installing gitignore"
 ln -s $working_dir/gitignore ~/.gitignore
+
 echo "Installing gitprompt"
 ln -s $working_dir/gitprompt.sh ~/.gitprompt.sh
 echo "Installing inputrc"
@@ -46,12 +36,19 @@ echo "Installing profile"
 ln -s $working_dir/profile ~/.profile
 echo "Installing job_control.bash"
 ln -s $working_dir/job_control.bash ~/.job_control.bash
-echo "Installing Rails config"
-ln -s $working_dir/railsrc ~/.railsrc
+
 echo "Installing tmux.conf"
 ln -s $working_dir/tmux.conf ~/.tmux.conf
 echo "Installing ssh config"
 ln -s $working_dir/ssh/config ~/.ssh/config
+
+echo "Installing gemrc"
+ln -s $working_dir/gemrc ~/.gemrc
+echo "Installing irbrc"
+ln -s $working_dir/irbrc ~/.irbrc
+echo "Installing Rails config"
+ln -s $working_dir/railsrc ~/.railsrc
+
 
 mkdir -p $HOME/bin
 
@@ -62,10 +59,7 @@ do
 done
 
 echo "Installing job_glyphs"
-cd job_glyphs/c
-make
-mv job_glyphs ~/bin
-
+cd job_glyphs/c && make && make install
 
 brew bundle install --file $working_dir/homebrew/Brewfile
 echo "/opt/homebrew/bin/bash" >> /etc/shells
