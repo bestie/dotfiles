@@ -58,14 +58,6 @@ vim.keymap.set("n", "<leader>va", "gg<S-v>G", opts("[V]isual select [a]ll"))
 -- Copy whole buffer to paste buffer
 vim.keymap.set("n", "<leader>ya", "gg<S-v>G\"+y<c-o>", opts("[Y]ank [a]ll"))
 
-<<<<<<< HEAD
-local function sub_quotes()
-    vim.cmd([[%s/"/'/g<cr>]])
-end
-
-vim.keymap.set("v", "<leader>'", sub_quotes, opts("Substitute double quotes with single quotes"))
-
-
 local toggle_diagnostic_location_list = function()
   local is_open = false
   for _, win in ipairs(vim.api.nvim_list_wins()) do
@@ -100,6 +92,5 @@ vim.keymap.set("n", "<Esc>", function()
   end
 end)
 
-vim.keymap.set({"n", "v"}, "<leader>ca", vim.lsp.buf.code_action, { noremap = true, silent = true, desc = "Code Action" })
-vim.keymap.set("v", "<leader>\"", [[:s/'/"/g<cr>]], opts("Replace single quotes with double quotes"))
-vim.keymap.set("n", '<leader>"', ":s/'/\"/g <cr>", opts("Replace double quotes with single quotes"))
+vim.keymap.set({"n", "v"}, "<leader>'", [[:s/"/'/g<cr>]], opts("Replace double quotes with single quotes"))
+vim.keymap.set({"n", "v"}, '<leader>"', [[:s/'/"/g<cr>]], opts("Replace single quotes with double quotes"))
