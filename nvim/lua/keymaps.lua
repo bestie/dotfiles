@@ -51,6 +51,7 @@ local function save_and_reload()
 end
 
 vim.keymap.set("n", "<leader>so", save_and_reload , opts("Source current file"))
+vim.keymap.set("n", "<leader>re", ":e!<CR>", opts("[Re]load file from disk"))
 vim.keymap.set("n", "<leader>mv", require("mv_file").mv_file, opts("[M]o[v]e current file"))
 
 -- Select all
