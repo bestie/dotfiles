@@ -21,6 +21,7 @@ require("hard_case").setup()
 require("resume_position").setup()
 require("hard_case").setup()
 require("ruby_debugger").setup()
+require("ruby").setup()
 
 -- TODO
 -- [x] undo tree
