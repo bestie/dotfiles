@@ -7,6 +7,22 @@ return {
     -- "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
   },
   lazy = false,
+  config = function(_, opts)
+    require("neo-tree").setup(opts)
+
+    -- neotree doesn't re-expand its width after being squashed when other panes
+    -- focus and expand to the set winwidth, so we must tell it to expand on focus
+    vim.api.nvim_create_autocmd("BufEnter", {
+      callback = function()
+        if vim.bo.filetype == "neo-tree" then
+          local current_width = vim.api.nvim_win_get_width(0)
+          if current_width < opts.window.width then
+            vim.api.nvim_win_set_width(0, opts.window.width)
+          end
+        end
+      end,
+    })
+  end,
   opts = {
     close_if_last_window = true,
     git_status = {
