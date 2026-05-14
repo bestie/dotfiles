@@ -35,13 +35,18 @@ return {
       -- },
       mapping = cmp.mapping.preset.insert({
         ['<M-Space>'] = cmp.mapping.complete(),
-        ["<CR>"] = cmp.mapping.confirm({ select = true }),
+        ['<C-j>'] = cmp.mapping.select_next_item(),
+        ['<C-k>'] = cmp.mapping.select_prev_item(),
+        ['<C-c>'] = cmp.mapping.abort(),
+        ['<C-d>'] = cmp.mapping.scroll_docs(4),
+        ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+        ["<CR>"] = cmp.mapping.confirm({ select = false }),
       }),
       sources = {
+        { name = "nvim_lsp" },
         { name = "buffer" },
         { name = "dictionary" },
         { name = "emoji" },
-        { name = "nvim_lsp" },
         { name = "treesitter" },
         -- { name = 'omni',
         --   option = {
