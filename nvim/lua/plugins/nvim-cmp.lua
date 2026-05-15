@@ -9,21 +9,6 @@ return {
     "ray-x/cmp-treesitter",
     -- "hrsh7th/cmp-omni",
     "delphinus/cmp-ctags",
-    -- {
-    --   "zbirenbaum/copilot-cmp",
-    --   config = function ()
-    --     require("copilot_cmp").setup()
-    --
-    --     -- disable co-pilot suggestions and panel (put this in co-pilot config)
-    --    require("copilot").setup({
-    --      suggestion = { enabled = false },
-    --      panel = { enabled = false },
-    --    })
-    --   end
-    -- },
-    -- "L3MON4D3/LuaSnip",
-    -- "hrsh7th/cmp-calc",
-    -- "saadparwaiz1/cmp_luasnip",
   },
   config = function()
     local cmp = require('cmp')
